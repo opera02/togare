@@ -1,0 +1,15 @@
+{
+  "scopeNames": {
+    "TogareNextcloudBridge": "Togare — Nextcloud Bridge"
+  },
+  "labels": {
+    "TogareNextcloudBridge": {
+      "unavailable": "Nextcloud indisponível. Tente novamente em alguns minutos.",
+      "fileNotFound": "Arquivo não encontrado no Nextcloud.",
+      "circuitBreakerOpen": "Nextcloud com falhas consecutivas — pausando chamadas por 5 minutos",
+      "tombstoneNotFound": "Tombstone não existe ou já foi purgado definitivamente.",
+      "uploadFailed": "Falha ao enviar arquivo para o Nextcloud.",
+      "downloadFailed": "Falha ao baixar arquivo do Nextcloud."
+    }
+  }
+}

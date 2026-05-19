@@ -1,0 +1,19 @@
+{
+  "_implemented": false,
+  "_pendingStory": "3.1",
+  "_pendingEntity": "Cliente",
+  "_idempotencyKey": "cpfCnpj",
+  "_description": "PLACEHOLDER. Story 3.1 vai criar a entidade Cliente; quando ela existir, esta story DEPRECATED e a 3.1 substitui este arquivo por 5-10 clientes determinísticos (CPF/CNPJ válidos fake). Schema esperado abaixo.",
+  "_schemaExpected": {
+    "clientes": [
+      {
+        "tipoPessoa": "fisica | juridica",
+        "nomeCompleto": "string",
+        "cpfCnpj": "string (validado por BrValidator)",
+        "advogadoResponsavelUserName": "string (FK userName em users.seed.json)",
+        "...": "demais campos conforme entityDef de Cliente"
+      }
+    ]
+  },
+  "clientes": []
+}

@@ -1,0 +1,23 @@
+{
+  "_implemented": false,
+  "_pendingStory": "3.3",
+  "_pendingEntity": "TpuClasse + TpuAssunto",
+  "_idempotencyKey": "codigo",
+  "_description": "PLACEHOLDER. Story 3.3 vai implementar sync mensal da Tabela Processual Unificada (TPU) do CNJ + cache Redis; quando ela existir, esta story DEPRECATED e a 3.3 substitui este arquivo por amostra mínima de classes/assuntos suficiente para os 10 processos do processos.seed.json. Schema esperado abaixo.",
+  "_schemaExpected": {
+    "classes": [
+      {
+        "codigo": "string (TPU classe)",
+        "nome": "string"
+      }
+    ],
+    "assuntos": [
+      {
+        "codigo": "string (TPU assunto)",
+        "nome": "string"
+      }
+    ]
+  },
+  "classes": [],
+  "assuntos": []
+}

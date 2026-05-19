@@ -1,0 +1,10 @@
+/build/
+/site/
+/tests/integration/config.php
+/node_modules
+/config.json
+/config.php
+/extensions/
+/vendor
+/.phpunit.result.cache
+/composer.phar

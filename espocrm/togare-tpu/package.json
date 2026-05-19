@@ -1,0 +1,36 @@
+{
+  "name": "espocrm-ext-togare-tpu",
+  "version": "0.2.1",
+  "description": "Módulo TPU do Togare — sync mensal CNJ + cache Redis (Story 3.3, FR8/FR9/NFR4/NFR17/NFR25) + hook ResolveTpuFieldsHook em Hooks/Processo/ que valida classe/assunto/movimento contra catálogo + denormaliza nomes + Controller TogareTpuCatalog com 3 endpoints search (autocomplete TPU para Story 3.4, FR8, v0.2.0).",
+  "scripts": {
+    "sa": "vendor/bin/phpstan",
+    "unit-tests": "vendor/bin/phpunit",
+    "integration-tests": "node build --copy && node build --composer-install && cd site && php vendor/bin/phpunit tests/integration/Espo/Modules/TogareTpu",
+    "copy": "node build --copy",
+    "composer-install": "node build --composer-install",
+    "sync": "node build --copy && node build --composer-install",
+    "extension": "node build --extension",
+    "build": "node build --extension",
+    "clear-cache": "php site/clear_cache.php",
+    "rebuild": "node build --rebuild",
+    "all": "node build --all",
+    "prepare-test": "node build --prepare-test",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "type": "module",
+  "author": "Togare",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "espo-extension-tools": "github:espocrm/extension-tools#0.4.3",
+    "fs-extra": "^9.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "npm": ">=8",
+    "node": ">=18"
+  }
+}

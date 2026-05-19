@@ -1,0 +1,9 @@
+[
+    {"name": "modalidade", "width": 12, "customLabel": "Modalidade"},
+    {"name": "cliente", "link": true, "customLabel": "Cliente"},
+    {"name": "valor", "width": 12, "customLabel": "Valor"},
+    {"name": "percentual", "width": 8, "customLabel": "%"},
+    {"name": "vigenciaInicio", "width": 12, "customLabel": "Início"},
+    {"name": "vigenciaFim", "width": 12, "customLabel": "Fim"},
+    {"name": "createdAt", "width": 14, "customLabel": "Cadastrado em"}
+]

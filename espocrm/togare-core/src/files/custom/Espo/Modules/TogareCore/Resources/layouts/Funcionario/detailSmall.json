@@ -1,0 +1,19 @@
+[
+    {
+        "label": "Dados do funcionário",
+        "rows": [
+            [
+                {"name": "nome"},
+                {"name": "cpf"}
+            ],
+            [
+                {"name": "cargo"},
+                {"name": "salario"}
+            ],
+            [
+                {"name": "dataAdmissao"},
+                false
+            ]
+        ]
+    }
+]

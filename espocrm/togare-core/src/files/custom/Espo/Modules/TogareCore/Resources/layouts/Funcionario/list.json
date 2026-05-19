@@ -1,0 +1,7 @@
+[
+    {"name": "nome", "link": true, "customLabel": "Nome"},
+    {"name": "cargo", "width": 18, "customLabel": "Cargo"},
+    {"name": "cpf", "width": 14, "customLabel": "CPF"},
+    {"name": "salario", "width": 12, "customLabel": "Salário"},
+    {"name": "dataAdmissao", "width": 14, "customLabel": "Admissão"}
+]

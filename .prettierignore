@@ -1,0 +1,41 @@
+# Dependências
+vendor/
+node_modules/
+.venv/
+
+# EspoCRM custom — quando houver vendor ou build interno
+espocrm/custom/**/vendor/
+espocrm/custom/**/build/
+
+# Módulos togare-* — arquivos herdados do ext-template têm formatação própria
+# (tsconfig.json, jsconfig.json, config-default.json, etc.). Não reformatar massa
+# vinda de upstream. Nossos arquivos dentro de src/files/ (i18n JSON, metadata,
+# etc.) são pequenos e consistentes sem precisar do prettier.
+espocrm/togare-*/
+
+# BMAD — skills e artefatos de planejamento têm tabelas/formatos próprios
+# e prettier pode reorganizar markdown com tabelas largas.
+_bmad/
+_bmad-output/
+
+# Docs de decisão (ADRs) — estrutura específica; prettier deixaria em paz, mas
+# tirar da fila acelera o hook e evita surpresas.
+docs/decisoes/
+
+# Caches, builds, IDE
+.cache/
+build/
+dist/
+.vscode/
+.idea/
+*.min.js
+*.min.css
+
+# Lockfiles (gerenciados pelos próprios tools)
+composer.lock
+package-lock.json
+yarn.lock
+
+# Caddyfile (formato próprio do Caddy, não JSON-like)
+docker/caddy/Caddyfile
+docker/spike-1b-S1/Caddyfile.spike

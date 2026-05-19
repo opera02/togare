@@ -1,0 +1,20 @@
+{
+    "fields": {
+        "stage": {
+            "options": ["Proposta Enviada", "Oportunidade Aceita", "Cliente Convertido", "Perdido"],
+            "default": "Proposta Enviada",
+            "style": {
+                "Proposta Enviada": "primary",
+                "Oportunidade Aceita": "info",
+                "Cliente Convertido": "success",
+                "Perdido": "danger"
+            },
+            "probabilityMap": {
+                "Proposta Enviada": 30,
+                "Oportunidade Aceita": 70,
+                "Cliente Convertido": 100,
+                "Perdido": 0
+            }
+        }
+    }
+}

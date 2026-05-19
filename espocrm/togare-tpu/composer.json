@@ -1,0 +1,17 @@
+{
+    "name": "espocrm/ext-togare-tpu",
+    "require": {
+        "php": ">=8.3",
+        "predis/predis": "^2.2"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Espo\\Modules\\TogareTpu\\": "src/files/custom/Espo/Modules/TogareTpu",
+            "tests\\unit\\Espo\\Modules\\TogareTpu\\": "tests/unit/Espo/Modules/TogareTpu"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5",
+        "phpstan/phpstan": "^2.1"
+    }
+}

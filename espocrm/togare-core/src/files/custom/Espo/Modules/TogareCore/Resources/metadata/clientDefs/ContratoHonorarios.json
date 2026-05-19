@@ -1,0 +1,74 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "list": "togare-core:views/contrato-honorarios/record/list",
+        "modal": "togare-core:views/contrato-honorarios/upload-modal"
+    },
+    "recordViews": {
+        "list": "togare-core:views/contrato-honorarios/record/list",
+        "detail": "togare-core:views/contrato-honorarios/record/detail"
+    },
+    "boolFilterList": [],
+    "iconClass": "fas fa-file-signature",
+    "relationshipPanels": {
+        "faturas": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "unlinkDisabled": true,
+            "rowActionsView": "togare-core:views/fatura/record/row-actions/relationship-with-pagamento",
+            "buttonList": [
+                {
+                    "action": "emitirFatura",
+                    "label": "Emitir fatura",
+                    "acl": "create",
+                    "aclScope": "Fatura",
+                    "handler": "togare-core:handlers/fatura/panel-action-handler"
+                }
+            ]
+        }
+    },
+    "dynamicLogic": {
+        "fields": {
+            "valor": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "modalidade",
+                            "value": ["fixo", "mensal", "hora_trabalhada", "misto"]
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "modalidade",
+                            "value": ["fixo", "mensal", "hora_trabalhada", "misto"]
+                        }
+                    ]
+                }
+            },
+            "percentual": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "modalidade",
+                            "value": ["exito", "sucumbencia", "misto"]
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "modalidade",
+                            "value": ["exito", "sucumbencia", "misto"]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

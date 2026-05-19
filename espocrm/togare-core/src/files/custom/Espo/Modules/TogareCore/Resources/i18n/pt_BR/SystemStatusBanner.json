@@ -1,0 +1,5 @@
+{
+    "messages": {
+        "djenUnavailable": "Sync DJEN pausada há {N}min. Próxima tentativa às {HH:MM}."
+    }
+}

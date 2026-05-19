@@ -1,0 +1,11 @@
+{
+  "togareNextcloudClient": {
+    "className": "Espo\\Modules\\TogareNextcloudBridge\\Services\\OcsApiClient"
+  },
+  "togareNextcloudFileStorage": {
+    "className": "Espo\\Modules\\TogareNextcloudBridge\\Services\\NextcloudFileStorage"
+  },
+  "togareNextcloudPurgeableStorage": {
+    "className": "Espo\\Modules\\TogareNextcloudBridge\\Services\\NextcloudPurgeableStorage"
+  }
+}

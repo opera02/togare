@@ -1,0 +1,8 @@
+{
+  "TogareBridgeHardDelete": {
+    "jobClassName": "Espo\\Modules\\TogareNextcloudBridge\\Jobs\\TogareBridgeHardDeleteJob",
+    "name": "Togare — Hard-delete de tombstones Nextcloud (30d)",
+    "description": "Varre togare_documento_log WHERE event='documento.soft_purged' AND payload.hardDeleteAt <= NOW E sem irmã 'documento.hard_deleted' para o mesmo tombstoneId; deleta path '.purged/<tid>/<logicalPath>' via OcsApiClient.deleteWebDav (idempotente em 404); grava row irmã 'documento.hard_deleted' em togare_documento_log + entry em togare_audit_log. Batch FIFO LIMIT 100. Story 5.5 — preparação Epic 8 LGPD.",
+    "scheduling": "0 3 * * *"
+  }
+}

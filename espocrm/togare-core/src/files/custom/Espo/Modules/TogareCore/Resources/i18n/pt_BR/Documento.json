@@ -1,0 +1,59 @@
+{
+    "labels": {
+        "Documento": "Documento",
+        "Documentos": "Documentos",
+        "Anexar documento": "Anexar documento",
+        "Baixar": "Baixar",
+        "Remover": "Remover",
+        "Tamanho": "Tamanho",
+        "Create Documento": "Anexar documento",
+        "contextLabel": "Vinculado a",
+        "chooseFile": "Escolha um arquivo"
+    },
+    "fields": {
+        "filename": "Arquivo",
+        "mimeType": "Tipo",
+        "sizeBytes": "Tamanho",
+        "processo": "Processo",
+        "cliente": "Cliente",
+        "prazo": "Prazo",
+        "uploadedBy": "Enviado por",
+        "uploadedAttachment": "Anexo",
+        "createdAt": "Enviado em",
+        "createdBy": "Criado por",
+        "modifiedAt": "Modificado em",
+        "modifiedBy": "Modificado por",
+        "assignedUser": "Responsável",
+        "nextcloudUri": "URI Nextcloud (interno)"
+    },
+    "links": {
+        "processo": "Processo",
+        "cliente": "Cliente",
+        "prazo": "Prazo",
+        "uploadedBy": "Enviado por",
+        "documentos": "Documentos",
+        "documentosCarregados": "Documentos enviados"
+    },
+    "tooltips": {
+        "filename": "Nome do arquivo após sanitização (preservada extensão original).",
+        "mimeType": "Tipo MIME validado pelo servidor.",
+        "sizeBytes": "Tamanho em bytes.",
+        "nextcloudUri": "URI lógica do binário no Nextcloud — não exibida ao usuário final."
+    },
+    "messages": {
+        "xorAllNull": "Documento deve estar vinculado a um Processo, Cliente OU Prazo.",
+        "xorMultipleSet": "Documento não pode estar vinculado a mais de um registro ao mesmo tempo. Escolha apenas um (Processo, Cliente ou Prazo).",
+        "xorBothNull": "Documento deve estar vinculado a um Processo OU a um Cliente.",
+        "xorBothSet": "Documento não pode estar vinculado a um Processo E a um Cliente ao mesmo tempo. Escolha apenas um.",
+        "mimeRejected": "Tipo de arquivo não permitido: {mimeType}. Aceitos: PDF, DOCX, XLSX, PNG, JPG, TIFF, TXT.",
+        "sizeExceeded": "Arquivo muito grande: {sizeMb}MB. Limite: {limitMb}MB.",
+        "uploadFailed": "Não foi possível enviar o arquivo para o Nextcloud agora. Tente novamente em alguns minutos.",
+        "downloadPending": "Download disponível em breve. Estamos finalizando.",
+        "purgeFailed": "Não foi possível mover o arquivo para a lixeira do Nextcloud agora. Tente novamente em alguns minutos.",
+        "attachmentNotFound": "Anexo temporário não encontrado. Faça o upload novamente.",
+        "uploadSuccess": "Documento anexado com sucesso.",
+        "removeConfirm": "Remover este documento? Ele será movido para a lixeira do Nextcloud por 30 dias.",
+        "removeSuccess": "Documento removido.",
+        "uploadHint": "Formatos aceitos: PDF, DOCX, XLSX, PNG, JPG, TIFF, TXT. Tamanho máximo: 200 MB."
+    }
+}

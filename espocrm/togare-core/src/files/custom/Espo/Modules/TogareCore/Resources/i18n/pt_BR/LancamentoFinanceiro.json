@@ -1,0 +1,82 @@
+{
+    "labels": {
+        "LancamentoFinanceiro": "Lançamento financeiro",
+        "LancamentosFinanceiros": "Lançamentos financeiros",
+        "Create LancamentoFinanceiro": "Novo lançamento",
+        "Edit LancamentoFinanceiro": "Editar lançamento",
+        "Registrar pagamento": "Registrar pagamento",
+        "Novo lançamento financeiro": "Novo lançamento financeiro"
+    },
+    "fields": {
+        "descricao": "Descrição",
+        "tipo": "Tipo",
+        "valor": "Valor",
+        "dataMovimento": "Data do movimento",
+        "formaPagamento": "Forma de pagamento",
+        "categoria": "Categoria",
+        "observacoes": "Observações",
+        "fatura": "Fatura",
+        "cliente": "Cliente",
+        "processo": "Processo",
+        "assignedUser": "Atribuído a",
+        "createdAt": "Criado em",
+        "modifiedAt": "Modificado em",
+        "createdBy": "Criado por",
+        "modifiedBy": "Modificado por"
+    },
+    "links": {
+        "fatura": "Fatura",
+        "cliente": "Cliente",
+        "processo": "Processo"
+    },
+    "options": {
+        "tipo": {
+            "pagamento_total": "Pagamento total",
+            "pagamento_parcial": "Pagamento parcial",
+            "despesa_interna": "Despesa interna",
+            "receita_avulsa": "Receita avulsa",
+            "acerto": "Acerto",
+            "estorno": "Estorno"
+        },
+        "formaPagamento": {
+            "": "(nenhuma)",
+            "dinheiro": "Dinheiro",
+            "pix": "PIX",
+            "boleto": "Boleto",
+            "transferencia_bancaria": "Transferência bancária",
+            "cartao_credito": "Cartão de crédito",
+            "cartao_debito": "Cartão de débito",
+            "cheque": "Cheque",
+            "outro": "Outro"
+        }
+    },
+    "presetFilters": {},
+    "boolFilters": {
+        "pagamentos": "Pagamentos",
+        "despesas": "Despesas",
+        "receitas": "Receitas"
+    },
+    "tooltips": {
+        "tipo": "Pagamento total/parcial e estorno exigem fatura; despesa, receita avulsa e acerto são lançamentos avulsos sem fatura.",
+        "valor": "Valor absoluto positivo em BRL. O tipo determina o sentido contábil.",
+        "fatura": "Obrigatória para pagamento_total, pagamento_parcial e estorno. Proibida para despesa_interna, receita_avulsa e acerto.",
+        "formaPagamento": "Obrigatória para pagamento_* e estorno. Para 'outro', detalhe nas observações.",
+        "categoria": "Texto livre. Útil para agrupar lançamentos em relatórios (ex.: combustível, custas, juros recebidos)."
+    },
+    "messages": {
+        "tipoSemFatura": "Este tipo de lançamento não admite fatura vinculada — desvincule a fatura ou troque o tipo.",
+        "tipoExigeFatura": "Pagamentos e estornos exigem fatura vinculada.",
+        "valorMaiorQueSaldo": "O valor do pagamento ({valor}) excede o saldo atual da fatura ({saldo}).",
+        "valorEstornoMaiorQueValorPago": "Não é possível estornar mais do que já foi pago nesta fatura ({valorPago}).",
+        "faturaCancelada": "Não é possível registrar lançamento em fatura cancelada.",
+        "formaPagamentoExigida": "Forma de pagamento é obrigatória para pagamentos e estornos.",
+        "formaPagamentoProibida": "Forma de pagamento não se aplica a lançamentos avulsos (despesa, receita ou acerto).",
+        "valorInvalido": "Valor deve ser maior que zero.",
+        "pagamentoTotalValorDiferenteSaldo": "Pagamento total exige valor exatamente igual ao saldo da fatura ({saldo}). Use pagamento parcial se quiser pagar valor diferente.",
+        "processoCrossCliente": "O processo informado pertence a outro cliente.",
+        "registrarSucesso": "Lançamento registrado.",
+        "pagamentoSucesso": "Pagamento de {valor} registrado.",
+        "faturaPagaSucesso": "Fatura paga!",
+        "ajusteSemFatura": "Lançamentos de acerto não admitem fatura vinculada."
+    }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "togare/monorepo",
+  "description": "Monorepo do Togare — solução self-hosted para escritório de advocacia. Stack EspoCRM + Nextcloud + integrações.",
+  "type": "project",
+  "license": "AGPL-3.0-only",
+  "require": {
+    "php": ">=8.2"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.75"
+  },
+  "scripts": {
+    "php-cs-fixer": "php-cs-fixer fix",
+    "php-cs-fixer-check": "php-cs-fixer fix --dry-run --diff",
+    "validate": "php tools/validate-togare-naming.php",
+    "fix": [
+      "@php-cs-fixer",
+      "@validate"
+    ],
+    "lint": [
+      "@php-cs-fixer-check",
+      "@validate"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -1,0 +1,1 @@
+{"erro": "schema mudou", "explicacao": "Esta resposta NÃO é uma lista de rows — é um objeto. PdpjAdapter deve detectar e lançar TpuAdapterUnavailableException."}

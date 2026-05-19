@@ -1,0 +1,73 @@
+{
+    "controller": "controllers/record",
+    "iconClass": "fas fa-money-bill-wave",
+    "color": "#2e7d32",
+    "recordViews": {
+        "list": "togare-core:views/lancamento-financeiro/record/list",
+        "detail": "togare-core:views/lancamento-financeiro/record/detail"
+    },
+    "modalViews": {
+        "edit": "togare-core:views/lancamento-financeiro/modals/registrar-pagamento"
+    },
+    "boolFilterList": ["pagamentos", "despesas", "receitas"],
+    "dynamicLogic": {
+        "fields": {
+            "fatura": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "tipo",
+                            "value": [
+                                "pagamento_total",
+                                "pagamento_parcial",
+                                "estorno"
+                            ]
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "tipo",
+                            "value": [
+                                "pagamento_total",
+                                "pagamento_parcial",
+                                "estorno"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "formaPagamento": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "tipo",
+                            "value": [
+                                "pagamento_total",
+                                "pagamento_parcial",
+                                "estorno"
+                            ]
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "tipo",
+                            "value": [
+                                "pagamento_total",
+                                "pagamento_parcial",
+                                "estorno"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

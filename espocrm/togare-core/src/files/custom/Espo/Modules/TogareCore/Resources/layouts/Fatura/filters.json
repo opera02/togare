@@ -1,0 +1,9 @@
+[
+    {"name": "status"},
+    {"name": "cliente"},
+    {"name": "contratoHonorarios"},
+    {"name": "processo"},
+    {"name": "dataEmissao"},
+    {"name": "dataVencimento"},
+    {"name": "createdAt"}
+]

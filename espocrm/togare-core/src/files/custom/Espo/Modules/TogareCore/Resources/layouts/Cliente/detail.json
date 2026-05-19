@@ -1,0 +1,73 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "tipoPessoa"}
+            ],
+            [
+                {"name": "cpf"},
+                {"name": "cnpj"}
+            ],
+            [
+                {"name": "razaoSocial"},
+                {"name": "nomeFantasia"}
+            ],
+            [
+                {"name": "rg"},
+                {"name": "inscricaoEstadual"}
+            ],
+            [
+                {"name": "dataNascimento"},
+                {"name": "estadoCivil"}
+            ],
+            [
+                {"name": "nacionalidade"},
+                {"name": "profissao"}
+            ]
+        ]
+    },
+    {
+        "label": "Contato",
+        "rows": [
+            [
+                {"name": "email"},
+                {"name": "telefone"}
+            ],
+            [
+                {"name": "telefone2"},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Endereço",
+        "rows": [
+            [
+                {"name": "cep"},
+                {"name": "uf"}
+            ],
+            [
+                {"name": "logradouro"},
+                {"name": "numeroEndereco"}
+            ],
+            [
+                {"name": "complemento"},
+                {"name": "bairro"}
+            ],
+            [
+                {"name": "cidade"},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Anotações",
+        "rows": [
+            [
+                {"name": "observacoes", "fullWidth": true}
+            ]
+        ]
+    }
+]

@@ -1,0 +1,3 @@
+{
+  "portalOwnershipCheckerClassName": "Espo\\Modules\\TogarePortalUi\\Classes\\AclPortal\\Processo\\OwnershipChecker"
+}

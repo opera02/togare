@@ -1,0 +1,14 @@
+{
+  "portal": {
+    "itemList": [
+      "__APPEND__",
+      {
+        "url": "#Admin/portalAppearance",
+        "label": "Portal Appearance",
+        "iconClass": "fas fa-palette",
+        "description": "portalAppearance",
+        "recordView": "togare-portal-ui:views/admin/portal-appearance"
+      }
+    ]
+  }
+}

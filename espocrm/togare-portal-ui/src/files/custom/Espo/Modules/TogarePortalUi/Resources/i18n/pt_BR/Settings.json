@@ -1,0 +1,16 @@
+{
+  "fields": {
+    "togarePortalSplashLogo": "Logo do escritório (Portal)",
+    "togarePortalSplashPrimaryColor": "Cor primária do Portal",
+    "togarePortalSplashWelcome": "Frase de boas-vindas do Portal",
+    "togarePortalSplashPhone": "Telefone de contato do escritório"
+  },
+  "tooltips": {
+    "togarePortalSplashPrimaryColor": "Cor de fundo da tela de login do Portal, em formato hexadecimal (ex.: #1c5fbf). Para o cliente idoso enxergar bem, prefira cores escuras o suficiente para contrastar com o texto branco.",
+    "togarePortalSplashWelcome": "Frase exibida ao cliente na tela de login do Portal. Deixe em branco para usar o texto padrão do Togare.",
+    "togarePortalSplashPhone": "Telefone exibido na tela de login para o cliente que esqueceu a senha. Deixe em branco para exibir uma orientação genérica."
+  },
+  "messages": {
+    "portalSplashContrastWarning": "A cor escolhida pode dificultar a leitura do cliente idoso na tela de login (contraste abaixo do recomendado). A configuração foi salva, mas considere uma cor mais escura para melhor acessibilidade."
+  }
+}

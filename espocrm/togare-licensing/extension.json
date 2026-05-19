@@ -1,0 +1,13 @@
+{
+  "module": "TogareLicensing",
+  "name": "TogareLicensing",
+  "description": "Togare Licensing — JWT offline + ReadOnlyGate (FR36, NFR12, NFR20). Pré-requisito de todos os módulos premium.",
+  "author": "Togare",
+  "bundled": true,
+  "acceptableVersions": [">=9.3.0"],
+  "php": [">=8.3"],
+  "scripts": [],
+  "dependencies": {
+    "togare-core": ">=0.4.0"
+  }
+}

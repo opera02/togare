@@ -1,0 +1,7 @@
+[
+    {"name": "name", "link": true, "width": 30},
+    {"name": "ambiguityReason", "width": 18},
+    {"name": "status", "width": 14},
+    {"name": "dataFatal", "width": 14},
+    {"name": "assignedUser", "width": 14}
+]

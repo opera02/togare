@@ -1,0 +1,20 @@
+{
+    "togareLicensing": {
+        "label": "Togare",
+        "itemList": [
+            {
+                "url": "#Admin/togareLicensingActivate",
+                "label": "Ativar Licença",
+                "iconClass": "fas fa-key",
+                "description": "togareLicensingActivate",
+                "recordView": "togare-licensing:views/admin/activate-license"
+            },
+            {
+                "url": "#ModuleStatus",
+                "label": "Status dos Módulos",
+                "iconClass": "fas fa-list",
+                "description": "moduleStatusList"
+            }
+        ]
+    }
+}

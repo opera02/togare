@@ -1,0 +1,103 @@
+{
+    "labels": {
+        "Cliente": "Cliente",
+        "Clientes": "Clientes",
+        "Create Cliente": "Novo Cliente",
+        "Edit Cliente": "Editar Cliente"
+    },
+    "fields": {
+        "name": "Nome",
+        "tipoPessoa": "Tipo",
+        "cpf": "CPF",
+        "rg": "RG",
+        "dataNascimento": "Data de nascimento",
+        "estadoCivil": "Estado civil",
+        "nacionalidade": "Nacionalidade",
+        "profissao": "Profissão",
+        "cnpj": "CNPJ",
+        "razaoSocial": "Razão Social",
+        "nomeFantasia": "Nome Fantasia",
+        "inscricaoEstadual": "Inscrição Estadual",
+        "email": "E-mail",
+        "telefone": "Telefone",
+        "telefone2": "Telefone 2",
+        "cep": "CEP",
+        "logradouro": "Logradouro",
+        "numeroEndereco": "Número",
+        "complemento": "Complemento",
+        "bairro": "Bairro",
+        "cidade": "Cidade",
+        "uf": "UF",
+        "observacoes": "Observações",
+        "tenantId": "Tenant",
+        "assignedUser": "Responsável",
+        "createdAt": "Criado em",
+        "modifiedAt": "Modificado em",
+        "createdBy": "Criado por",
+        "modifiedBy": "Modificado por"
+    },
+    "options": {
+        "tipoPessoa": {
+            "pf": "Pessoa Física",
+            "pj": "Pessoa Jurídica"
+        },
+        "estadoCivil": {
+            "": "—",
+            "solteiro": "Solteiro(a)",
+            "casado": "Casado(a)",
+            "divorciado": "Divorciado(a)",
+            "viuvo": "Viúvo(a)",
+            "uniao_estavel": "União estável",
+            "separado_judicialmente": "Separado(a) judicialmente"
+        },
+        "uf": {
+            "": "—",
+            "AC": "Acre",
+            "AL": "Alagoas",
+            "AM": "Amazonas",
+            "AP": "Amapá",
+            "BA": "Bahia",
+            "CE": "Ceará",
+            "DF": "Distrito Federal",
+            "ES": "Espírito Santo",
+            "GO": "Goiás",
+            "MA": "Maranhão",
+            "MG": "Minas Gerais",
+            "MS": "Mato Grosso do Sul",
+            "MT": "Mato Grosso",
+            "PA": "Pará",
+            "PB": "Paraíba",
+            "PE": "Pernambuco",
+            "PI": "Piauí",
+            "PR": "Paraná",
+            "RJ": "Rio de Janeiro",
+            "RN": "Rio Grande do Norte",
+            "RO": "Rondônia",
+            "RR": "Roraima",
+            "RS": "Rio Grande do Sul",
+            "SC": "Santa Catarina",
+            "SE": "Sergipe",
+            "SP": "São Paulo",
+            "TO": "Tocantins"
+        }
+    },
+    "tooltips": {
+        "tipoPessoa": "Define se o cliente é Pessoa Física (CPF) ou Pessoa Jurídica (CNPJ).",
+        "telefone": "Apenas dígitos. Aceita máscara — o sistema remove automaticamente.",
+        "cpf": "11 dígitos com dígito verificador. Aceita máscara — o sistema remove automaticamente.",
+        "cnpj": "14 dígitos com dígito verificador. Aceita máscara — o sistema remove automaticamente.",
+        "cep": "8 dígitos. Aceita máscara — o sistema remove automaticamente."
+    },
+    "presetFilters": {
+        "pf": "Pessoa Física",
+        "pj": "Pessoa Jurídica"
+    },
+    "links": {
+        "processos": "Processos",
+        "prazos": "Prazos",
+        "documentos": "Documentos",
+        "contratosHonorarios": "Contratos de honorários",
+        "faturas": "Faturas",
+        "lancamentosFinanceiros": "Lançamentos financeiros"
+    }
+}

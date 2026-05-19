@@ -1,0 +1,8 @@
+[
+    {"name": "modalidade"},
+    {"name": "cliente"},
+    {"name": "vigenciaInicio"},
+    {"name": "vigenciaFim"},
+    {"name": "createdAt"},
+    {"name": "uploadedBy"}
+]

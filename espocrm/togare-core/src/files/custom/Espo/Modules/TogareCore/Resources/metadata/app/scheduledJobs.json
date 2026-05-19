@@ -1,0 +1,20 @@
+{
+  "TogareQueueCleanup": {
+    "jobClassName": "Espo\\Modules\\TogareCore\\Jobs\\TogareQueueCleanupJob",
+    "name": "Togare — Limpeza mensal da fila",
+    "description": "Remove items concluídos (status=done) de togare_queue_items com mais de 90 dias. Dead letter permanece para auditoria.",
+    "scheduling": "0 3 1 * *"
+  },
+  "TogareAuditLogArchiver": {
+    "jobClassName": "Espo\\Modules\\TogareCore\\Jobs\\AuditLogArchiverJob",
+    "name": "Togare — Audit log alerta retenção 24m",
+    "description": "Conta rows em togare_audit_log com occurred_at >24m e emite log audit.archive.pending. NÃO deleta (NFR10 — admin arquiva manualmente). Story 2.4.",
+    "scheduling": "0 4 * * 0"
+  },
+  "TogarePrazoReminder": {
+    "jobClassName": "Espo\\Modules\\TogareCore\\Jobs\\PrazoReminderJob",
+    "name": "Togare — Lembretes de prazo (D-7/D-3/D-1 + status dirigidos)",
+    "description": "Varre togare_prazo_lembrete WHERE status='pending' AND scheduled_for <= NOW() e despacha pop-up + email com retry SMTP exponencial. SLA NFR37 ≤10min p95. Story 4b.2 + ADR-04.",
+    "scheduling": "*/5 * * * *"
+  }
+}

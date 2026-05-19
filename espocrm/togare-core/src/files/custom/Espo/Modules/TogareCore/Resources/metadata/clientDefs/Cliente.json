@@ -1,0 +1,200 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "edit": "togare-core:views/cliente/record/edit",
+        "detail": "togare-core:views/cliente/record/detail"
+    },
+    "boolFilterList": [],
+    "relationshipPanels": {
+        "documentos": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "rowActionsView": "togare-core:views/document/record/row-actions/relationship-with-download",
+            "buttonList": [
+                {
+                    "action": "anexarDocumento",
+                    "label": "Anexar documento",
+                    "acl": "create",
+                    "aclScope": "Documento",
+                    "handler": "togare-core:handlers/documento/panel-action-handler"
+                }
+            ]
+        },
+        "contratosHonorarios": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "unlinkDisabled": true,
+            "rowActionsView": "togare-core:views/contrato-honorarios/record/row-actions/relationship-with-download",
+            "buttonList": [
+                {
+                    "action": "anexarContrato",
+                    "label": "Anexar contrato",
+                    "acl": "create",
+                    "aclScope": "ContratoHonorarios",
+                    "handler": "togare-core:handlers/contrato-honorarios/panel-action-handler"
+                }
+            ]
+        },
+        "faturas": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "unlinkDisabled": true,
+            "rowActionsView": "togare-core:views/fatura/record/row-actions/relationship-with-pagamento",
+            "buttonList": [
+                {
+                    "action": "emitirFatura",
+                    "label": "Emitir fatura",
+                    "acl": "create",
+                    "aclScope": "Fatura",
+                    "handler": "togare-core:handlers/fatura/panel-action-handler"
+                }
+            ]
+        },
+        "lancamentosFinanceiros": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "unlinkDisabled": true
+        }
+    },
+    "dynamicLogic": {
+        "fields": {
+            "cpf": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pf"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pf"
+                        }
+                    ]
+                }
+            },
+            "rg": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pf"
+                        }
+                    ]
+                }
+            },
+            "dataNascimento": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pf"
+                        }
+                    ]
+                }
+            },
+            "estadoCivil": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pf"
+                        }
+                    ]
+                }
+            },
+            "nacionalidade": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pf"
+                        }
+                    ]
+                }
+            },
+            "profissao": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pf"
+                        }
+                    ]
+                }
+            },
+            "cnpj": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pj"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pj"
+                        }
+                    ]
+                }
+            },
+            "razaoSocial": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pj"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pj"
+                        }
+                    ]
+                }
+            },
+            "nomeFantasia": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pj"
+                        }
+                    ]
+                }
+            },
+            "inscricaoEstadual": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pj"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

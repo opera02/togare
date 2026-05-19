@@ -1,0 +1,15 @@
+{
+    "links": {
+        "processosColaborando": {
+            "type": "hasMany",
+            "entity": "Processo",
+            "foreign": "collaborators",
+            "relationshipName": "ProcessoCollaborator"
+        },
+        "documentosCarregados": {
+            "type": "hasMany",
+            "entity": "Documento",
+            "foreign": "uploadedBy"
+        }
+    }
+}

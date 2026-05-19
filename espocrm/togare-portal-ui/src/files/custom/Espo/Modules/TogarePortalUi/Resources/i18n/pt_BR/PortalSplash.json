@@ -1,0 +1,10 @@
+{
+  "messages": {
+    "splashDefault": "Olá. Aqui você acompanha o andamento do seu processo.",
+    "phoneFallback": "Esqueceu sua senha? Ligue para o escritório: {telefone}",
+    "phonePlaceholder": "(consulte o escritório)",
+    "senhaErrada": "Não conseguimos entrar com esses dados. Verifique a senha que você criou. Se esqueceu, ligue para o escritório.",
+    "lockout": "Por segurança, o acesso foi pausado por 15 minutos. Se precisar entrar agora, ligue para o escritório: {telefone}.",
+    "semProcessoLiberado": "Seu advogado ainda não habilitou o acompanhamento online. Entre em contato com o escritório."
+  }
+}

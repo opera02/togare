@@ -1,0 +1,14 @@
+{
+  "togareTpuRedisConnection": {
+    "className": "Espo\\Modules\\TogareTpu\\Services\\RedisConnection"
+  },
+  "togareTpuCache": {
+    "className": "Espo\\Modules\\TogareTpu\\Services\\TpuCacheService"
+  },
+  "togareTpuSync": {
+    "className": "Espo\\Modules\\TogareTpu\\Services\\TpuSyncService"
+  },
+  "togareTpuPdpjAdapter": {
+    "className": "Espo\\Modules\\TogareTpu\\Services\\PdpjAdapter"
+  }
+}

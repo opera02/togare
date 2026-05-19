@@ -1,0 +1,9 @@
+{
+  "links": {
+    "portalUsers": {
+      "type": "hasMany",
+      "entity": "User",
+      "foreign": "togareCliente"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "fields": {
+    "oabNumber": "OAB",
+    "oabUf": "UF da OAB"
+  },
+  "tooltips": {
+    "oabNumber": "Apenas dígitos (sem máscara, sem barra). Ex.: 462034.",
+    "oabUf": "UF de inscrição na OAB. Sem OAB cadastrada, o usuário não recebe publicações DJEN."
+  },
+  "options": {
+    "oabUf": {
+      "": "—",
+      "AC": "AC", "AL": "AL", "AM": "AM", "AP": "AP", "BA": "BA",
+      "CE": "CE", "DF": "DF", "ES": "ES", "GO": "GO", "MA": "MA",
+      "MG": "MG", "MS": "MS", "MT": "MT", "PA": "PA", "PB": "PB",
+      "PE": "PE", "PI": "PI", "PR": "PR", "RJ": "RJ", "RN": "RN",
+      "RO": "RO", "RR": "RR", "RS": "RS", "SC": "SC", "SE": "SE",
+      "SP": "SP", "TO": "TO"
+    }
+  }
+}

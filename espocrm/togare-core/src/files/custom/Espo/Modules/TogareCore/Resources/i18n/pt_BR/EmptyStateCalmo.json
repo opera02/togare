@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "zero-calmo": {
+      "prazos-hoje": "Nenhum prazo hoje. Aproveita o café. ☕",
+      "sem-publicacoes": "Sem novas publicações no momento.",
+      "sem-audiencias": "Nenhuma audiência agendada. Respira.",
+      "default": "Nada por aqui agora."
+    },
+    "zero-educativo": {
+      "sem-prazos": "Você ainda não tem prazos cadastrados. Quando o DJEN sincronizar, eles aparecem aqui.",
+      "sem-processos": "Você ainda não cadastrou processos. Clique em \"Novo processo\" para começar.",
+      "sem-clientes": "Você ainda não cadastrou clientes. Comece em \"Novo cliente\".",
+      "portal-sem-processos-liberados": "Seu advogado ainda não habilitou o acompanhamento online. Entre em contato com o escritório.",
+      "default": "Nada aqui ainda — mas vai aparecer. Veja \"Como funciona\"."
+    },
+    "zero-filtrado": {
+      "generico": "Nenhum resultado com esses filtros.",
+      "default": "Nenhum resultado com esses filtros."
+    }
+  },
+  "ctas": {
+    "comoFunciona": "Como funciona",
+    "limparFiltros": "Limpar filtros",
+    "novoCliente": "Novo cliente",
+    "novoProcesso": "Novo processo"
+  }
+}

@@ -1,0 +1,62 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "edit": "togare-core:views/prazo/record/edit",
+        "detail": "togare-core:views/prazo/record/detail"
+    },
+    "boolFilterList": [
+        "onlyMy",
+        "naoVinculadas",
+        "meusPendentes",
+        "pendentesParaHoje",
+        "meusRascunhos",
+        "aguardandoCliente",
+        "protocoladosUltimos30d",
+        "acompanhamento"
+    ],
+    "kanbanViewMode": false,
+    "calendar": {
+        "dateField": "dataFatal",
+        "nameField": "atoCodigo"
+    },
+    "relationshipPanels": {
+        "documentos": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "rowActionsView": "togare-core:views/document/record/row-actions/relationship-with-download",
+            "buttonList": [
+                {
+                    "action": "anexarDocumento",
+                    "label": "Anexar documento",
+                    "acl": "create",
+                    "aclScope": "Documento",
+                    "handler": "togare-core:handlers/documento/panel-action-handler"
+                }
+            ]
+        }
+    },
+    "dynamicLogic": {
+        "fields": {
+            "motivoReagendamento": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "status",
+                            "value": "atrasado_reagendado"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "status",
+                            "value": "atrasado_reagendado"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

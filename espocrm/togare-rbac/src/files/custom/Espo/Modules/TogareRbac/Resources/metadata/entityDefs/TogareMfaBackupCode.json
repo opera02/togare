@@ -1,0 +1,33 @@
+{
+  "fields": {
+    "userId": {
+      "type": "varchar",
+      "maxLength": 17,
+      "required": true
+    },
+    "codeHash": {
+      "type": "varchar",
+      "maxLength": 255,
+      "required": true
+    },
+    "used": {
+      "type": "bool",
+      "default": false
+    },
+    "usedAt": {
+      "type": "datetime"
+    },
+    "createdAt": {
+      "type": "datetime",
+      "readOnly": true
+    }
+  },
+  "indexes": {
+    "user": {
+      "columns": ["userId", "deleted", "used"]
+    }
+  },
+  "additionalParams": {
+    "tableName": "togare_mfa_backup_code"
+  }
+}

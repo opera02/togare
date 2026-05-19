@@ -1,0 +1,8 @@
+{
+    "passwordHash": {
+        "className": "Espo\\Modules\\TogareRbac\\Service\\Password\\TogarePasswordHash"
+    },
+    "togareRbacBackupCodeService": {
+        "className": "Espo\\Modules\\TogareRbac\\Service\\Mfa\\BackupCodeService"
+    }
+}

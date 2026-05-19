@@ -1,0 +1,8 @@
+[
+    {"name": "numeroCnj", "link": true, "width": 22},
+    {"name": "classeNome", "width": 18},
+    {"name": "area", "width": 10},
+    {"name": "status", "width": 10},
+    {"name": "assignedUser", "width": 15},
+    {"name": "createdAt", "width": 13}
+]

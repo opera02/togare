@@ -1,0 +1,71 @@
+{
+    "name": "Sócio/Admin",
+    "assignmentPermission": "all",
+    "userPermission": "all",
+    "messagePermission": "all",
+    "portalPermission": "no",
+    "exportPermission": "all",
+    "massUpdatePermission": "all",
+    "auditPermission": "all",
+    "data": {
+        "scopeList": [
+            "User", "Role", "ModuleStatus",
+            "Account", "Contact", "Lead", "Opportunity",
+            "Document", "Note", "Email", "EmailTemplate",
+            "Calendar", "Meeting", "Call", "Task",
+            "Campaign", "Case", "KnowledgeBaseArticle",
+            "Cliente", "ParteContraria", "Processo", "Audiencia", "Prazo", "PublicacaoAmbigua",
+            "Documento",
+            "Deadline", "Hearing", "Invoice", "Fatura", "LancamentoFinanceiro",
+            "ContratoHonorarios", "Funcionario",
+            "PortalProcess", "PortalMessage"
+        ],
+        "scopeLevel": {
+            "User": "all",
+            "Role": "all",
+            "ModuleStatus": "all",
+            "Account": "all",
+            "Contact": "all",
+            "Lead": "all",
+            "Opportunity": "all",
+            "Document": "all",
+            "Note": "all",
+            "Email": "all",
+            "EmailTemplate": "all",
+            "Calendar": "all",
+            "Meeting": "all",
+            "Call": "all",
+            "Task": "all",
+            "Campaign": "all",
+            "Case": "all",
+            "KnowledgeBaseArticle": "all",
+            "Cliente": "all",
+            "ParteContraria": "all",
+            "Processo": "all",
+            "Audiencia": "all",
+            "Prazo": "all",
+            "PublicacaoAmbigua": "all",
+            "Documento": "all",
+            "Deadline": "all",
+            "Hearing": "all",
+            "Invoice": "all",
+            "Fatura": "all",
+            "LancamentoFinanceiro": "all",
+            "ContratoHonorarios": "all",
+            "Funcionario": "all",
+            "PortalProcess": "all",
+            "PortalMessage": "all"
+        },
+        "fieldLevel": {
+            "Prazo": {
+                "descricao": "yes",
+                "prioridade": "yes",
+                "tipoPrazo": "yes",
+                "motivoReagendamento": "yes",
+                "cliente": "yes",
+                "parteContraria": "yes"
+            }
+        }
+    },
+    "fieldData": {}
+}

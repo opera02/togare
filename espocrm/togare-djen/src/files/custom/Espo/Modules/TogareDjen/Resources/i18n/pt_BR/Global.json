@@ -1,0 +1,16 @@
+{
+  "scopeNames": {
+    "TogareDjen": "Togare — DJEN (Diário de Justiça Eletrônico Nacional)"
+  },
+  "labels": {
+    "TogareDjen": {
+      "syncCompleted": "Sync DJEN concluído",
+      "syncFailed": "Sync DJEN falhou",
+      "syncInProgress": "Sync DJEN em andamento",
+      "syncSkippedLicenseExpired": "Sync DJEN pausado — licença em modo somente leitura",
+      "adapterUnavailable": "Comunica API indisponível — publicações pendentes ficam em fila para retry automático",
+      "circuitBreakerOpen": "Comunica API com falhas consecutivas — pausando chamadas por 10 minutos",
+      "userMissingOab": "Usuário não monitorado pelo DJEN — preencha OAB e UF para receber publicações"
+    }
+  }
+}

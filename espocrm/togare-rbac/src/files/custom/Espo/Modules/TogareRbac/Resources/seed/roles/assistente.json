@@ -1,0 +1,71 @@
+{
+    "name": "Assistente/Estagiário",
+    "assignmentPermission": "team",
+    "userPermission": "own",
+    "messagePermission": "team",
+    "portalPermission": "no",
+    "exportPermission": "no",
+    "massUpdatePermission": "no",
+    "auditPermission": "no",
+    "data": {
+        "scopeList": [
+            "User", "Role", "ModuleStatus",
+            "Account", "Contact", "Lead", "Opportunity",
+            "Document", "Note", "Email", "EmailTemplate",
+            "Calendar", "Meeting", "Call", "Task",
+            "Campaign", "Case", "KnowledgeBaseArticle",
+            "Cliente", "ParteContraria", "Processo", "Audiencia", "Prazo", "PublicacaoAmbigua",
+            "Documento",
+            "Deadline", "Hearing", "Invoice", "Fatura", "LancamentoFinanceiro",
+            "ContratoHonorarios", "Funcionario",
+            "PortalProcess", "PortalMessage"
+        ],
+        "scopeLevel": {
+            "User": {"read": "team", "edit": "own", "create": "no", "delete": "no"},
+            "Role": "no",
+            "ModuleStatus": "no",
+            "Account": {"read": "team", "edit": "no", "create": "no", "delete": "no"},
+            "Contact": {"read": "team", "edit": "no", "create": "no", "delete": "no"},
+            "Lead": "no",
+            "Opportunity": {"read": "team", "edit": "no", "create": "no", "delete": "no"},
+            "Document": {"read": "team", "edit": "no", "create": "no", "delete": "no"},
+            "Note": "own",
+            "Email": "own",
+            "EmailTemplate": "own",
+            "Calendar": "team",
+            "Meeting": "team",
+            "Call": "team",
+            "Task": "team",
+            "Campaign": "no",
+            "Case": "team",
+            "KnowledgeBaseArticle": "team",
+            "Cliente": {"read": "team", "edit": "team", "create": "team", "delete": "no"},
+            "ParteContraria": {"read": "team", "edit": "team", "create": "team", "delete": "no"},
+            "Processo": {"read": "team", "edit": "team", "create": "team", "delete": "no"},
+            "Audiencia": "own",
+            "Prazo": {"read": "team", "edit": "team", "create": "team", "delete": "no"},
+            "PublicacaoAmbigua": {"read": "team", "edit": "no", "create": "no", "delete": "no"},
+            "Documento": {"read": "team", "edit": "no", "create": "no", "delete": "no"},
+            "Deadline": "own",
+            "Hearing": "own",
+            "Invoice": "no",
+            "Fatura": {"read": "own", "edit": "no", "create": "no", "delete": "no"},
+            "LancamentoFinanceiro": "no",
+            "ContratoHonorarios": {"read": "own", "edit": "no", "create": "no", "delete": "no"},
+            "Funcionario": "no",
+            "PortalProcess": "no",
+            "PortalMessage": "no"
+        },
+        "fieldLevel": {
+            "Prazo": {
+                "descricao": "yes",
+                "prioridade": "yes",
+                "tipoPrazo": "yes",
+                "motivoReagendamento": "yes",
+                "cliente": "yes",
+                "parteContraria": "yes"
+            }
+        }
+    },
+    "fieldData": {}
+}

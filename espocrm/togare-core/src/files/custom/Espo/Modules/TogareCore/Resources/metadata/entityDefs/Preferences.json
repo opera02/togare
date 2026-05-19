@@ -1,0 +1,9 @@
+{
+    "fields": {
+        "togareLembreteConfig": {
+            "type": "jsonObject",
+            "view": "togare-core:views/preferences/lembrete-config",
+            "default": null
+        }
+    }
+}

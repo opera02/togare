@@ -1,0 +1,20 @@
+🔔 TOGARE — VENCE HOJE
+=======================
+
+VENCE HOJE — {cnj}
+
+Descrição: {descricao}
+
+Data fatal (legal):       {dataFatal}
+Data planejada (interno): {dataCumprimento}
+
+Confirme ou adie este prazo hoje.
+
+Abrir prazo no Togare:
+{prazoUrl}
+
+---
+Aviso legal (FR39): {hedgeJuridico}
+
+Você está recebendo esta notificação porque é responsável pelo
+prazo ou tem perfil Sócio/Admin no escritório.

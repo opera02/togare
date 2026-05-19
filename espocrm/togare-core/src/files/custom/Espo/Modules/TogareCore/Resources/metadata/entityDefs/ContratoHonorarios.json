@@ -1,0 +1,202 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "modalidade"},
+            "order": {"order": [["createdAt", "{direction}"]]}
+        },
+        "modalidade": {
+            "type": "enum",
+            "options": [
+                "fixo",
+                "exito",
+                "sucumbencia",
+                "mensal",
+                "hora_trabalhada",
+                "misto"
+            ],
+            "required": true,
+            "audited": true
+        },
+        "valor": {
+            "type": "currency",
+            "min": 0,
+            "default": null
+        },
+        "percentual": {
+            "type": "float",
+            "min": 0,
+            "max": 100,
+            "default": null
+        },
+        "parcelamentoJson": {
+            "type": "text",
+            "trim": true,
+            "default": null,
+            "tooltip": true
+        },
+        "dataAssinatura": {
+            "type": "date",
+            "required": true,
+            "audited": true
+        },
+        "vigenciaInicio": {
+            "type": "date",
+            "required": true,
+            "audited": true
+        },
+        "vigenciaFim": {
+            "type": "date",
+            "required": false,
+            "audited": true,
+            "tooltip": true
+        },
+        "filename": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true,
+            "readOnly": true
+        },
+        "mimeType": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true,
+            "readOnly": true
+        },
+        "sizeBytes": {
+            "type": "int",
+            "min": 0,
+            "readOnly": true
+        },
+        "fileStorageUri": {
+            "type": "varchar",
+            "maxLength": 500,
+            "trim": true,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "uploadedAttachment": {
+            "type": "file",
+            "notStorable": true
+        },
+        "cliente": {
+            "type": "link",
+            "required": true,
+            "view": "togare-core:views/fields/link-autocomplete"
+        },
+        "clienteName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "cliente.name"},
+            "order": {"order": [["cliente.name", "{direction}"]]}
+        },
+        "processos": {
+            "type": "linkMultiple",
+            "view": "togare-core:views/common/fields/processos-by-cliente",
+            "required": false
+        },
+        "uploadedBy": {
+            "type": "link",
+            "required": false,
+            "readOnly": true
+        },
+        "uploadedByName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "uploadedBy.name"},
+            "order": {"order": [["uploadedBy.name", "{direction}"]]}
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "cliente": {
+            "type": "belongsTo",
+            "entity": "Cliente",
+            "foreign": "contratosHonorarios"
+        },
+        "processos": {
+            "type": "hasMany",
+            "entity": "Processo",
+            "foreign": "contratosHonorarios",
+            "relationshipName": "ContratoHonorariosProcesso"
+        },
+        "faturas": {
+            "type": "hasMany",
+            "entity": "Fatura",
+            "foreign": "contratoHonorarios"
+        },
+        "uploadedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        }
+    },
+    "indexes": {
+        "clienteId": {
+            "columns": ["clienteId"]
+        },
+        "dataAssinatura": {
+            "columns": ["dataAssinatura"]
+        },
+        "vigenciaInicio": {
+            "columns": ["vigenciaInicio"]
+        },
+        "vigenciaFim": {
+            "columns": ["vigenciaFim"]
+        },
+        "uploadedById": {
+            "columns": ["uploadedById"]
+        },
+        "tenantId": {
+            "columns": ["tenantId"]
+        },
+        "createdAt": {
+            "columns": ["createdAt"]
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc",
+        "textFilterFields": ["cliente.name", "modalidade"]
+    }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "espocrm-ext-togare-djen",
+  "version": "0.7.0",
+  "description": "Módulo DJEN do Togare — adapter Comunica API PJe + scheduled job diário + worker dedicado consumindo fila djen com retry persistente (Story 4a.1, FR12 parcial / NFR18 / NFR24 / NFR27). + DjenParserService aplicando art. 5º Res. CNJ 455/2022 (Story 4a.2, FR13). + PrazoCreatorService materializa Prazo persistido em togare-core a partir do parser output: match CNJ → Processo (status=pendente) ou rascunho (status=rascunho), idempotência via UNIQUE INDEX em sourcePubId, heurística assignedUser cascade, payload preservado em publicacaoOrigemRaw — handlePublication chama parser → creator no mesmo dispatch transacional (Story 4a.3, FR14). + Story 4a.3.1: rename STATUS_RASCUNHO_NAO_VINCULADO → STATUS_RASCUNHO em PrazoCreatorService alinhado à V009 mapping da togare-core 0.18.0; auto-vínculo cliente+parteContraria delegado ao AutoLinkClientHook em togare-core (não embutido no creator — ADR-03 v1.1 §3). Requer togare-core ≥ 0.18.0 (entity Prazo expandida). + Story 4a.6 (v0.5.0): rate-limit DJEN explícito ≤30 requests/60s contra Comunica API via RateLimiter da togare-core (Story 1a.4c) — DjenRateLimitConfig + DjenAdapter::guardRateLimit() chamado antes de cada tentativa HTTP em fetchWithRetry() com sleep adaptativo até cap 90s; throw DjenAdapterUnavailableException no cap (worker faz markFailed customDelay=1h existente); fail-open quando RateLimiter indisponível (DB down). + Story 4b.1b (v0.6.0): PublicationMatcher 2-fase CNJ exato → name-match exato (Decisão #2 mãe — fuzzy match Growth) com MAX_NAME_MATCH_CANDIDATES=5 + ordering estável por numeroCnj ASC + denormalização snapshot 8 fields cada candidato + 2 value-objects MatchResult/CreationResult (final readonly) + refactor PrazoCreatorService.create devolve CreationResult com 4 ramos (prazo_bound | prazo_rascunho | publicacao_ambigua | deduped) + idempotência cross-table sourcePubId em Prazo OR PublicacaoAmbigua (Decisão #3 mãe; B20 endereçada por design — PublicationMatcher param OBRIGATÓRIO no construtor, não nullable) + AmbiguityResolverService transacional com 3 métodos resolve/ignore/bulkIgnoreProcesso (Decisão #4 mãe — pattern oficial EspoCRM 9.x getTransactionManager()->run + Throwable rollback automático + append togare_ambiguity_log via PDO direto VARCHAR(32) bin2hex(random_bytes(16))) + 2 Exceptions tipadas AlreadyResolvedException/InvalidCandidateException convertidas para HTTP 409/400 pelo Controller TogareDjenPublicacaoAmbigua. Requer togare-core >= 0.24.0. ≥35 testes PHPUnit novos (10 PublicationMatcher + 3 PrazoCreatorService novos + 8 AmbiguityResolverService + 4 CreationResult + 4 MatchResult + ~10 Controller + 1 DjenWorkerService end-to-end ambiguidade). Backward-compat: DjenWorkerService.handlePublication descarta retorno do create — preservada Spike 1b.S3 invariante (markDone em todos os caminhos).",
+  "scripts": {
+    "sa": "vendor/bin/phpstan",
+    "unit-tests": "vendor/bin/phpunit",
+    "integration-tests": "node build --copy && node build --composer-install && cd site && php vendor/bin/phpunit tests/integration/Espo/Modules/TogareDjen",
+    "copy": "node build --copy",
+    "composer-install": "node build --composer-install",
+    "sync": "node build --copy && node build --composer-install",
+    "extension": "node build --extension",
+    "build": "node build --extension",
+    "clear-cache": "php site/clear_cache.php",
+    "rebuild": "node build --rebuild",
+    "all": "node build --all",
+    "prepare-test": "node build --prepare-test",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "type": "module",
+  "author": "Togare",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "espo-extension-tools": "github:espocrm/extension-tools#0.4.3",
+    "fs-extra": "^9.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "npm": ">=8",
+    "node": ">=18"
+  }
+}

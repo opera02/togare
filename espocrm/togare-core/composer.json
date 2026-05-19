@@ -1,0 +1,17 @@
+{
+    "name": "espocrm/ext-togare-core",
+    "require": {
+        "php": ">=8.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Espo\\Modules\\TogareCore\\": "src/files/custom/Espo/Modules/TogareCore",
+            "Espo\\Modules\\TogareNextcloudBridge\\": "../togare-nextcloud-bridge/src/files/custom/Espo/Modules/TogareNextcloudBridge",
+            "tests\\unit\\Espo\\Modules\\TogareCore\\": "tests/unit/Espo/Modules/TogareCore"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5",
+        "phpstan/phpstan": "^2.1"
+    }
+}

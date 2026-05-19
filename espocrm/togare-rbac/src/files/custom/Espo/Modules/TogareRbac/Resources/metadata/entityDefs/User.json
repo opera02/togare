@@ -1,0 +1,18 @@
+{
+    "fields": {
+        "togareWizardCompleted": {
+            "type": "bool",
+            "default": false,
+            "audited": true,
+            "tooltip": false,
+            "isCustom": true
+        },
+        "togareWizardCompletedAt": {
+            "type": "datetime",
+            "readOnly": true,
+            "audited": true,
+            "tooltip": false,
+            "isCustom": true
+        }
+    }
+}

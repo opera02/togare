@@ -1,0 +1,149 @@
+# ==============================================================================
+# Caddyfile.spike — receita X-Accel-Redirect equivalente em Caddy v2.
+#
+# CONTEXTO:
+#   Nginx tem `X-Accel-Redirect` nativo: upstream retorna header apontando para
+#   uma rota `internal`, nginx descarta body e serve o arquivo dali.
+#
+#   Caddy v2 NÃO tem esse nome. A receita equivalente usa 3 primitivas:
+#     1. reverse_proxy → upstream EspoCRM.
+#     2. handle_response (matcher por header) → intercepta response com
+#        header X-Accel-Redirect e substitui por servir arquivo local.
+#     3. file_server com root → serve bytes do filesystem montado read-only.
+#
+#   Esta config é a RECEITA PRIMÁRIA. Se falhar no sanity local (AC2 da
+#   Story 1b.S1), ver receitas alternativas A e B em Dev Notes da story.
+#
+# VALIDA (Fase 1 — sanity local):
+#   - `curl -k "https://localhost:8443/api/v1/Spike/action/download?path=test-200mb.pdf"`
+#     baixa PDF 200MB sem erro + body do PHP vazio + Caddy serve do mount.
+#
+# NÃO VALIDA AQUI (Fase 2 — VPS, Epic 10):
+#   - NFR1 quantitativo (p95 ≤ 2s sob 10 downloads concorrentes).
+# ==============================================================================
+
+{
+	# Spike não precisa de ACME. Usa CA interna do Caddy (tls internal).
+	auto_https off
+
+	# Mantém HTTP/1.1 e HTTP/2; HTTP/3 opcional no sanity local (virtio-fs
+	# do Docker Desktop pode ter bottleneck UDP — se curl -k --http3 der
+	# problema, repetir com --http2 para isolar).
+	servers {
+		protocols h1 h2 h3
+	}
+
+	# Log nível INFO — queremos ver @hasAccelRedirect disparando nos logs do
+	# sanity (AC2 pede essa evidência).
+	log {
+		output stdout
+		format console
+		level INFO
+	}
+}
+
+# ------------------------------------------------------------------------------
+# Sites do spike — :80 (HTTP) e :443 (HTTPS).
+#
+# Para spike local throwaway preferimos HTTP (porta 8080 no host) — evita
+# incompatibilidade do curl do Windows com schannel + cert auto-assinado do
+# Caddy (tls internal cobre só 'localhost', não 'caddy-spike' na rede docker).
+# HTTPS continua disponível em 8443 para quem quiser testar TLS também.
+#
+# AMBOS os sites apontam para o mesmo bloco de rotas via snippet reutilizável.
+# ------------------------------------------------------------------------------
+
+# Snippet com a receita X-Accel-Redirect equivalente — reutilizável entre
+# os dois sites (HTTP e HTTPS).
+#
+# RECEITA ADOTADA: Alternativa A (route dentro de handle_response).
+#
+# A receita primária do spike (rewrite + vars sub_request + handle_path externo)
+# consumiu o header mas NÃO re-entrou no pipeline de rotas — response ficou com
+# Content-Length: 0 e body vazio. A alternativa A usa `route` para declarar um
+# pipeline explícito dentro do handle_response: uri replace + file_server com
+# root apontando direto para /internal-files. Descoberto em 2026-04-24 durante
+# o sanity local da Story 1b.S1 (laptop Felipe).
+(spike_routes) {
+	# Reverse proxy para EspoCRM com interceptação do header X-Accel-Redirect.
+	reverse_proxy espocrm-spike:80 {
+		# SEGURANÇA: matcher restringe a paths que começam com /internal-files/.
+		# Se o upstream enviar X-Accel-Redirect apontando para outro caminho
+		# (ex: /etc/passwd), o matcher não dispara e o response original do
+		# upstream é devolvido ao cliente — nunca serve arquivo arbitrário.
+		@hasAccelRedirect header X-Accel-Redirect /internal-files/*
+		handle_response @hasAccelRedirect {
+			# root aponta para / porque o header já traz o prefixo /internal-files/
+			# completo; o file_server resolve o path absoluto resultante.
+			root * /
+			# rewrite muda a URI para o valor do header (já validado pelo matcher).
+			# Ex.: X-Accel-Redirect: /internal-files/data/test-200mb.pdf →
+			#      URI = /internal-files/data/test-200mb.pdf
+			rewrite * {rp.header.X-Accel-Redirect}
+			# file_server serve bytes diretos do filesystem do container
+			# (onde /internal-files/ é o mount read-only de nextcloud_data_spike).
+			file_server
+		}
+	}
+}
+
+# Site HTTP — porta 80 interna (mapeada para 8080 no host).
+:80 {
+	import spike_routes
+}
+
+# Site HTTPS — porta 443 interna (mapeada para 8443 no host).
+:443 {
+	# Certificado auto-assinado emitido pela CA interna do Caddy.
+	# curl precisa de -k para aceitar (esperado no sanity local).
+	tls internal
+
+	import spike_routes
+}
+
+# ==============================================================================
+# FLUXO DA RECEITA (explicação detalhada do snippet acima):
+#   1. Request chega em `/api/v1/Spike/action/download?...`.
+#   2. Caddy encaminha para espocrm-spike:80 via reverse_proxy.
+#   3. EspoCRM valida ACL (mock — Task 3 da story), retorna 200 com header
+#      `X-Accel-Redirect: /internal-files/data/test-200mb.pdf` e body vazio.
+#   4. Matcher @hasAccelRedirect detecta o header e dispara handle_response.
+#   5. handle_response:
+#      - Seta vars.sub_request = true (para o handle_path /internal-files/*
+#        aceitar a request).
+#      - Reescreve URL para o valor do header.
+#      - Request interna cai no handle_path e file_server serve os bytes.
+#
+# REFERÊNCIA OFICIAL:
+#   https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#intercepting-responses
+# ==============================================================================
+# FIM DA RECEITA. Abaixo, alternativas documentadas para troca rápida.
+# ==============================================================================
+
+
+# ==============================================================================
+# RECEITAS ALTERNATIVAS (consultar SE a primária acima falhar no sanity AC2):
+#
+# Alternativa A — `route` dentro de handle_response:
+#
+#   reverse_proxy espocrm-spike:80 {
+#       @hasAccel header X-Accel-Redirect *
+#       handle_response @hasAccel {
+#           route {
+#               uri replace * {rp.header.X-Accel-Redirect}
+#               file_server {
+#                   root /internal-files
+#               }
+#           }
+#       }
+#   }
+#
+# Alternativa B — header customizado + handle externo:
+#   - Upstream PHP retorna `X-Togare-Serve-Path: /data/test-200mb.pdf`.
+#   - Caddy detecta, seta vars.togare_path e reescreve para uma rota dedicada
+#     `/_togare_internal_download` que serve o arquivo.
+#   - Mais complexo; usar só se A e B falharem.
+#
+# O dev da Story 1b.S1 DEVE registrar no relatório qual variante acabou
+# sendo usada e por que as outras falharam (se aplicável).
+# ==============================================================================

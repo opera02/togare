@@ -1,0 +1,37 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [
+                {"name": "descricao"},
+                {"name": "contratoHonorarios"}
+            ],
+            [
+                {"name": "cliente"},
+                {"name": "processo"}
+            ]
+        ]
+    },
+    {
+        "label": "Valores e Datas",
+        "rows": [
+            [
+                {"name": "valorBruto"},
+                {"name": "dataEmissao"}
+            ],
+            [
+                {"name": "dataVencimento"},
+                {"name": "assignedUser"}
+            ]
+        ]
+    },
+    {
+        "label": "Observações",
+        "rows": [
+            [
+                {"name": "observacoes", "fullWidth": true},
+                false
+            ]
+        ]
+    }
+]

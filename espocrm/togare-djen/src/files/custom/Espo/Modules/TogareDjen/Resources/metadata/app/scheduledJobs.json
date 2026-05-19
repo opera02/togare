@@ -1,0 +1,8 @@
+{
+  "TogareDjenSync": {
+    "jobClassName": "Espo\\Modules\\TogareDjen\\Jobs\\TogareDjenSyncJob",
+    "name": "Togare — Sync diário DJEN",
+    "description": "Enfileira janelas de sync DJEN por advogado com OAB cadastrado (cron 06:00 BRT seg-sex; janela = max(last_synced_at, today-7d) → today). Worker dedicado (togare-djen-worker) consome a fila djen e chama Comunica API com retry persistente.",
+    "scheduling": "0 6 * * 1-5"
+  }
+}

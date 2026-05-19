@@ -1,0 +1,82 @@
+{
+    "labels": {
+        "Fatura": "Fatura",
+        "Faturas": "Faturas",
+        "Create Fatura": "Emitir fatura",
+        "Edit Fatura": "Editar fatura",
+        "Cancelar fatura": "Cancelar fatura",
+        "Registrar pagamento": "Registrar pagamento",
+        "Emitir Fatura": "Emitir fatura"
+    },
+    "fields": {
+        "numero": "Número",
+        "descricao": "Descrição",
+        "status": "Status",
+        "dataEmissao": "Data de emissão",
+        "dataVencimento": "Data de vencimento",
+        "valorBruto": "Valor bruto",
+        "valorPago": "Valor pago",
+        "saldo": "Saldo",
+        "observacoes": "Observações",
+        "motivoCancelamento": "Motivo do cancelamento",
+        "cliente": "Cliente",
+        "processo": "Processo",
+        "contratoHonorarios": "Contrato de honorários",
+        "lancamentosFinanceiros": "Lançamentos financeiros",
+        "assignedUser": "Atribuído a",
+        "createdAt": "Criada em",
+        "modifiedAt": "Modificada em",
+        "createdBy": "Criada por",
+        "modifiedBy": "Modificada por"
+    },
+    "links": {
+        "cliente": "Cliente",
+        "processo": "Processo",
+        "contratoHonorarios": "Contrato de honorários",
+        "lancamentosFinanceiros": "Lançamentos"
+    },
+    "options": {
+        "status": {
+            "emitida": "Emitida",
+            "parcialmente_paga": "Parcialmente paga",
+            "paga": "Paga",
+            "vencida": "Vencida",
+            "cancelada": "Cancelada"
+        }
+    },
+    "presetFilters": {},
+    "boolFilters": {
+        "emAberto": "Em aberto",
+        "vencidas": "Vencidas"
+    },
+    "tooltips": {
+        "numero": "Número auto-gerado no formato ANO-SEQ (ex.: 2026-0001). Sequência reinicia em 1º de janeiro. Não editável após criação.",
+        "status": "Calculado automaticamente conforme pagamentos. Cancelada é estado terminal.",
+        "valorBruto": "Valor total da fatura em BRL. Mudança aciona recálculo de saldo.",
+        "valorPago": "Soma de pagamentos (totais e parciais) menos estornos. Atualizado automaticamente.",
+        "saldo": "Valor bruto menos valor pago. Atualizado automaticamente após cada lançamento.",
+        "contratoHonorarios": "Obrigatório (Art. 22 §4º Estatuto OAB). Apenas contratos vigentes do cliente são aceitos.",
+        "processo": "Opcional. Quando informado, deve pertencer ao mesmo cliente.",
+        "dataVencimento": "Default: data de emissão + 30 dias."
+    },
+    "messages": {
+        "contratoObrigatorio": "Contrato de honorários é obrigatório para emitir fatura (Art. 22 §4º Estatuto OAB).",
+        "contratoNaoVigente": "Cliente não possui ContratoHonorarios vigente. Cadastre ou renove o contrato antes de emitir a fatura.",
+        "valorBrutoInvalido": "Valor bruto deve ser maior que zero.",
+        "dataVencimentoAnteriorEmissao": "Data de vencimento deve ser igual ou posterior à data de emissão.",
+        "processoCrossCliente": "O processo informado pertence a outro cliente.",
+        "numeroJaExiste": "Já existe uma fatura com este número no mesmo ano.",
+        "numeroImutavel": "Número da fatura não pode ser alterado após a emissão.",
+        "contratoImutavel": "Contrato de honorários não pode ser alterado após a emissão.",
+        "dataEmissaoImutavel": "Data de emissão não pode ser alterada após a criação.",
+        "statusImutavelDireto": "Status só pode ser alterado via registro de pagamento ou cancelamento.",
+        "faturaJaCancelada": "Esta fatura está cancelada e não aceita novas operações.",
+        "cancelarConfirmacao": "Esta ação é irreversível. Para cancelar a fatura, digite CANCELAR na caixa de confirmação.",
+        "cancelarMotivoObrigatorio": "Informe o motivo do cancelamento (mínimo 10 caracteres).",
+        "cancelarSucesso": "Fatura cancelada.",
+        "cancelarMotivoPlaceholder": "Motivo do cancelamento (mínimo 10 caracteres)",
+        "statusJaPaga": "Esta fatura já está paga.",
+        "emitirSucesso": "Fatura emitida.",
+        "atualizarSucesso": "Fatura atualizada."
+    }
+}

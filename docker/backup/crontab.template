@@ -1,0 +1,7 @@
+# Crontab do togare-backup, processado pelo entrypoint.sh.
+# Placeholders {{...}} substituídos via sed na boot.
+# TZ=America/Sao_Paulo é injetada via environment do compose — sem isso o cron
+# roda em UTC (2h UTC = 23h Brasília verão / 0h inverno).
+
+{{BACKUP_CRON_EXPRESSION}} /app/backup.sh
+{{PRUNE_CRON_EXPRESSION}} /app/prune.sh

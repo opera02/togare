@@ -1,0 +1,17 @@
+{
+    "name": "espocrm/ext-togare-portal-ui",
+    "require": {
+        "php": ">=8.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Espo\\Modules\\TogareCore\\": "../togare-core/src/files/custom/Espo/Modules/TogareCore",
+            "Espo\\Modules\\TogarePortalUi\\": "src/files/custom/Espo/Modules/TogarePortalUi",
+            "tests\\unit\\Espo\\Modules\\TogarePortalUi\\": "tests/unit/Espo/Modules/TogarePortalUi"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5",
+        "phpstan/phpstan": "^2.1"
+    }
+}

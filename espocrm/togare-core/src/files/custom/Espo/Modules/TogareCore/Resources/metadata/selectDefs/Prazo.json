@@ -1,0 +1,14 @@
+{
+    "boolFilterClassNameMap": {
+        "naoVinculadas": "Espo\\Modules\\TogareCore\\Classes\\Select\\Bool\\Prazo\\NaoVinculadas",
+        "meusPendentes": "Espo\\Modules\\TogareCore\\Classes\\Select\\Bool\\Prazo\\MeusPendentes",
+        "pendentesParaHoje": "Espo\\Modules\\TogareCore\\Classes\\Select\\Bool\\Prazo\\PendentesParaHoje",
+        "meusRascunhos": "Espo\\Modules\\TogareCore\\Classes\\Select\\Bool\\Prazo\\MeusRascunhos",
+        "aguardandoCliente": "Espo\\Modules\\TogareCore\\Classes\\Select\\Bool\\Prazo\\AguardandoCliente",
+        "protocoladosUltimos30d": "Espo\\Modules\\TogareCore\\Classes\\Select\\Bool\\Prazo\\ProtocoladosUltimos30d",
+        "acompanhamento": "Espo\\Modules\\TogareCore\\Classes\\Select\\Bool\\Prazo\\Acompanhamento"
+    },
+    "ordererClassNameMap": {
+        "dataFatal": "Espo\\Modules\\TogareCore\\Classes\\Select\\Order\\Prazo\\DataFatalPriorizado"
+    }
+}

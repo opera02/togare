@@ -1,0 +1,8 @@
+{
+  "togareMfaRequired": {
+    "className": "Espo\\Modules\\TogareRbac\\AppParam\\TogareMfaRequired"
+  },
+  "togareWizardRequired": {
+    "className": "Espo\\Modules\\TogareRbac\\AppParam\\TogareWizardRequired"
+  }
+}

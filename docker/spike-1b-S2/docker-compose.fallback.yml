@@ -1,0 +1,40 @@
+name: togare-spike-1bs2
+
+# Spike 1b.S2 — OVERRIDE fallback (Plano B do ADR 0005b draft).
+#
+# Uso combinado:
+#   docker compose -f docker-compose.spike.yml -f docker-compose.fallback.yml up -d \
+#     mariadb-spike togare-workers-spike
+#
+# O serviço `togare-workers-spike` substitui worker-djen + worker-internal
+# por 1 único container com supervisord + 2 workers standalone (alpine-php-cli,
+# sem framework EspoCRM). Valida o Plano B ponta-a-ponta.
+#
+# worker-djen e worker-internal são desabilitados via profile (movidos para
+# um profile que não sobe por default).
+
+services:
+  # Tira os workers nativos do caminho.
+  worker-djen:
+    profiles: ["only-native"]
+
+  worker-internal:
+    profiles: ["only-native"]
+
+  # Container fallback: supervisord gerencia 2 workers standalone.
+  togare-workers-spike:
+    build:
+      context: ./fallback
+      dockerfile: Dockerfile
+    image: togare-spike-1bs2/togare-workers-fallback:0.1
+    init: true # tini como PID 1; supervisord vira PID 2.
+    networks: [spike_net]
+    depends_on:
+      mariadb-spike:
+        condition: service_healthy
+    environment:
+      TOGARE_DB_HOST: mariadb-spike
+      TOGARE_DB_NAME: spike_db
+      TOGARE_DB_USER: spike
+      TOGARE_DB_PASSWORD: spike
+    restart: "no"

@@ -1,0 +1,57 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [{"name": "status"}, {"name": "source"}],
+            [{"name": "numeroProcessoOriginal"}, false]
+        ]
+    },
+    {
+        "label": "Detalhamento",
+        "rows": [
+            [{"name": "descricao", "fullWidth": true}],
+            [{"name": "prioridade"}, {"name": "tipoPrazo"}],
+            [{"name": "dataCumprimento"}, false],
+            [{"name": "motivoReagendamento", "fullWidth": true}],
+            [{"name": "cliente"}, {"name": "parteContraria"}]
+        ]
+    },
+    {
+        "label": "Cálculo (art. 5º Res. CNJ 455)",
+        "rows": [
+            [{"name": "dataDisponibilizacao"}, {"name": "dataInicioPrazo"}],
+            [{"name": "dataFatal"}, {"name": "prazoDias"}],
+            [{"name": "contagem"}, false]
+        ]
+    },
+    {
+        "label": "Classificação do ato",
+        "rows": [
+            [{"name": "atoCodigo"}, {"name": "referenciaLegal"}],
+            [{"name": "confidence"}, false],
+            [{"name": "fonteExcerpt", "fullWidth": true}]
+        ]
+    },
+    {
+        "label": "Vínculos",
+        "rows": [
+            [{"name": "processo"}, {"name": "assignedUser"}]
+        ]
+    },
+    {
+        "label": "Avançado (DJEN)",
+        "style": "collapsed",
+        "rows": [
+            [{"name": "sourcePubId"}, {"name": "parserRegraVersao"}],
+            [{"name": "publicacaoOrigemRaw", "fullWidth": true}]
+        ]
+    },
+    {
+        "label": "Auditoria",
+        "rows": [
+            [{"name": "tenantId"}, false],
+            [{"name": "createdAt"}, {"name": "createdBy"}],
+            [{"name": "modifiedAt"}, {"name": "modifiedBy"}]
+        ]
+    }
+]

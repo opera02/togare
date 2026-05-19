@@ -1,0 +1,17 @@
+{
+    "fields": {
+        "stage": "Estágio",
+        "probability": "Probabilidade",
+        "amount": "Valor",
+        "closeDate": "Data de Fechamento",
+        "leadSource": "Origem do Lead"
+    },
+    "options": {
+        "stage": {
+            "Proposta Enviada": "Proposta Enviada",
+            "Oportunidade Aceita": "Oportunidade Aceita",
+            "Cliente Convertido": "Cliente Convertido",
+            "Perdido": "Perdido"
+        }
+    }
+}

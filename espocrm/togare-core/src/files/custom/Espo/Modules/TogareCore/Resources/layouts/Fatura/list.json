@@ -1,0 +1,9 @@
+[
+    {"name": "numero", "width": 12, "customLabel": "Número"},
+    {"name": "cliente", "link": true, "customLabel": "Cliente"},
+    {"name": "status", "width": 12, "customLabel": "Status"},
+    {"name": "valorBruto", "width": 12, "customLabel": "Valor bruto"},
+    {"name": "saldo", "width": 12, "customLabel": "Saldo"},
+    {"name": "dataEmissao", "width": 10, "customLabel": "Emissão"},
+    {"name": "dataVencimento", "width": 10, "customLabel": "Vencimento"}
+]

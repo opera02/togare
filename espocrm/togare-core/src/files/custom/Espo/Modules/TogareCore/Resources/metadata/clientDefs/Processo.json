@@ -1,0 +1,40 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "edit": "togare-core:views/processo/record/edit",
+        "detail": "togare-core:views/processo/record/detail"
+    },
+    "boolFilterList": ["onlyMy"],
+    "relationshipPanels": {
+        "documentos": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "rowActionsView": "togare-core:views/document/record/row-actions/relationship-with-download",
+            "buttonList": [
+                {
+                    "action": "anexarDocumento",
+                    "label": "Anexar documento",
+                    "acl": "create",
+                    "aclScope": "Documento",
+                    "handler": "togare-core:handlers/documento/panel-action-handler"
+                }
+            ]
+        },
+        "contratosHonorarios": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "unlinkDisabled": true,
+            "editDisabled": true,
+            "removeDisabled": true,
+            "rowActionsView": "togare-core:views/contrato-honorarios/record/row-actions/relationship-with-download"
+        },
+        "faturas": {
+            "createDisabled": true,
+            "selectDisabled": true,
+            "unlinkDisabled": true,
+            "editDisabled": true,
+            "removeDisabled": true,
+            "rowActionsView": "togare-core:views/fatura/record/row-actions/relationship-with-pagamento"
+        }
+    }
+}

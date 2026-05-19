@@ -1,0 +1,26 @@
+{
+  "togareDjenAdapter": {
+    "className": "Espo\\Modules\\TogareDjen\\Services\\DjenAdapter"
+  },
+  "togareDjenUserStateRepository": {
+    "className": "Espo\\Modules\\TogareDjen\\Services\\DjenUserStateRepository"
+  },
+  "togareDjenWindowEnqueuer": {
+    "className": "Espo\\Modules\\TogareDjen\\Services\\DjenWindowEnqueuer"
+  },
+  "togareDjenAtoClassifier": {
+    "className": "Espo\\Modules\\TogareDjen\\Services\\DjenAtoClassifier"
+  },
+  "togareDjenPrazoRules": {
+    "className": "Espo\\Modules\\TogareDjen\\Services\\DjenPrazoRules"
+  },
+  "togareDjenParser": {
+    "className": "Espo\\Modules\\TogareDjen\\Services\\DjenParserService"
+  },
+  "togareDjenPrazoCreator": {
+    "className": "Espo\\Modules\\TogareDjen\\Services\\PrazoCreatorService"
+  },
+  "togareDjenWorker": {
+    "className": "Espo\\Modules\\TogareDjen\\Services\\DjenWorkerService"
+  }
+}

@@ -1,0 +1,57 @@
+{
+    "labels": {
+        "Audiencia": "Audiência",
+        "create": "Nova audiência",
+        "Create Audiencia": "Nova audiência"
+    },
+    "fields": {
+        "dataHora": "Data e hora",
+        "duracaoMinutos": "Duração (minutos)",
+        "tribunal": "Tribunal",
+        "vara": "Vara",
+        "enderecoLink": "Endereço/Link",
+        "tipo": "Tipo",
+        "modalidade": "Modalidade",
+        "status": "Status",
+        "participantes": "Participantes",
+        "observacoes": "Observações/Resultado",
+        "processo": "Processo",
+        "assignedUser": "Advogado responsável",
+        "tenantId": "Tenant"
+    },
+    "links": {
+        "processo": "Processo"
+    },
+    "options": {
+        "tipo": {
+            "conciliacao": "Conciliação",
+            "instrucao_julgamento": "Instrução e julgamento",
+            "julgamento": "Julgamento",
+            "una": "Una",
+            "conciliacao_mediacao": "Conciliação/Mediação (CEJUSC)",
+            "outras": "Outras"
+        },
+        "modalidade": {
+            "presencial": "Presencial",
+            "virtual": "Virtual",
+            "hibrida": "Híbrida"
+        },
+        "status": {
+            "agendada": "Agendada",
+            "realizada": "Realizada",
+            "cancelada": "Cancelada",
+            "adiada": "Adiada"
+        }
+    },
+    "presetFilters": {
+        "onlyMy": "Apenas minhas"
+    },
+    "messages": {
+        "dataHoraRequerida": "Data e hora da audiência são obrigatórias.",
+        "processoRequerido": "Audiência precisa estar vinculada a um processo.",
+        "modalidadeInvalida": "Modalidade inválida — escolha uma das opções.",
+        "statusInvalido": "Status inválido — escolha uma das opções.",
+        "tipoInvalido": "Tipo inválido — escolha uma das opções.",
+        "duracaoForaDoIntervalo": "Duração deve estar entre 15 e 480 minutos."
+    }
+}

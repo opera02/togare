@@ -1,0 +1,1467 @@
+/*
+ * Togare Core — estilos dos 3 componentes transversais (Story 1a.6a):
+ * HedgeBanner, StatusBadge, EmptyStateCalmo.
+ *
+ * Layer cascade permite override por escritório (UX-DR8):
+ *   @layer base           → reset + EspoCRM core (fora daqui)
+ *   @layer togare-components → regras nossas (este arquivo)
+ *   @layer tenant-overrides  → escritório customiza sem !important
+ *
+ * Contraste AA (4.5:1) por default. AAA (7:1) em rotas críticas do Portal
+ * fica para Epic 7a (UX-DR9 Trade-off X2).
+ *
+ * Prefixo togare- em todas as classes (isolamento do core EspoCRM).
+ */
+
+@layer base, togare-components, tenant-overrides;
+
+@layer togare-components {
+  /* =========================================================================
+   * HedgeBanner — disclaimer polimórfico (4 variants)
+   * ========================================================================= */
+
+  .togare-hedge-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.4;
+    border-radius: 4px;
+    color: #4a5464;
+  }
+
+  .togare-hedge-banner__icon {
+    flex-shrink: 0;
+    font-size: 0.9375rem; /* 15px */
+  }
+
+  .togare-hedge-banner__text {
+    flex-grow: 1;
+  }
+
+  .togare-hedge-banner__link {
+    margin-left: 0.5rem;
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .togare-hedge-banner__link:focus-visible {
+    outline: 2px solid #0060df;
+    outline-offset: 2px;
+  }
+
+  .togare-hedge-banner--footer-global {
+    background: #f5f6f7;
+    border-top: 1px solid #dfe1e5;
+    color: #5c6470;
+    font-size: 0.75rem; /* 12px — mais discreto no rodapé */
+    padding: 0.375rem 1rem;
+  }
+
+  .togare-hedge-banner--module-deadline {
+    background: #fff8e6;
+    border: 1px solid #f0d080;
+    color: #6b5400;
+  }
+
+  .togare-hedge-banner--action-destructive {
+    background: #fdecea;
+    border: 1px solid #e0a0a0;
+    color: #7a1f1f;
+    font-weight: 500;
+  }
+
+  .togare-hedge-banner--portal-friendly {
+    background: #eaf4fb;
+    border: 1px solid #9dc3e0;
+    color: #2c4f6c;
+    font-size: 0.9375rem; /* 15px — levemente maior para Portal */
+  }
+
+  /* =========================================================================
+   * StatusBadge — indicador cromático (5 estados × 3 tamanhos)
+   * ========================================================================= */
+
+  .togare-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 999px;
+    font-weight: 500;
+    padding: 0.125rem 0.5rem;
+  }
+
+  .togare-status-badge__icon {
+    flex-shrink: 0;
+  }
+
+  .togare-status-badge--small {
+    font-size: 0.6875rem; /* 11px */
+    padding: 0.0625rem 0.375rem;
+  }
+  .togare-status-badge--medium {
+    font-size: 0.8125rem; /* 13px */
+  }
+  .togare-status-badge--large {
+    font-size: 1rem; /* 16px */
+    padding: 0.25rem 0.75rem;
+  }
+
+  .togare-status-badge--pendente {
+    background: #fff4cc;
+    color: #6b5400;
+  }
+  .togare-status-badge--confirmado {
+    background: #d8f0d8;
+    color: #1e5a1e;
+  }
+  .togare-status-badge--precisa-leitura {
+    background: #ffe4cc;
+    color: #8a4500;
+  }
+  .togare-status-badge--critico {
+    background: #fdd4d4;
+    color: #8a0f0f;
+    animation: togareStatusBadgePulse 1.6s ease-in-out infinite;
+  }
+  .togare-status-badge--info {
+    background: #d6e8f5;
+    color: #1f4870;
+  }
+  /* Story 4a.4 T10 (Plano A) — 8 estados novos do Prazo. UX spec C2 v1.1
+     linhas 574-583 + Decisão UX-1: cor + ícone único + label visível em
+     toda ocorrência (redundância tripla — colorblind safe + WCAG AAA). */
+  .togare-status-badge--rascunho {
+    background: #ececec;
+    color: #4a4a4a;
+  }
+  .togare-status-badge--atrasado_reagendado {
+    background: #fdd4d4;
+    color: #8a0f0f;
+  }
+  .togare-status-badge--aguardando_cliente {
+    background: #ece4f7;  /* lilás claro */
+    color: #4a3375;
+  }
+  .togare-status-badge--aguardando_correcao {
+    background: #ffe4cc;  /* laranja claro */
+    color: #8a4500;
+  }
+  .togare-status-badge--protocolado {
+    background: #d8f0d8;
+    color: #1e5a1e;
+  }
+  .togare-status-badge--ciencia_renuncia {
+    background: #d4ece9;  /* verde-azulado */
+    color: #1e5a55;
+  }
+  .togare-status-badge--acompanhamento {
+    background: #d6e8f5;
+    color: #1f4870;
+  }
+  .togare-status-badge--descartado {
+    background: #e8e8e8;
+    color: #6a6a6a;
+    text-decoration: line-through;
+  }
+
+  @keyframes togareStatusBadgePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(138, 15, 15, 0.0); }
+    50%      { box-shadow: 0 0 0 3px rgba(138, 15, 15, 0.35); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .togare-status-badge--critico {
+      animation: none;
+    }
+  }
+
+  /* =========================================================================
+   * Story 4b.3 — UX-DR10 redundância semântica D-0
+   * Badge vermelho sólido com ícone sino + texto "VENCE HOJE".
+   * Pulsação OPCIONAL via .togare-status-badge--pulse (não acionada por
+   * default — Decisão #6 da Story 4b.3). Redundância semântica do AC10
+   * está em CARD MODIFIER + chip + texto + borda (não depende de pulsação).
+   * ========================================================================= */
+
+  .togare-status-badge--vence_hoje,
+  .togare-status-badge--vence-hoje {
+    background: #c62828;       /* vermelho sólido (não claro) */
+    color: #ffffff;             /* contraste WCAG AA mínimo 4.5:1 */
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  /* Pulsação OPCIONAL — só ativa se caller explicitamente adicionar a classe
+   * --pulse. Caller responsável por NÃO adicionar quando prefers-reduced-motion
+   * ativo (mas mídia query abaixo é defesa em profundidade). */
+  @keyframes togareDZeroPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0.0); }
+    50%      { box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.45); }
+  }
+  .togare-status-badge--vence_hoje.togare-status-badge--pulse,
+  .togare-status-badge--vence-hoje.togare-status-badge--pulse {
+    animation: togareDZeroPulse 1.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .togare-status-badge--vence_hoje.togare-status-badge--pulse,
+    .togare-status-badge--vence-hoje.togare-status-badge--pulse {
+      animation: none;
+    }
+  }
+
+  /* Story 4b.3 fix-pass v0.27.1 (B26) — UX-DR10 redundância visual no
+   * dashlet "Meus prazos do dia". Aplicado às `.list-row` stock do
+   * EspoCRM via DOM injection no `_decorateD0Cards` do dashlet
+   * (NÃO via rowView custom, que foi removida na 4a.4 fix-pass 0.19.1
+   * por bug do `views/record/row` ES6 module fantasma).
+   *
+   * Modifier `--d-zero` aplicado ao row inteiro + chip
+   * `__d-zero-badge` injetado como filho da primeira coluna. Mesmas
+   * cores do `--vence-hoje` (vermelho sólido `#c62828`).
+   *
+   * NOTA fix-pass v0.27.2 — a regra de `border-left` do row vive
+   * INTENCIONALMENTE FORA do `@layer togare-components` (no fim do
+   * arquivo, após o fechamento do layer) porque o tema stock do
+   * EspoCRM 9.x não usa `@layer` e suas regras unlayered SEMPRE vencem
+   * regras dentro de layers, independente de especificidade. O chip
+   * (`__d-zero-badge`) fica aqui dentro porque suas propriedades não
+   * conflitam com nenhuma regra do tema (classe própria sem ancestor
+   * shenanigans). */
+  .togare-row__d-zero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: #c62828;
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    margin-right: 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  /* CardDePrazo — modifier --d-zero (Story 4b.3, AC8 + AC10).
+   * Borda esquerda vermelha SOMA-SE ao chip "VENCE HOJE" + ícone sino +
+   * texto literal — 4 sinais semânticos simultâneos (UX-DR10).
+   * Sem dependência de pulsação — reduced-motion preserva todos os 4 sinais. */
+  .togare-card-de-prazo--d-zero {
+    border-left: 4px solid #c62828;
+  }
+  .togare-card-de-prazo__d-zero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: #c62828;
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    margin-right: 0.5rem;
+  }
+
+  /* =========================================================================
+   * EmptyStateCalmo — estado vazio humano (3 variantes)
+   * ========================================================================= */
+
+  .togare-empty-state-calmo {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #5c6470;
+  }
+
+  .togare-empty-state-calmo__text {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.9375rem; /* 15px base — contextos Portal sobem via modifier */
+    line-height: 1.5;
+  }
+
+  .togare-empty-state-calmo__cta {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem; /* 14px */
+    color: #0060df;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .togare-empty-state-calmo__cta:focus-visible {
+    outline: 2px solid #0060df;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Variants apenas mudam tom emocional — não layout. Base é neutra. */
+  .togare-empty-state-calmo--zero-calmo .togare-empty-state-calmo__text {
+    /* leve — sem pendência */
+    color: #5c7058;
+  }
+  .togare-empty-state-calmo--zero-educativo .togare-empty-state-calmo__text {
+    /* educativo — convida a começar */
+    color: #4a5464;
+  }
+  .togare-empty-state-calmo--zero-filtrado .togare-empty-state-calmo__text {
+    /* neutro — filtro não retornou */
+    color: #6c7480;
+  }
+
+  /* =========================================================================
+   * ConfirmacaoTextual — gate de ação destrutiva (1a.6b)
+   * ========================================================================= */
+
+  .togare-confirmacao-textual {
+    padding: 1rem;
+  }
+
+  .togare-confirmacao-textual--modal {
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+    max-width: 520px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+  }
+
+  .togare-confirmacao-textual__label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #2d3748;
+  }
+
+  .togare-confirmacao-textual__input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9375rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    color: #2d3748;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .togare-confirmacao-textual__input:focus-visible {
+    outline: 2px solid #0060df;
+    outline-offset: 1px;
+    border-color: #0060df;
+  }
+
+  .togare-confirmacao-textual__desc {
+    font-size: 0.8125rem;
+    color: #5c6470;
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  .togare-confirmacao-textual__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  /* =========================================================================
+   * ToastTogare — stack global + 4 variants (1a.6b)
+   * ========================================================================= */
+
+  .togare-toast-stack {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+    max-width: 420px;
+  }
+
+  .togare-toast-slot {
+    pointer-events: auto;
+  }
+
+  .togare-toast {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    min-width: 280px;
+    max-width: 420px;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    font-size: 0.9375rem;
+    animation: togareToastIn 0.3s ease-out;
+    overflow: hidden;
+  }
+
+  .togare-toast__icon {
+    flex-shrink: 0;
+    font-size: 1.125rem;
+  }
+
+  .togare-toast__message {
+    flex-grow: 1;
+  }
+
+  .togare-toast__action {
+    flex-shrink: 0;
+    color: inherit;
+    text-decoration: underline;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-weight: 500;
+  }
+
+  .togare-toast__action:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .togare-toast__close {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .togare-toast__close:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .togare-toast__close:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .togare-toast__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: currentColor;
+    opacity: 0.35;
+    transform-origin: left center;
+    animation-name: togareToastProgress;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+
+  .togare-toast--undo {
+    background: #f0fbf3;
+    border-left: 3px solid #1e8f3e;
+    color: #155c26;
+  }
+  .togare-toast--warning {
+    background: #fff8e6;
+    border-left: 3px solid #c18900;
+    color: #6b5400;
+  }
+  .togare-toast--success {
+    background: #f0fbf3;
+    border-left: 3px solid #1e8f3e;
+    color: #155c26;
+  }
+  .togare-toast--error {
+    background: #fdecea;
+    border-left: 3px solid #a83030;
+    color: #7a1f1f;
+  }
+  /* Story 4a.4 — variant auto-link (AutoLinkBanner via ToastTogare). Tom
+     neutro cinza-azulado: feedback informativo de auto-vínculo Cliente/Parte
+     herdados via Processo, sem severidade de undo/warning. */
+  .togare-toast--auto-link {
+    background: #eef4f4;
+    border-left: 3px solid #5a7d7c;
+    color: #2d4242;
+  }
+
+  /* Story 4a.4 fix-pass 0.19.3 — StatusSelector dropdown bonito (B5).
+     Bootstrap-like, leve, sem dependência de plugin externo. */
+  .togare-status-selector {
+    display: inline-block;
+    position: relative;
+  }
+  .togare-status-selector__trigger {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    color: #333;
+    padding: 4px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+    border-radius: 3px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .togare-status-selector__trigger:hover {
+    filter: brightness(0.95);
+    border-color: #adadad;
+  }
+  .togare-status-selector__trigger[aria-expanded="true"] {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  /* Story 4a.4 fix-pass 0.19.4 (B10) — cor do trigger por status, espelha
+     StatusBadge cores. Pegada CSS: classes `togare-status-selector__trigger
+     --{status}` aplicadas dinamicamente pelo template. */
+  .togare-status-selector__trigger--rascunho {
+    background-color: #ececec;
+    color: #4a4a4a;
+  }
+  .togare-status-selector__trigger--pendente {
+    background-color: #fff4cc;
+    color: #6b5400;
+  }
+  .togare-status-selector__trigger--atrasado_reagendado {
+    background-color: #fdd4d4;
+    color: #8a0f0f;
+  }
+  .togare-status-selector__trigger--aguardando_cliente {
+    background-color: #ece4f7;
+    color: #4a3375;
+  }
+  .togare-status-selector__trigger--aguardando_correcao {
+    background-color: #ffe4cc;
+    color: #8a4500;
+  }
+  .togare-status-selector__trigger--protocolado {
+    background-color: #d8f0d8;
+    color: #1e5a1e;
+  }
+  .togare-status-selector__trigger--ciencia_renuncia {
+    background-color: #d4ece9;
+    color: #1e5a55;
+  }
+  .togare-status-selector__trigger--acompanhamento {
+    background-color: #d6e8f5;
+    color: #1f4870;
+  }
+  .togare-status-selector__trigger--descartado {
+    background-color: #e8e8e8;
+    color: #6a6a6a;
+    text-decoration: line-through;
+  }
+  .togare-status-selector__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    min-width: 200px;
+    margin: 4px 0 0;
+    padding: 4px 0;
+    list-style: none;  /* remove bullets */
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  }
+  .togare-status-selector__menu[hidden] {
+    display: none;
+  }
+  .togare-status-selector__menu-header {
+    padding: 6px 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #999;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 4px;
+  }
+  .togare-status-selector__item {
+    display: block;
+    padding: 6px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.4;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .togare-status-selector__item:hover,
+  .togare-status-selector__item:focus {
+    background-color: #f5f5f5;
+    color: #262626;
+    text-decoration: none;
+    outline: none;
+  }
+  .togare-status-selector--terminal {
+    color: #777;
+    font-style: italic;
+  }
+
+  .togare-toast--leaving {
+    animation: togareToastOut 0.3s ease-in forwards;
+  }
+
+  @keyframes togareToastIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes togareToastOut {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-8px); }
+  }
+
+  @keyframes togareToastProgress {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+  }
+
+  /* Mobile: full-width top, sem rounded. */
+  @media (max-width: 768px) {
+    .togare-toast-stack {
+      top: 0;
+      bottom: auto;
+      left: 0;
+      right: 0;
+      max-width: none;
+    }
+    .togare-toast {
+      border-radius: 0;
+      max-width: none;
+    }
+  }
+
+  /* Respeitar prefers-reduced-motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .togare-toast,
+    .togare-toast--leaving,
+    .togare-toast__progress {
+      animation: none;
+    }
+  }
+
+  /* ==========================================================
+     BriefingDoDia headline (Story 4a.5)
+     ==========================================================
+     Bloco renderizado no header do dashlet `togare-prazos-do-dia`,
+     antes de `.list-container` nativo. Mostra contagem dinâmica
+     ("3 prazos pendentes") + CTA "Confira hoje ↗".
+
+     Variantes:
+       --zero    → estado calmo (count=0); sem CTA; tom verdoso
+       --active  → contagem >= 1; CTA presente
+  */
+  .togare-briefing-headline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .togare-briefing-headline strong {
+    font-size: 18px;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+
+  .togare-briefing-headline--zero {
+    background: #f0f8f0;
+    color: #5a7d5a;
+    border-bottom-color: #d4e8d4;
+  }
+
+  .togare-briefing-cta {
+    margin-left: auto;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* Mobile: stack vertical (CTA cai abaixo). */
+  @media (max-width: 768px) {
+    .togare-briefing-headline {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .togare-briefing-cta {
+      margin-left: 0;
+      align-self: stretch;
+      text-align: center;
+    }
+  }
+
+  /* =========================================================================
+   * PublicacaoAmbigua — Story 4b.1c (UX C9 QueueNavegavel + UX C10 ComparadorCandidatos)
+   *
+   * Bandas coloridas em 5 variants (azul, laranja, verde, roxo, vermelho).
+   * Contraste AA: bandas com `color: #fff` no heading sobreposto têm contraste
+   * ≥ 4.5:1 com os tokens abaixo. Bandas são apenas faixas (height 6px), não
+   * servem como background do texto — o texto fica em fundo branco.
+   *
+   * Defesa B5 (Story 4a.4): dropdown bulk-action é `<ul role="menu">`
+   * standalone (Bootstrap não estiliza esse pattern por default).
+   *
+   * UX-DR8: prefers-reduced-motion desliga animações de transição.
+   * ========================================================================= */
+
+  .togare-pub-ambigua {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .togare-pub-ambigua__queue {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .togare-pub-ambigua__queue-counter {
+    font-weight: 500;
+    margin: 0 0.5rem;
+  }
+
+  .togare-pub-ambigua__bulk {
+    margin-left: auto;
+    position: relative;
+  }
+
+  .togare-pub-ambigua__bulk-toggle {
+    cursor: pointer;
+  }
+
+  /* B5 — CSS próprio (Bootstrap não estiliza <ul role="menu"> standalone) */
+  .togare-pub-ambigua__bulk-menu {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    position: absolute;
+    right: 0;
+    top: 100%;
+    min-width: 220px;
+    z-index: 20;
+  }
+
+  .togare-pub-ambigua__bulk-menu li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .togare-pub-ambigua__bulk-menu-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 6px 12px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .togare-pub-ambigua__bulk-menu-item:hover,
+  .togare-pub-ambigua__bulk-menu-item:focus {
+    background: #f1f3f5;
+    outline: none;
+  }
+
+  .togare-pub-ambigua__texto {
+    background: #fffdf2;
+    border: 1px solid #f4e7a3;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: #1a1a1a;
+  }
+
+  .togare-pub-ambigua__mark {
+    background-color: #fef3c7;
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+
+  .togare-pub-ambigua__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .togare-pub-ambigua__card {
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 0;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.15s ease;
+  }
+
+  .togare-pub-ambigua__card:focus,
+  .togare-pub-ambigua__card:focus-within {
+    outline: 2px solid #0366d6;
+    outline-offset: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .togare-pub-ambigua__band {
+    width: 100%;
+    height: 6px;
+  }
+
+  /* Tokens reusados / coerentes com StatusBadge — contraste AA com texto branco */
+  .togare-pub-ambigua__band--azul     { background-color: #1f6feb; }
+  .togare-pub-ambigua__band--laranja  { background-color: #d97706; }
+  .togare-pub-ambigua__band--verde    { background-color: #16a34a; }
+  .togare-pub-ambigua__band--roxo     { background-color: #7c3aed; }
+  .togare-pub-ambigua__band--vermelho { background-color: #dc2626; }
+
+  .togare-pub-ambigua__card--azul     { border-top: 0; }
+  .togare-pub-ambigua__card--laranja  { border-top: 0; }
+  .togare-pub-ambigua__card--verde    { border-top: 0; }
+  .togare-pub-ambigua__card--roxo     { border-top: 0; }
+  .togare-pub-ambigua__card--vermelho { border-top: 0; }
+
+  .togare-pub-ambigua__candidato-heading {
+    margin: 0.75rem 1rem 0.25rem;
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .togare-pub-ambigua__row {
+    margin: 0.25rem 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    color: #1a1a1a;
+  }
+
+  .togare-pub-ambigua__cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem 1rem;
+  }
+
+  .togare-pub-ambigua__cta--loading {
+    position: relative;
+  }
+
+  .togare-pub-ambigua__spinner {
+    display: inline-block;
+    width: 0.9em;
+    height: 0.9em;
+    margin-right: 0.4em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    vertical-align: -0.12em;
+    animation: togare-pub-ambigua-spin 0.8s linear infinite;
+  }
+
+  @keyframes togare-pub-ambigua-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .togare-pub-ambigua__rodape {
+    border-top: 1px solid #e1e4e8;
+    padding-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .togare-pub-ambigua__hedge {
+    font-size: 0.8125rem;
+    color: #57606a;
+    font-style: italic;
+  }
+
+  .togare-pub-ambigua__empty {
+    padding: 2rem;
+    text-align: center;
+    color: #57606a;
+    background: #f8f9fa;
+    border: 1px dashed #d0d7de;
+    border-radius: 6px;
+  }
+
+  /* UX-DR8 — reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .togare-pub-ambigua__card,
+    .togare-pub-ambigua__queue,
+    .togare-pub-ambigua__spinner {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* Mobile (< 768px) — UX C9 spec L1538-L1540: header colapsa, bulk vira item de menu */
+  @media (max-width: 768px) {
+    .togare-pub-ambigua__queue {
+      flex-wrap: wrap;
+    }
+    .togare-pub-ambigua__bulk {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+
+  /* =========================================================================
+   * GateBanner — gate ativo de cobrança (Story 6.2, UX-DR2 P2)
+   * Bloqueia ação enquanto pré-requisito não atendido. Aparece condicionalmente.
+   * 3 variants: financeiro-sem-contrato, licenca-expirada, pre-requisito-entidade
+   * ========================================================================= */
+
+  .togare-gate-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #f0ad4e;
+    border-radius: 0 4px 4px 0;
+    background-color: #fdf6e3;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .togare-gate-banner__icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+  }
+
+  .togare-gate-banner__text {
+    flex: 1;
+    color: #795600;
+  }
+
+  .togare-gate-banner__cta {
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+  }
+
+  /* variant: financeiro-sem-contrato — urgência OAB (vermelho) */
+  .togare-gate-banner--financeiro-sem-contrato {
+    border-left-color: #d9534f;
+    background-color: #fdf2f0;
+  }
+  .togare-gate-banner--financeiro-sem-contrato .togare-gate-banner__text {
+    color: #8b1a1a;
+  }
+
+  /* variant: licenca-expirada — aviso laranja */
+  .togare-gate-banner--licenca-expirada {
+    border-left-color: #e8a000;
+    background-color: #fff8e6;
+  }
+  .togare-gate-banner--licenca-expirada .togare-gate-banner__text {
+    color: #704500;
+  }
+
+  /* variant: pre-requisito-entidade — informativo azul */
+  .togare-gate-banner--pre-requisito-entidade {
+    border-left-color: #337ab7;
+    background-color: #eaf4fb;
+  }
+  .togare-gate-banner--pre-requisito-entidade .togare-gate-banner__text {
+    color: #1a4a6e;
+  }
+
+  .togare-gate-banner__cta:focus-visible {
+    outline: 2px solid #0060df;
+    outline-offset: 2px;
+  }
+}
+
+/* ========================================================================
+ * Story 4b.3 fix-pass v0.27.2 (B26-2) — UX-DR10 borda esquerda vermelha
+ * INTENCIONALMENTE UNLAYERED.
+ *
+ * Diagnóstico (smoke F1 round 2 do Felipe pós v0.27.1):
+ *   - O tema stock do EspoCRM 9.x aplica `border-left-width: 0px` via
+ *     `.panel > .panel-body > .list-container > .list > .list-group >
+ *      .list-group-item` (especificidade 0,0,6,1).
+ *   - O tema NÃO usa `@layer` — suas regras são unlayered.
+ *   - CSS Cascade Layers (Level 5): regras unlayered sempre vencem regras
+ *     dentro de qualquer `@layer`, independente da especificidade.
+ *   - Resultado da v0.27.1: a regra de `border-left: 4px solid #c62828`
+ *     dentro do `@layer togare-components` perdia para a regra unlayered
+ *     do tema mesmo tendo cor vermelha computed — o `width:0` do tema
+ *     zerava a borda.
+ *
+ * Correção:
+ *   1. Mover esta regra FORA do `@layer togare-components` (compete com
+ *      regras do tema por especificidade pura).
+ *   2. Especificidade casada com o seletor do tema + 1 classe extra
+ *      (`.togare-row--d-zero`) = 0,0,7,1 vence 0,0,6,1.
+ *
+ * Tenant overrides (UX-DR8): se um escritório quiser desligar a borda
+ * D-0, pode usar especificidade ainda maior OU `!important` em CSS
+ * próprio (raro — vermelho aqui é semanticamente vinculante: NFR5).
+ * ======================================================================== */
+.panel > .panel-body > .list-container > .list > .list-group > .list-group-item.togare-row--d-zero {
+  border-left: 4px solid #c62828;
+}
+
+/* ==========================================================================
+ * SystemStatusBanner (Story 4b.4 / FR18 / NFR19 / ADR 0009)
+ * ==========================================================================
+ * Banner amarelo persistente exibido em surfaces de prazo quando o circuit
+ * breaker do DjenAdapter está aberto há ≥30 min. Componente novo, NÃO
+ * variant do HedgeBanner (SRP — hedge é jurídico, status é operacional).
+ *
+ * Cores warning padrão Bootstrap: bg #fff3cd / texto #664d03 (contraste ~7.5:1).
+ * `data-visible="false"` => `display:none` (preserva DOM, evita layout shift).
+ * `prefers-reduced-motion` desliga qualquer transition.
+ * ======================================================================== */
+.togare-system-status-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #fff3cd;
+  color: #664d03;
+  border: 1px solid #ffe69c;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.togare-system-status-banner[data-visible="false"] {
+  display: none;
+}
+.togare-system-status-banner__icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.togare-system-status-banner__text {
+  flex: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .togare-system-status-banner {
+    transition: none;
+  }
+}
+
+/* ========================================================================
+ * Story 6.3 — LancamentoFinanceiro tipo badges (Decisão #14 da spec).
+ * Cores semânticas WCAG AA contraste para a célula `tipo` em record/list e
+ * record/detail. Aplicadas via DOM patch (afterRender) na view custom.
+ *
+ *  - verde     → pagamento_total | pagamento_parcial | receita_avulsa (entrada)
+ *  - vermelho  → despesa_interna (saída)
+ *  - amarelo   → acerto (neutro)
+ *  - laranja   → estorno (reverso/saída)
+ *
+ * Acessibilidade: cor + label texto sempre presentes (WCAG 1.4.1 — não
+ * dependa só de cor). aria-label injetado pela view JS.
+ * ======================================================================== */
+.togare-row__tipo--verde {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+.togare-row__tipo--vermelho {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+.togare-row__tipo--amarelo {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+.togare-row__tipo--laranja {
+  background-color: #ffd8b1;
+  color: #804000;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+ * Story 10.2 / FR41 — painel TogareHealth (dashlet "Saúde do Togare").
+ *
+ * Grid 3x2 de tiles + rodapé licença + histórico. 4 estados, cada um com
+ * cor + ícone único + label (AR-5 colorblind-safe, vinculante). Contraste
+ * AA 4.5:1 (HealthPanel é rota CRM, não Portal → AA, não AAA). Bloco
+ * `@layer togare-components` adicional (layers de mesmo nome mesclam) —
+ * mantém precedência de tenant-overrides UX-DR8. Não compete com o tema
+ * (conteúdo self-contained do dashlet).
+ * ======================================================================== */
+@layer togare-components {
+  .togare-health-live {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .togare-health-panel__header {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1c2b39;
+    margin-bottom: 0.75rem;
+  }
+
+  .togare-health-panel__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .togare-health-panel__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .togare-health-tile {
+    border: 1px solid #d6dce1;
+    border-left-width: 4px;
+    border-radius: 4px;
+    padding: 0.5rem 0.625rem;
+    background: #ffffff;
+  }
+
+  .togare-health-tile__head {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-weight: 600;
+  }
+
+  .togare-health-tile__icon {
+    font-weight: 700;
+  }
+
+  .togare-health-tile__metric {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #41525f;
+  }
+
+  .togare-health-tile__sr-state {
+    font-weight: 600;
+  }
+
+  .togare-health-tile__detail {
+    display: inline-block;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
+  }
+
+  /* Estado OK — verde (contraste AA: #155724 sobre #d4edda ≈ 7:1). */
+  .togare-health-tile--ok {
+    border-left-color: #1e7e34;
+    background: #eef7f0;
+  }
+  .togare-health-tile--ok .togare-health-tile__icon {
+    color: #155724;
+  }
+
+  /* Estado LENTO — amarelo (#856404 sobre #fff3cd ≈ 5.6:1). */
+  .togare-health-tile--lento {
+    border-left-color: #b8860b;
+    background: #fff8e6;
+  }
+  .togare-health-tile--lento .togare-health-tile__icon {
+    color: #856404;
+  }
+
+  /* Estado OFFLINE — vermelho (#721c24 sobre #f8d7da ≈ 7:1). */
+  .togare-health-tile--offline {
+    border-left-color: #b02a37;
+    background: #fdeef0;
+  }
+  .togare-health-tile--offline .togare-health-tile__icon {
+    color: #721c24;
+  }
+
+  /* Estado NÃO-INSTALADO — cinza calmo, SEM alarme (AC1). */
+  .togare-health-tile--nao-instalado {
+    border-left-color: #adb5bd;
+    background: #f4f5f6;
+  }
+  .togare-health-tile--nao-instalado .togare-health-tile__name,
+  .togare-health-tile--nao-instalado .togare-health-tile__metric {
+    color: #6c757d;
+  }
+  .togare-health-tile--nao-instalado .togare-health-tile__icon {
+    color: #868e96;
+  }
+
+  .togare-health-panel__footer {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .togare-health-footer__licenca {
+    color: #41525f;
+  }
+  .togare-health-footer__licenca[data-licenca-state="expirando"] {
+    color: #856404;
+    font-weight: 600;
+  }
+  .togare-health-footer__licenca[data-licenca-state="vencida"] {
+    color: #721c24;
+    font-weight: 700;
+  }
+
+  .togare-health-footer__historico-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #0a58ca;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+  .togare-health-footer__historico-link:focus-visible {
+    outline: 2px solid #0060df;
+    outline-offset: 2px;
+  }
+
+  .togare-health-panel__historico {
+    margin-top: 0.5rem;
+    border-top: 1px solid #e3e7ea;
+    padding-top: 0.5rem;
+  }
+  .togare-health-historico__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8125rem;
+  }
+  .togare-health-historico__item {
+    padding: 0.125rem 0;
+  }
+  .togare-health-historico__when {
+    color: #6c757d;
+  }
+  .togare-health-historico__vazio {
+    color: #6c757d;
+    font-size: 0.8125rem;
+    margin: 0;
+  }
+}
+
+@layer togare-components {
+  /* =========================================================================
+   * BriefingDoDia — dashlet de resumo diário por role (Story 10.1)
+   * Grid 2 colunas por default. AA ≥4.5:1. Font base ≥14px.
+   * ========================================================================= */
+
+  .togare-briefing-dashlet {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.5;
+    color: #2c3e50;
+  }
+
+  .togare-briefing__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .togare-briefing__greeting {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #2c3e50; /* contrast 8.6:1 on white */
+    flex: 1;
+  }
+
+  .togare-briefing__notif {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    /* G2-P6 (code review 2026-05-18): fundo é #fef3c7 (amber-100), NÃO branco.
+       #b45309 sobre #fef3c7 ≈ 4.5:1 (borderline). #92400e (amber-800) ≈ 6:1
+       sobre #fef3c7 — margem segura para AA 4.5:1 (rota CRM, AC6). */
+    color: #92400e;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 12px;
+    padding: 0.125rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  .togare-briefing__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  /* Card base — o card inteiro é um link (Tab+Enter nativo, AC4) */
+  .togare-briefing-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.75rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+    background: #f8f9fa;
+    color: #2c3e50; /* contrast 8.6:1 */
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.15s, border-color 0.15s;
+    min-height: 80px;
+  }
+
+  .togare-briefing-card:hover,
+  .togare-briefing-card:focus-visible {
+    background: #e9ecef;
+    border-color: #0060df;
+    outline: 2px solid #0060df;
+    outline-offset: 2px;
+    color: #2c3e50;
+    text-decoration: none;
+  }
+
+  .togare-briefing-card--empty {
+    opacity: 0.65;
+    background: #f8f9fa;
+    border-color: #e9ecef;
+  }
+
+  .togare-briefing-card--loading {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .togare-briefing-card__count {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #1a6bbf; /* contrast 4.6:1 on white */
+  }
+
+  .togare-briefing-card--empty .togare-briefing-card__count {
+    color: #6c757d; /* contrast 4.6:1 on white */
+  }
+
+  .togare-briefing-card__title {
+    font-size: 0.8125rem;
+    color: #4a5568; /* contrast 7.0:1 on white */
+    font-weight: 500;
+  }
+
+  .togare-briefing-card__cta {
+    font-size: 0.75rem;
+    color: #1a6bbf;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Health card — variante com ok / atenção / crítico */
+  .togare-briefing-card--health {
+    border-width: 2px;
+  }
+
+  .togare-briefing-card--health-ok {
+    background: #f0fdf4;
+    border-color: #22c55e;
+  }
+
+  .togare-briefing-card--health-ok .togare-briefing-card__health-status {
+    color: #15803d; /* contrast 5.7:1 */
+  }
+
+  .togare-briefing-card--health-atencao {
+    background: #fffbeb;
+    border-color: #f59e0b;
+  }
+
+  .togare-briefing-card--health-atencao .togare-briefing-card__health-status {
+    color: #b45309; /* contrast 4.6:1 */
+  }
+
+  .togare-briefing-card--health-critico {
+    background: #fff1f2;
+    border-color: #ef4444;
+  }
+
+  .togare-briefing-card--health-critico .togare-briefing-card__health-status {
+    color: #b91c1c; /* contrast 5.4:1 */
+  }
+
+  .togare-briefing-card__health-status {
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  /* G2-P5 (code review 2026-05-18): glyph de estado (AR-5 cor+ícone+label).
+     aria-hidden no HTML — herda a cor do --health-status (já AA por estado). */
+  .togare-briefing-card__glyph {
+    margin-right: 0.25rem;
+  }
+
+  .togare-briefing__empty-state {
+    margin: 0;
+    padding: 0.75rem 0;
+    color: #4a5568; /* contrast 7.0:1 */
+    font-size: 0.875rem;
+  }
+
+  /* Acessibilidade: sr-only para live region */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}

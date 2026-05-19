@@ -1,0 +1,159 @@
+{
+    "labels": {
+        "Prazo": "Prazo",
+        "create": "Novo prazo",
+        "Create Prazo": "Novo prazo",
+        "panelAvancadoDjen": "Avançado (DJEN)",
+        "statusSelectorTrigger": "Mudar status",
+        "lerMais": "Ler mais",
+        "lerMenos": "Ler menos",
+        "verNoDjen": "Ver no DJEN ↗",
+        "revisar": "Revisar",
+        "mostrarCamposTecnicos": "Mostrar campos técnicos",
+        "ocultarCamposTecnicos": "Ocultar campos técnicos",
+        "payloadAccordion": "Payload bruto (clique para expandir)",
+        "payloadAccordionWarning": "⚠ Payload não pôde ser parseado como JSON"
+    },
+    "fields": {
+        "dataDisponibilizacao": "Data de disponibilização",
+        "dataInicioPrazo": "Início da contagem",
+        "dataFatal": "Data fatal",
+        "prazoDias": "Prazo (dias)",
+        "contagem": "Tipo de contagem",
+        "atoCodigo": "Código do ato",
+        "referenciaLegal": "Referência legal",
+        "confidence": "Confiança",
+        "parserRegraVersao": "Versão da regra do parser",
+        "fonteExcerpt": "Trecho da publicação",
+        "source": "Origem",
+        "sourcePubId": "ID da publicação (DJEN)",
+        "numeroProcessoOriginal": "Número CNJ (publicação)",
+        "publicacaoOrigemRaw": "Payload bruto da publicação",
+        "status": "Status",
+        "processo": "Processo",
+        "assignedUser": "Advogado responsável",
+        "tenantId": "Tenant",
+        "descricao": "Descrição",
+        "prioridade": "Prioridade",
+        "tipoPrazo": "Tipo de prazo",
+        "motivoReagendamento": "Motivo do reagendamento",
+        "dataCumprimento": "Data de cumprimento (interno)",
+        "cliente": "Cliente",
+        "parteContraria": "Parte contrária"
+    },
+    "tooltips": {
+        "dataCumprimento": "Data em que VOCÊ planeja fazer este prazo (controle interno do escritório). Pode ser anterior à data fatal — pense como margem de segurança operacional. Padrão sugerido: data fatal menos 2 dias úteis."
+    },
+    "links": {
+        "processo": "Processo",
+        "cliente": "Cliente",
+        "parteContraria": "Parte contrária",
+        "documentos": "Documentos"
+    },
+    "options": {
+        "status": {
+            "rascunho": "Rascunho",
+            "pendente": "Pendente",
+            "atrasado_reagendado": "Atrasado/Reagendado",
+            "aguardando_cliente": "Aguardando cliente",
+            "aguardando_correcao": "Aguardando correção",
+            "protocolado": "Protocolado",
+            "ciencia_renuncia": "Ciência com renúncia",
+            "acompanhamento": "Acompanhamento",
+            "descartado": "Descartado"
+        },
+        "contagem": {
+            "uteis": "Dias úteis",
+            "corridos": "Dias corridos"
+        },
+        "confidence": {
+            "high": "Alta",
+            "medium": "Média",
+            "low": "Baixa"
+        },
+        "source": {
+            "djen": "DJEN (automático)",
+            "manual": "Manual",
+            "manual_ambiguo": "Manual (ambiguidade)"
+        },
+        "prioridade": {
+            "baixa": "Baixa",
+            "normal": "Normal",
+            "alta": "Alta",
+            "urgente": "Urgente"
+        },
+        "atoCodigo": {
+            "impugnacao_cumprimento": "Impugnação ao cumprimento de sentença",
+            "cumprimento_sentenca": "Cumprimento de sentença",
+            "embargos_declaracao": "Embargos de Declaração",
+            "agravo_instrumento": "Agravo de Instrumento",
+            "agravo_interno": "Agravo Interno",
+            "quesitos_pericia": "Quesitos de perícia",
+            "replica": "Réplica",
+            "recurso_apelacao": "Recurso de Apelação",
+            "contestacao": "Contestação",
+            "manifestacao_geral_intimacao": "Manifestação geral / intimação",
+            "manifestacao_generica": "Manifestação genérica"
+        },
+        "tipoPrazo": {
+            "": "(não classificado)",
+            "peticao_inicial": "Petição inicial",
+            "contestacao": "Contestação",
+            "replica": "Réplica",
+            "apelacao": "Apelação",
+            "agravo_instrumento": "Agravo de Instrumento",
+            "agravo_interno": "Agravo Interno",
+            "embargos_declaracao": "Embargos de Declaração",
+            "resp_re": "REsp / RE",
+            "aresp_are": "AREsp / ARE",
+            "manifestacao_diversa": "Manifestações diversas",
+            "impugnacao_laudo_cumprimento": "Impugnação (laudo / cumprimento de sentença)",
+            "contrarrazoes": "Contrarrazões",
+            "idpj": "IDPJ",
+            "mandado_seguranca": "Mandado de Segurança",
+            "audiencia": "Audiência",
+            "ciencia_renuncia": "Ciência com renúncia",
+            "diligencia_administrativa": "Diligências administrativas / resposta ao cliente"
+        }
+    },
+    "boolFilters": {
+        "onlyMy": "Apenas meus",
+        "naoVinculadas": "Não vinculadas",
+        "meusPendentes": "Meus pendentes",
+        "pendentesParaHoje": "Para hoje",
+        "meusRascunhos": "Meus rascunhos",
+        "aguardandoCliente": "Aguardando cliente",
+        "protocoladosUltimos30d": "Protocolados (últimos 30 dias)",
+        "acompanhamento": "Acompanhamento"
+    },
+    "messages": {
+        "dataFatalRequerida": "Data fatal do prazo é obrigatória.",
+        "dataInicioPrazoRequerida": "Data de início da contagem é obrigatória.",
+        "dataDisponibilizacaoRequerida": "Data de disponibilização é obrigatória.",
+        "prazoDiasInvalido": "Prazo em dias deve estar entre 1 e 365.",
+        "prazoDiasZero": "Prazo em dias deve ser maior que zero.",
+        "contagemInvalida": "Tipo de contagem inválido — use 'úteis' ou 'corridos'.",
+        "confidenceInvalida": "Confiança inválida — use 'high', 'medium' ou 'low'.",
+        "sourceInvalida": "Origem inválida — use 'djen', 'manual' ou 'manual_ambiguo'.",
+        "statusInvalido": "Status inválido — escolha uma das opções.",
+        "prioridadeInvalida": "Prioridade inválida — escolha entre baixa, normal, alta ou urgente.",
+        "prazoPendenteSemProcesso": "Prazo pendente precisa estar vinculado a um processo.",
+        "prazoPendenteSemAssignee": "Prazo pendente precisa ter um advogado responsável.",
+        "rascunhoSemNumero": "Rascunho de prazo precisa preservar o número do processo da publicação original.",
+        "dataFatalAnteriorADisponibilizacao": "Data fatal não pode ser anterior à data de disponibilização.",
+        "dataInicioPrazoAnteriorADisponibilizacao": "Data de início da contagem não pode ser anterior à data de disponibilização.",
+        "motivoReagendamentoRequerido": "Para mudar para Atrasado/Reagendado, informe o motivo do reagendamento (mínimo 10 caracteres).",
+        "statusSelectorMotivoTitulo": "Por que este prazo foi reagendado/atrasado?",
+        "statusSelectorMotivoPlaceholder": "Ex.: Tribunal reagendou audiência para 20/05; cliente solicitou prorrogação",
+        "statusSelectorMotivoMinChars": "Mínimo 10 caracteres",
+        "statusSelectorMotivoCounterTpl": "{n}/10 caracteres mínimo",
+        "confirmStatusProtocolado": "Marcar este prazo como Protocolado? Esta ação fica registrada no audit log.",
+        "confirmStatusCienciaRenuncia": "Marcar este prazo como Ciência com renúncia? Esta ação fica registrada no audit log.",
+        "confirmStatusDescartado": "Descartar este prazo? Esta ação fica registrada no audit log e pode ser revertida em até 30 dias via Admin → Trash.",
+        "toastUndoPrazoMarcado": "Marcado como {label}.",
+        "toastAutoLinkClienteParte": "Cliente {nomeCliente} e Parte {nomeParte} herdados do Processo {cnj}.",
+        "toastAutoLinkSoCliente": "Cliente {nomeCliente} herdado do Processo {cnj}.",
+        "toastUndoActionLabel": "Desfazer",
+        "toastAutoLinkActionLabel": "Editar"
+    }
+}

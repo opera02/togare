@@ -1,0 +1,5 @@
+{
+  "Totp": {
+    "loginClassName": "Espo\\Modules\\TogareRbac\\Authentication\\Mfa\\TogareTotpLogin"
+  }
+}

@@ -1,0 +1,107 @@
+{
+    "fields": {
+        "name": "Identificação",
+        "sourcePubId": "ID da publicação na origem (DJEN)",
+        "numeroProcessoOriginal": "Número do processo (CNJ)",
+        "payload": "Payload bruto da publicação",
+        "texto": "Texto completo da publicação",
+        "dataDisponibilizacao": "Data de disponibilização",
+        "dataInicioPrazo": "Início do prazo",
+        "dataFatal": "Data fatal (legal)",
+        "prazoDias": "Prazo (dias)",
+        "contagem": "Contagem",
+        "atoCodigo": "Ato classificado",
+        "referenciaLegal": "Referência legal",
+        "confidence": "Confiança do parser",
+        "parserRegraVersao": "Versão da regra do parser",
+        "fonteExcerpt": "Trecho da fonte",
+        "candidatos": "Processos candidatos",
+        "ambiguityReason": "Motivo da ambiguidade",
+        "status": "Status",
+        "decisionType": "Tipo de decisão",
+        "decidedAt": "Decidido em",
+        "decidedBy": "Decidido por",
+        "decisionProcesso": "Processo escolhido",
+        "prazoCriado": "Prazo gerado",
+        "assignedUser": "Advogado responsável"
+    },
+    "tooltips": {
+        "candidatos": "Lista denormalizada (snapshot) dos processos candidatos identificados pelo bot DJEN. Preserva o contexto original mesmo se os processos forem editados depois.",
+        "payload": "Conteúdo bruto recebido da Comunica API (Diário de Justiça Eletrônico Nacional). Reservado para auditoria e diagnóstico.",
+        "ambiguityReason": "Motivo pelo qual o bot caiu em fila para revisão humana: 'cnj_multiplos_processos' (defensivo) ou 'name_match_multiplos_candidatos' (caso principal — match por nome de partes)."
+    },
+    "options": {
+        "status": {
+            "pendente_revisao": "Precisa sua leitura",
+            "resolvido": "Resolvida",
+            "ignorado": "Ignorada",
+            "bulk_ignorado": "Ignorada em lote"
+        },
+        "decisionType": {
+            "": "(sem decisão)",
+            "confirmar_candidato": "Candidato confirmado",
+            "ignorar": "Ignorada",
+            "bulk_ignorar_processo": "Ignorada em lote (por processo)"
+        },
+        "ambiguityReason": {
+            "cnj_multiplos_processos": "CNJ batendo múltiplos processos",
+            "name_match_multiplos_candidatos": "Match por nome — múltiplos candidatos"
+        },
+        "confidence": {
+            "high": "Alta",
+            "medium": "Média",
+            "low": "Baixa"
+        },
+        "contagem": {
+            "uteis": "Dias úteis",
+            "corridos": "Dias corridos"
+        }
+    },
+    "boolFilters": {
+        "precisaSuaLeitura": "Precisa sua leitura"
+    },
+    "presetFilters": {
+    },
+    "labels": {
+        "Create PublicacaoAmbigua": "Criar publicação ambígua"
+    },
+    "messages": {
+        "alreadyResolved": "Esta publicação já foi resolvida por outro advogado em {timestamp}. Sua tela vai atualizar.",
+        "invalidCandidate": "O processo escolhido não está na lista de candidatos desta publicação.",
+        "invalidCandidateEmpty": "Informe o processo a ser bulk-ignorado.",
+        "confirmationIgnore": "Esta publicação não vai gerar Prazo. Decisão fica registrada para auditoria.",
+        "bulkIgnoreSuccess": "{count} publicações marcadas como ignoradas para o processo {processoCnj}.",
+        "confirmarPrazoNesteProcesso": "Confirmar prazo neste processo",
+        "nenhumDosNIgnorar": "Nenhum dos {N} — ignorar publicação",
+        "ignorarTodosCandidato": "Ignorar todos com mesmo {label}",
+        "bulkIgnoreConfirmation": "Isso vai ignorar TODAS as publicações pendentes que tenham este Processo como candidato. Continuar?",
+        "bulkIgnoreHeader": "Ignorar todos do processo",
+        "bulkIgnoreChooseHeader": "Escolha o processo a ignorar",
+        "bulkIgnoreNoSelection": "Selecione ao menos 1 publicação para usar esta ação.",
+        "bulkIgnoreNoCommon": "As publicações selecionadas não compartilham processoIds em candidatos. Refine a seleção.",
+        "bulkIgnoreVisibleRowsOnly": "Esta ação vale apenas para linhas visíveis selecionadas. Desmarque selecionar todos e escolha linhas da página atual.",
+        "bulkMenuEmpty": "(sem candidatos)",
+        "ignorarHeader": "Ignorar publicação",
+        "resolveSucesso": "Prazo confirmado neste processo.",
+        "ignoreSucesso": "Publicação ignorada.",
+        "forbidden": "Sem permissão para esta ação.",
+        "serverError": "Erro do servidor. Tente novamente.",
+        "tentarDeNovo": "Tentar de novo",
+        "resolvendo": "Resolvendo...",
+        "itemDeQueue": "Item {n} de {total}",
+        "anterior": "← Anterior",
+        "proximo": "Próximo →",
+        "itemAnteriorAria": "Item anterior",
+        "proximoItemAria": "Próximo item",
+        "acoesEmMassa": "Ações em massa",
+        "keyboardShortcutsTooltip": "Navegação: ←/→ entre items, b = bulk action",
+        "decisaoBloqueadaTooltip": "Apenas Advogado ou Sócio/Admin pode decidir esta publicação.",
+        "candidatoLetra": "Candidato {letra}: {clienteNome}",
+        "dataDistribuicaoFallback": "—",
+        "cartaoSemCandidatos": "Esta publicação não tem candidatos snapshotted — provavelmente foi resolvida ou ignorada. Volte para a fila.",
+        "buttonContinue": "Continuar",
+        "buttonCancel": "Cancelar",
+        "confirmIgnoreButton": "Ignorar",
+        "hedgeBanner": "Ferramentas podem falhar — confira sempre antes de protocolar."
+    }
+}

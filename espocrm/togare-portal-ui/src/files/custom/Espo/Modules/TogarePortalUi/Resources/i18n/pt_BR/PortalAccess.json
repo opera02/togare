@@ -1,0 +1,15 @@
+{
+  "labels": {
+    "liberarAcessoPortal": "Liberar acesso ao Portal"
+  },
+  "messages": {
+    "provisionEmailSubject": "Acesso ao Portal do Cliente — {escritorio}",
+    "provisionEmailBody": "Olá, {nome}. O {escritorio} criou seu acesso ao Portal do Cliente, onde você acompanha o andamento do seu processo quando quiser. Para começar, clique no link abaixo e crie a sua senha: {link}. Depois, para entrar no Portal, use este usuário: {userName}. Este link é pessoal e vale por tempo limitado — se ele expirar, ligue para o escritório. Se precisar de ajuda, ligue para o escritório: {telefone}.",
+    "provisionEmailPhoneFallback": "o escritório",
+    "provisionConfirm": "Liberar o acesso ao Portal do Cliente para {nome}? Ele receberá um e-mail com um link para criar a senha.",
+    "provisionConfirmText": "Liberar acesso",
+    "provisionSuccessEmailSent": "Acesso liberado. {nome} recebeu um e-mail com o link para criar a senha e o usuário de acesso.",
+    "provisionSuccessEmailFailed": "Acesso liberado, mas não foi possível enviar o e-mail agora. Usuário criado: {userName}. Tente liberar novamente mais tarde para reenviar o link ao cliente.",
+    "provisionError": "Não foi possível liberar o acesso ao Portal. {detalhe}"
+  }
+}

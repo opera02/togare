@@ -1,0 +1,13 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "list": "togare-core:views/document/record/list",
+        "modal": "togare-core:views/document/upload-modal"
+    },
+    "recordViews": {
+        "list": "togare-core:views/document/record/list",
+        "detail": "togare-core:views/document/record/detail"
+    },
+    "boolFilterList": [],
+    "iconClass": "fas fa-file-alt"
+}

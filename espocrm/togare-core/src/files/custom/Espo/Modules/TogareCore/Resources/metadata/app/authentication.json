@@ -1,0 +1,10 @@
+{
+    "onSuccessHookClassNameList": [
+        "__APPEND__",
+        "Espo\\Modules\\TogareCore\\Hooks\\Authentication\\AuthEventAudit"
+    ],
+    "onFailHookClassNameList": [
+        "__APPEND__",
+        "Espo\\Modules\\TogareCore\\Hooks\\Authentication\\AuthEventAudit"
+    ]
+}

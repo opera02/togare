@@ -1,0 +1,77 @@
+{
+    "view": "togare-core:views/dashlets/togare-prazos-do-dia",
+    "aclScope": "Prazo",
+    "entityType": "Prazo",
+    "options": {
+        "view": "views/dashlets/options/record-list",
+        "fields": {
+            "title": {
+                "type": "varchar",
+                "required": true
+            },
+            "autorefreshInterval": {
+                "type": "enumFloat",
+                "options": [0, 0.5, 1, 2, 5, 10]
+            },
+            "displayRecords": {
+                "type": "int",
+                "min": 1,
+                "max": 20
+            },
+            "expandedLayout": {
+                "type": "base",
+                "view": "views/dashlets/fields/records/expanded-layout"
+            }
+        },
+        "defaults": {
+            "orderBy": "dataFatal",
+            "order": "asc",
+            "displayRecords": 8,
+            "autorefreshInterval": 0.5,
+            "expandedLayout": {
+                "rows": [
+                    [
+                        {"name": "status"},
+                        {"name": "dataFatal", "soft": true}
+                    ],
+                    [
+                        {"name": "descricao"},
+                        {"name": "processoName", "link": true}
+                    ],
+                    [
+                        {"name": "prioridade"},
+                        false
+                    ]
+                ]
+            },
+            "searchData": {
+                "bool": {
+                    "pendentesParaHoje": true
+                }
+            }
+        },
+        "layout": [
+            {
+                "rows": [
+                    [
+                        {"name": "title"},
+                        {"name": "autorefreshInterval"}
+                    ],
+                    [
+                        {"name": "displayRecords"},
+                        false
+                    ],
+                    [
+                        {"name": "expandedLayout"},
+                        false
+                    ]
+                ]
+            }
+        ]
+    },
+    "accessDataList": [
+        {
+            "inPortalDisabled": true
+        }
+    ]
+}

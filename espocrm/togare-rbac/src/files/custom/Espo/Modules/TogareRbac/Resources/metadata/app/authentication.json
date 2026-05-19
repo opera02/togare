@@ -1,0 +1,14 @@
+{
+    "beforeLoginHookClassNameList": [
+        "__APPEND__",
+        "Espo\\Modules\\TogareRbac\\Authentication\\Hook\\AuthLockoutEnforcer"
+    ],
+    "onFailHookClassNameList": [
+        "__APPEND__",
+        "Espo\\Modules\\TogareRbac\\Authentication\\Hook\\AuthFailedAttemptCounter"
+    ],
+    "onSuccessHookClassNameList": [
+        "__APPEND__",
+        "Espo\\Modules\\TogareRbac\\Authentication\\Hook\\AuthSuccessRateLimitReset"
+    ]
+}

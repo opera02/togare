@@ -1,0 +1,9 @@
+[
+    {"name": "tipo"},
+    {"name": "cliente"},
+    {"name": "fatura"},
+    {"name": "processo"},
+    {"name": "formaPagamento"},
+    {"name": "categoria"},
+    {"name": "dataMovimento"}
+]

@@ -1,0 +1,17 @@
+{
+  "name": "togare-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo do Togare — dev tools (prettier + lefthook).",
+  "license": "AGPL-3.0-only",
+  "devDependencies": {
+    "lefthook": "^1.12.0",
+    "prettier": "^3.4.0"
+  },
+  "scripts": {
+    "fix": "prettier --write . && php tools/validate-togare-naming.php",
+    "lint": "prettier --check . && php tools/validate-togare-naming.php",
+    "validate-bundle-imports": "node tools/validate-bundle-imports.mjs",
+    "prepare": "lefthook install"
+  }
+}

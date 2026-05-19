@@ -1,0 +1,44 @@
+{
+    "labels": {
+        "WizardShell": "Bem-vindo ao Togare",
+        "Step1Title": "Identidade do escritório",
+        "Step2Title": "Cor primária",
+        "Step3Title": "Confirmar roles",
+        "Step4Title": "Convidar usuários iniciais"
+    },
+    "fields": {
+        "companyName": "Nome do escritório",
+        "companyLogo": "Logotipo (PNG, JPG ou SVG, até 512KB)",
+        "primaryColor": "Cor primária (#RRGGBB)",
+        "userName": "Nome de usuário",
+        "emailAddress": "E-mail",
+        "firstName": "Nome",
+        "lastName": "Sobrenome",
+        "role": "Role"
+    },
+    "messages": {
+        "stepProgress": "Passo {n} de 4",
+        "skipWizard": "Pular wizard",
+        "skipConfirm": "Digite \"pular\" para confirmar",
+        "previous": "← Anterior",
+        "next": "Próximo →",
+        "finish": "Concluir wizard",
+        "logoUploadHint": "Recomendado: 256x256 px, fundo transparente.",
+        "colorInvalidFormat": "Cor inválida. Use formato #RRGGBB.",
+        "companyNameEmpty": "Informe o nome do escritório.",
+        "inviteMaxLimit": "Máximo de 20 convites por lote. Convide os demais após concluir o wizard.",
+        "inviteNoRows": "Nenhum convite preenchido. Prosseguindo sem convidar usuários. Você pode convidá-los depois via Admin → Usuários.",
+        "inviteAddRow": "+ Adicionar usuário",
+        "inviteSendAll": "Convidar todos",
+        "roleRenameLabel": "Renomear (opcional)",
+        "roleRenameInvalid": "Nome de role inválido ou já existe.",
+        "roleSocioAdminReserved": "O role 'Sócio/Admin' é reservado e não pode ser renomeado.",
+        "logoAttachmentNotFound": "Arquivo de logo não encontrado. Reenvie o logotipo.",
+        "inviteRowUserNameEmpty": "Linha {row}: nome de usuário obrigatório.",
+        "inviteRowEmailInvalid": "Linha {row}: e-mail inválido.",
+        "inviteRowRoleRequired": "Linha {row}: selecione ao menos um role.",
+        "summarySucceeded": "Convidados com sucesso: {count}",
+        "summaryFailed": "Falhas: {count}",
+        "preview": "Pré-visualização da cor primária."
+    }
+}

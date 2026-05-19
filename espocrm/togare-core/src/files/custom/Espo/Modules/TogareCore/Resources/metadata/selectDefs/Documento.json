@@ -1,0 +1,6 @@
+{
+    "orderBy": "createdAt",
+    "order": "desc",
+    "boolFilterClassNameMap": {},
+    "selectAttributesDependencyMap": {}
+}

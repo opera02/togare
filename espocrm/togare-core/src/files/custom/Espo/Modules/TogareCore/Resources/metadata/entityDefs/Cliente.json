@@ -1,0 +1,233 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "maxLength": 255,
+            "trim": true
+        },
+        "tipoPessoa": {
+            "type": "enum",
+            "options": ["pf", "pj"],
+            "default": "pf",
+            "required": true
+        },
+        "cpf": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cpf-br",
+            "maxLength": 14,
+            "trim": true
+        },
+        "rg": {
+            "type": "varchar",
+            "maxLength": 30,
+            "trim": true
+        },
+        "dataNascimento": {
+            "type": "date"
+        },
+        "estadoCivil": {
+            "type": "enum",
+            "options": [
+                "",
+                "solteiro",
+                "casado",
+                "divorciado",
+                "viuvo",
+                "uniao_estavel",
+                "separado_judicialmente"
+            ],
+            "default": ""
+        },
+        "nacionalidade": {
+            "type": "varchar",
+            "maxLength": 50,
+            "default": "Brasileira",
+            "trim": true
+        },
+        "profissao": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true
+        },
+        "cnpj": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cnpj-br",
+            "maxLength": 18,
+            "trim": true
+        },
+        "razaoSocial": {
+            "type": "varchar",
+            "maxLength": 255,
+            "trim": true
+        },
+        "nomeFantasia": {
+            "type": "varchar",
+            "maxLength": 255,
+            "trim": true
+        },
+        "inscricaoEstadual": {
+            "type": "varchar",
+            "maxLength": 30,
+            "trim": true
+        },
+        "email": {
+            "type": "email"
+        },
+        "telefone": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/telefone-br",
+            "maxLength": 16,
+            "trim": true
+        },
+        "telefone2": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/telefone-br",
+            "maxLength": 16,
+            "trim": true
+        },
+        "cep": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cep-br",
+            "maxLength": 9,
+            "trim": true
+        },
+        "logradouro": {
+            "type": "varchar",
+            "maxLength": 255,
+            "trim": true
+        },
+        "numeroEndereco": {
+            "type": "varchar",
+            "maxLength": 20,
+            "trim": true
+        },
+        "complemento": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true
+        },
+        "bairro": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true
+        },
+        "cidade": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true
+        },
+        "uf": {
+            "type": "enum",
+            "options": [
+                "",
+                "AC", "AL", "AM", "AP", "BA", "CE", "DF",
+                "ES", "GO", "MA", "MG", "MS", "MT", "PA",
+                "PB", "PE", "PI", "PR", "RJ", "RN", "RO",
+                "RR", "RS", "SC", "SE", "SP", "TO"
+            ],
+            "default": ""
+        },
+        "observacoes": {
+            "type": "text"
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "assignedUser": {
+            "type": "link"
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "processos": {
+            "type": "hasMany",
+            "entity": "Processo",
+            "foreign": "clientes",
+            "relationshipName": "ClienteProcesso"
+        },
+        "prazos": {
+            "type": "hasMany",
+            "entity": "Prazo",
+            "foreign": "cliente"
+        },
+        "documentos": {
+            "type": "hasMany",
+            "entity": "Documento",
+            "foreign": "cliente"
+        },
+        "contratosHonorarios": {
+            "type": "hasMany",
+            "entity": "ContratoHonorarios",
+            "foreign": "cliente"
+        },
+        "faturas": {
+            "type": "hasMany",
+            "entity": "Fatura",
+            "foreign": "cliente"
+        },
+        "lancamentosFinanceiros": {
+            "type": "hasMany",
+            "entity": "LancamentoFinanceiro",
+            "foreign": "cliente"
+        }
+    },
+    "indexes": {
+        "cpfPartial": {
+            "columns": ["cpf"],
+            "unique": true
+        },
+        "cnpjPartial": {
+            "columns": ["cnpj"],
+            "unique": true
+        },
+        "tipoPessoaName": {
+            "columns": ["tipoPessoa", "name"]
+        },
+        "createdAt": {
+            "columns": ["createdAt"]
+        }
+    },
+    "collection": {
+        "orderBy": "name",
+        "order": "asc",
+        "textFilterFields": [
+            "name",
+            "cpf",
+            "cnpj",
+            "razaoSocial",
+            "nomeFantasia",
+            "email",
+            "telefone"
+        ]
+    }
+}

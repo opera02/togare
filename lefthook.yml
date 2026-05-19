@@ -1,0 +1,41 @@
+# Pre-commit hooks do Togare (Story 1a.2).
+# Referência: architecture.md Step 5 — "Enforcement local (sem CI)".
+#
+# Para ativar no repo local (1x por clone):
+#   npm install                  (roda "prepare" → lefthook install)
+#   # ou manualmente:
+#   npx lefthook install
+#
+# Para pular em commit legítimo:
+#   git commit --no-verify -m "mensagem [skip hooks: <motivo>]"
+#
+# Cada job é um script em tools/hooks/ — fica fácil testar, debugar e evita
+# pegadinhas de parsing YAML heredoc no Git Bash (Windows).
+
+min_version: 1.12.0
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: php-cs-fixer
+      glob: "*.php"
+      run: bash tools/hooks/php-cs-fixer.sh {staged_files}
+
+    - name: prettier
+      glob: "*.{js,jsx,ts,tsx,json,md,yml,yaml,css,scss,html}"
+      run: bash tools/hooks/prettier.sh {staged_files}
+
+    - name: validate-togare-naming
+      run: bash tools/hooks/validate-togare-naming.sh {staged_files}
+
+    - name: block-secrets
+      run: bash tools/hooks/block-secrets.sh {staged_files}
+
+    - name: validate-bundle-imports
+      glob: "espocrm/*/src/files/client/custom/modules/*/src/**/*.js"
+      run: node tools/validate-bundle-imports.mjs {staged_files}
+
+pre-push:
+  jobs:
+    - name: phpunit-togare-core
+      run: bash -c "cd espocrm/togare-core && php vendor/bin/phpunit"

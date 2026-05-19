@@ -1,0 +1,11 @@
+[
+    {"name": "status", "width": 12},
+    {"name": "numeroProcessoOriginal", "link": true, "width": 18},
+    {"name": "atoCodigo", "width": 14},
+    {"name": "dataFatal", "width": 10},
+    {"name": "prazoDias", "width": 6},
+    {"name": "prioridade", "width": 8},
+    {"name": "confidence", "width": 8},
+    {"name": "assignedUser", "width": 12},
+    {"name": "modifiedAt", "width": 10}
+]

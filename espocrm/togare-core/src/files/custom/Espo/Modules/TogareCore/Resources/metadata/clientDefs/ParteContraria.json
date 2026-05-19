@@ -1,0 +1,34 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "edit": "togare-core:views/parte-contraria/record/edit",
+        "detail": "togare-core:views/parte-contraria/record/detail"
+    },
+    "boolFilterList": [],
+    "dynamicLogic": {
+        "fields": {
+            "cpf": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pf"
+                        }
+                    ]
+                }
+            },
+            "cnpj": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "tipoPessoa",
+                            "value": "pj"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

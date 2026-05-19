@@ -1,0 +1,8 @@
+{
+  "TogareTpuSync": {
+    "jobClassName": "Espo\\Modules\\TogareTpu\\Jobs\\TogareTpuSyncJob",
+    "name": "Togare — Sync mensal TPU (CNJ)",
+    "description": "Sincroniza classes, assuntos e movimentos do PDPJ via API REST. Idempotente. Janela alvo 02-04h BRT (NFR4).",
+    "scheduling": "0 3 1 * *"
+  }
+}

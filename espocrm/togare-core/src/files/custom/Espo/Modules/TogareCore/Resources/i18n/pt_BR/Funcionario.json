@@ -1,0 +1,31 @@
+{
+    "labels": {
+        "Funcionario": "Funcionário",
+        "Funcionários": "Funcionários",
+        "Create Funcionario": "Cadastrar funcionário",
+        "Edit Funcionario": "Editar funcionário"
+    },
+    "fields": {
+        "nome": "Nome",
+        "cpf": "CPF",
+        "cargo": "Cargo",
+        "salario": "Salário (R$)",
+        "dataAdmissao": "Data de admissão",
+        "tenantId": "Tenant (interno)",
+        "createdAt": "Cadastrado em",
+        "createdBy": "Criado por",
+        "modifiedAt": "Modificado em",
+        "modifiedBy": "Modificado por",
+        "assignedUser": "Responsável"
+    },
+    "links": {
+        "createdBy": "Criado por",
+        "modifiedBy": "Modificado por",
+        "assignedUser": "Responsável"
+    },
+    "messages": {
+        "cpfObrigatorio": "CPF é obrigatório para o funcionário.",
+        "cpfInvalido": "CPF inválido — confira o número e tente de novo.",
+        "cpfDuplicado": "Já existe um funcionário cadastrado com este CPF."
+    }
+}

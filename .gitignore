@@ -1,0 +1,78 @@
+# Dependências
+node_modules/
+vendor/
+.venv/
+__pycache__/
+*.pyc
+
+# Ambiente
+.env
+.env.*
+!.env.example
+
+# Credenciais geradas pelo instalador (NUNCA versionar — contém senhas)
+docker/CREDENCIAIS-TOGARE.txt
+
+# Dados e volumes locais
+docker/data/
+docker/volumes/
+docker/backup-data/
+*.sqlite
+*.db
+
+# Logs
+*.log
+logs/
+
+# IDE / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Artefatos de build
+dist/
+build/
+.cache/
+
+# Caches de ferramentas dev
+.php-cs-fixer.cache
+.prettier-cache
+.phpunit.result.cache
+
+# EspoCRM
+espocrm/custom/**/build/
+espocrm/custom/**/vendor/
+
+# Nextcloud
+nextcloud/config/config.php
+nextcloud/data/
+
+# Tmp / scratch
+tmp-*.sql
+tmp-*.json
+tmp-*.txt
+
+# Artefatos de code-review (LLM externa) — temp por sessão
+_bmad-output/implementation-artifacts/.review-group-*.diff
+_bmad-output/implementation-artifacts/.review-*.tmp
+
+# Fixtures de upload de smoke browser (lixo de teste manual na raiz)
+/dummy-contrato.pdf
+/dummy.png
+# Dumps de saída de teste avulsos na raiz
+/phpunit-*-output.txt
+
+# --- Exclusoes do espelho publico (branch publica-togare) ---
+/_bmad/
+/_bmad-output/
+/.claude/
+/.agent/
+/.agents/
+/CLAUDE.md
+/dummy-contrato.pdf
+/dummy.png
+/phpunit-0.35.0-output.txt
+/{output_folder}/
+/espocrm;C/
+/espocrm/togare-core;C/

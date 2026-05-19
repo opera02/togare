@@ -1,0 +1,30 @@
+{
+  "name": "espocrm-ext-togare-rbac",
+  "version": "0.14.1",
+  "releaseNotes": "Story 6.5 fix-pass (togare-rbac 0.14.1 PATCH): fecha findings do bmad-code-review. V010 tolera role.data malformado em scopeList/scopeLevel sem deixar Funcionario parcial; seeds dos 8 roles agora explicitam Fatura com politica canonica da Story 6.3, incluindo RH-lite=no em instalacao nova. Dependencia togare-core cravada >=0.37.1.",
+  "description": "Togare RBAC — 8 roles + convite + MFA TOTP + audit dual-write + auth lockout + wizard + alinhamentos por entity. + Story 6.3 v0.13.0: scope-level Fatura + LancamentoFinanceiro via V009 idempotente (Sócio/Admin+Financeiro=all em ambas; Advogado+Assistente=read own via assignedUser; Secretária+Marketing+RH-lite+Cliente-portal=no). + Story 6.5 v0.14.1: Funcionario via V010 + seeds Fatura canonicos. +PREVIOUS V008 ContratoHonorarios (6.1), V007 Documento (5.2), V005 field-level Prazo, V004 add Prazo scope, V003 Advogado read-own Processo, V002 process->Processo, V001 MFA backup codes. Requer togare-core >= 0.37.1.",
+  "scripts": {
+    "sa": "vendor/bin/phpstan",
+    "unit-tests": "vendor/bin/phpunit",
+    "copy": "node build --copy",
+    "composer-install": "node build --composer-install",
+    "sync": "node build --copy && node build --composer-install",
+    "extension": "node build --extension",
+    "build": "node build --extension",
+    "clear-cache": "php site/clear_cache.php",
+    "rebuild": "node build --rebuild",
+    "all": "node build --all",
+    "prepare-test": "node build --prepare-test"
+  },
+  "type": "module",
+  "author": "Togare",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "espo-extension-tools": "github:espocrm/extension-tools#0.4.3",
+    "fs-extra": "^9.0.0"
+  },
+  "engines": {
+    "npm": ">=8",
+    "node": ">=18"
+  }
+}

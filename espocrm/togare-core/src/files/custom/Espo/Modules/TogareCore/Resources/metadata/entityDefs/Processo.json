@@ -1,0 +1,258 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "numeroCnj"},
+            "order": {"order": [["numeroCnj", "{direction}"]]},
+            "where": {"LIKE": {"whereClause": {"numeroCnj*": "{value}"}}},
+            "view": "togare-core:views/fields/cnj"
+        },
+        "numeroCnj": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cnj",
+            "maxLength": 25,
+            "trim": true,
+            "required": true
+        },
+        "segredoJustica": {
+            "type": "bool",
+            "default": false
+        },
+        "classeCodigo": {
+            "type": "int",
+            "view": "togare-tpu:views/fields/tpu-lookup",
+            "tpuTipo": "classe",
+            "min": 1,
+            "required": true
+        },
+        "classeNome": {
+            "type": "varchar",
+            "maxLength": 255,
+            "readOnly": true
+        },
+        "assuntoCodigo": {
+            "type": "int",
+            "view": "togare-tpu:views/fields/tpu-lookup",
+            "tpuTipo": "assunto",
+            "min": 1,
+            "required": true
+        },
+        "assuntoNome": {
+            "type": "varchar",
+            "maxLength": 255,
+            "readOnly": true
+        },
+        "movimentoCodigo": {
+            "type": "int",
+            "view": "togare-tpu:views/fields/tpu-lookup",
+            "tpuTipo": "movimento",
+            "min": 1
+        },
+        "movimentoNome": {
+            "type": "varchar",
+            "maxLength": 255,
+            "readOnly": true
+        },
+        "area": {
+            "type": "enum",
+            "options": [
+                "civel",
+                "criminal",
+                "trabalhista",
+                "tributario",
+                "administrativo",
+                "previdenciario",
+                "consumidor",
+                "familia",
+                "empresarial",
+                "ambiental",
+                "outras"
+            ],
+            "default": "civel",
+            "required": true
+        },
+        "instancia": {
+            "type": "enum",
+            "options": ["primeira", "segunda", "superior"],
+            "default": "primeira",
+            "required": true
+        },
+        "fase": {
+            "type": "enum",
+            "options": [
+                "conhecimento",
+                "cumprimento_sentenca",
+                "execucao",
+                "recursal",
+                "arquivado"
+            ],
+            "default": "conhecimento",
+            "required": true
+        },
+        "status": {
+            "type": "enum",
+            "options": ["ativo", "suspenso", "arquivado", "baixado"],
+            "default": "ativo",
+            "required": true
+        },
+        "polo": {
+            "type": "enum",
+            "options": ["ativo", "passivo", "terceiro"],
+            "default": "ativo",
+            "required": true
+        },
+        "valorCausa": {
+            "type": "currency",
+            "default": 0,
+            "min": 0
+        },
+        "valorCausaCurrency": {
+            "type": "varchar",
+            "maxLength": 3,
+            "default": "BRL"
+        },
+        "dataDistribuicao": {
+            "type": "date"
+        },
+        "dataAutuacao": {
+            "type": "date"
+        },
+        "tribunal": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true
+        },
+        "vara": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true
+        },
+        "observacoes": {
+            "type": "text"
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false
+        },
+        "collaborators": {
+            "type": "linkMultiple",
+            "view": "views/fields/link-multiple",
+            "tooltip": false,
+            "audited": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "collaborators": {
+            "type": "hasMany",
+            "entity": "User",
+            "foreign": "processosColaborando",
+            "relationshipName": "ProcessoCollaborator"
+        },
+        "clientes": {
+            "type": "hasMany",
+            "entity": "Cliente",
+            "foreign": "processos",
+            "relationshipName": "ClienteProcesso"
+        },
+        "partesContrarias": {
+            "type": "hasMany",
+            "entity": "ParteContraria",
+            "foreign": "processos",
+            "relationshipName": "ParteContrariaProcesso"
+        },
+        "audiencias": {
+            "type": "hasMany",
+            "entity": "Audiencia",
+            "foreign": "processo"
+        },
+        "prazos": {
+            "type": "hasMany",
+            "entity": "Prazo",
+            "foreign": "processo"
+        },
+        "documentos": {
+            "type": "hasMany",
+            "entity": "Documento",
+            "foreign": "processo"
+        },
+        "contratosHonorarios": {
+            "type": "hasMany",
+            "entity": "ContratoHonorarios",
+            "foreign": "processos",
+            "relationshipName": "ContratoHonorariosProcesso"
+        },
+        "faturas": {
+            "type": "hasMany",
+            "entity": "Fatura",
+            "foreign": "processo"
+        },
+        "lancamentosFinanceiros": {
+            "type": "hasMany",
+            "entity": "LancamentoFinanceiro",
+            "foreign": "processo"
+        }
+    },
+    "indexes": {
+        "numeroCnj": {
+            "columns": ["numeroCnj"],
+            "unique": true
+        },
+        "areaStatus": {
+            "columns": ["area", "status"]
+        },
+        "assignedUserId": {
+            "columns": ["assignedUserId"]
+        },
+        "createdAt": {
+            "columns": ["createdAt"]
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc",
+        "textFilterFields": [
+            "numeroCnj",
+            "classeNome",
+            "assuntoNome",
+            "tribunal",
+            "vara",
+            "observacoes"
+        ]
+    }
+}

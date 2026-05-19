@@ -1,0 +1,5 @@
+{
+    "boolFilterClassNameMap": {
+        "precisaSuaLeitura": "Espo\\Modules\\TogareCore\\Classes\\Select\\Bool\\PublicacaoAmbigua\\PrecisaSuaLeitura"
+    }
+}

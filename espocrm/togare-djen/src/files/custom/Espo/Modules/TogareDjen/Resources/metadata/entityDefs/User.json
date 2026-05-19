@@ -1,0 +1,22 @@
+{
+  "fields": {
+    "oabNumber": {
+      "type": "varchar",
+      "maxLength": 20,
+      "required": false,
+      "trim": true,
+      "audited": false
+    },
+    "oabUf": {
+      "type": "enum",
+      "options": [
+        "",
+        "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO",
+        "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR",
+        "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"
+      ],
+      "required": false,
+      "audited": false
+    }
+  }
+}

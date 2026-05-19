@@ -1,0 +1,17 @@
+{
+    "options": {
+        "fields": {
+            "displayRecords": "Quantos prazos exibir",
+            "autorefreshInterval": "Atualizar a cada (h)",
+            "expandedLayout": "Colunas exibidas"
+        }
+    },
+    "messages": {
+        "briefingHeadlineZero": "Nenhum prazo pendente — aproveita o café. ☕",
+        "briefingHeadlineOne": "1 prazo pendente",
+        "briefingHeadlineMany": "{N} prazos pendentes",
+        "briefingCtaConfiraHoje": "Confira hoje",
+        "briefingD0ToastMessage": "VENCE HOJE: {N} prazo(s) — confirme ou adie"
+    }
+}
+

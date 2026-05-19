@@ -1,0 +1,5 @@
+{
+  "accessControlFilterClassNameMap": {
+    "portalOnlyOwn": "Espo\\Modules\\TogarePortalUi\\Classes\\Select\\Processo\\AccessControlFilters\\PortalOnlyCliente"
+  }
+}

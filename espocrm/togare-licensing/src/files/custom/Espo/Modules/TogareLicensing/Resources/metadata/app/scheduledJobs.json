@@ -1,0 +1,8 @@
+{
+  "TogareRevalidateLicenses": {
+    "jobClassName": "Espo\\Modules\\TogareLicensing\\Jobs\\RevalidateLicensesJob",
+    "name": "Togare — Revalidação de Licenças",
+    "description": "Verifica diariamente os módulos com licença vencida e os transita para read_only sem destruir dados (NFR20). Cron 04:00 BRT.",
+    "scheduling": "0 4 * * *"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "states": {
+    "pendente": {
+      "label": "Pendente",
+      "icon": "🟡",
+      "ariaLabel": "Status: pendente"
+    },
+    "confirmado": {
+      "label": "Confirmado",
+      "icon": "🟢",
+      "ariaLabel": "Status: confirmado"
+    },
+    "precisa-leitura": {
+      "label": "Precisa sua leitura",
+      "icon": "🟠",
+      "ariaLabel": "Status: precisa da sua leitura"
+    },
+    "critico": {
+      "label": "Crítico",
+      "icon": "🔴",
+      "ariaLabel": "Status: crítico",
+      "ariaLabelWithDays": "Prazo crítico, vence em {days} dia útil",
+      "ariaLabelWithDaysPlural": "Prazo crítico, vence em {days} dias úteis"
+    },
+    "info": {
+      "label": "Informativo",
+      "icon": "🔵",
+      "ariaLabel": "Status: informativo"
+    },
+    "rascunho": {
+      "label": "Rascunho",
+      "icon": "📝",
+      "ariaLabel": "Status: rascunho"
+    },
+    "atrasado_reagendado": {
+      "label": "Atrasado/Reagendado",
+      "icon": "⚠️",
+      "ariaLabel": "Status: atrasado ou reagendado",
+      "ariaLabelWithDays": "Prazo Atrasado/Reagendado, vence em {days} dia útil",
+      "ariaLabelWithDaysPlural": "Prazo Atrasado/Reagendado, vence em {days} dias úteis"
+    },
+    "aguardando_cliente": {
+      "label": "Aguardando cliente",
+      "icon": "👤",
+      "ariaLabel": "Status: aguardando retorno do cliente"
+    },
+    "aguardando_correcao": {
+      "label": "Aguardando correção",
+      "icon": "✏️",
+      "ariaLabel": "Status: aguardando correção"
+    },
+    "protocolado": {
+      "label": "Protocolado",
+      "icon": "✅",
+      "ariaLabel": "Status: protocolado"
+    },
+    "ciencia_renuncia": {
+      "label": "Ciência com renúncia",
+      "icon": "🛡️",
+      "ariaLabel": "Status: ciência com renúncia"
+    },
+    "acompanhamento": {
+      "label": "Acompanhamento",
+      "icon": "👁️",
+      "ariaLabel": "Status: acompanhamento"
+    },
+    "descartado": {
+      "label": "Descartado",
+      "icon": "⊘",
+      "ariaLabel": "Status: descartado"
+    },
+    "vence_hoje": {
+      "label": "VENCE HOJE",
+      "icon": "🔔",
+      "ariaLabel": "VENCE HOJE — confirme ou adie"
+    }
+  }
+}

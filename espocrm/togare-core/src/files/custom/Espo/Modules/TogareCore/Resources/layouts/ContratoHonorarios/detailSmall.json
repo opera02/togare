@@ -1,0 +1,41 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [
+                {"name": "cliente"},
+                {"name": "modalidade"}
+            ],
+            [
+                {"name": "valor"},
+                {"name": "percentual"}
+            ],
+            [
+                {"name": "dataAssinatura"},
+                {"name": "vigenciaInicio"}
+            ],
+            [
+                {"name": "vigenciaFim"},
+                {"name": "parcelamentoJson"}
+            ]
+        ]
+    },
+    {
+        "label": "Processos vinculados",
+        "rows": [
+            [
+                {"name": "processos", "fullWidth": true},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Arquivo",
+        "rows": [
+            [
+                {"name": "uploadedAttachment", "fullWidth": true},
+                false
+            ]
+        ]
+    }
+]

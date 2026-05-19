@@ -1,0 +1,20 @@
+{
+    "options": {
+        "fields": {
+            "title": "Título do painel"
+        }
+    },
+    "labels": {
+        "header": "Saúde do Togare",
+        "verHistorico": "Ver histórico de incidentes",
+        "verDetalhe": "Ver detalhe",
+        "semIncidentes": "Sem incidentes registrados.",
+        "semAcesso": "Painel restrito a Sócio/Admin."
+    },
+    "states": {
+        "ok": "Saudável",
+        "lento": "Lento",
+        "offline": "Fora do ar",
+        "nao_instalado": "Não instalado"
+    }
+}

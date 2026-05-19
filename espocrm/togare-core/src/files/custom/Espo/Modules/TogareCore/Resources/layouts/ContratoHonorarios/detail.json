@@ -1,0 +1,59 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [
+                {"name": "cliente"},
+                {"name": "modalidade"}
+            ],
+            [
+                {"name": "valor"},
+                {"name": "percentual"}
+            ],
+            [
+                {"name": "dataAssinatura"},
+                {"name": "vigenciaInicio"}
+            ],
+            [
+                {"name": "vigenciaFim"},
+                {"name": "parcelamentoJson"}
+            ]
+        ]
+    },
+    {
+        "label": "Processos vinculados",
+        "rows": [
+            [
+                {"name": "processos", "fullWidth": true},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Arquivo",
+        "rows": [
+            [
+                {"name": "filename"},
+                {"name": "mimeType"}
+            ],
+            [
+                {"name": "sizeBytes"},
+                {"name": "uploadedBy"}
+            ]
+        ]
+    },
+    {
+        "label": "Auditoria",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "createdAt"},
+                {"name": "createdBy"}
+            ],
+            [
+                {"name": "modifiedAt"},
+                {"name": "modifiedBy"}
+            ]
+        ]
+    }
+]

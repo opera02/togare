@@ -1,0 +1,33 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [{"name": "numeroCnj"}, {"name": "segredoJustica"}],
+            [{"name": "area"}, {"name": "instancia"}],
+            [{"name": "fase"}, {"name": "status"}],
+            [{"name": "polo"}, {"name": "valorCausa"}]
+        ]
+    },
+    {
+        "label": "Classificação CNJ",
+        "rows": [
+            [{"name": "classeCodigo"}, {"name": "classeNome"}],
+            [{"name": "assuntoCodigo"}, {"name": "assuntoNome"}],
+            [{"name": "movimentoCodigo"}, {"name": "movimentoNome"}]
+        ]
+    },
+    {
+        "label": "Tribunal e datas",
+        "rows": [
+            [{"name": "tribunal"}, {"name": "vara"}],
+            [{"name": "dataDistribuicao"}, {"name": "dataAutuacao"}]
+        ]
+    },
+    {
+        "label": "Atribuição",
+        "rows": [
+            [{"name": "assignedUser"}, {"name": "collaborators"}],
+            [{"name": "observacoes", "fullWidth": true}]
+        ]
+    }
+]

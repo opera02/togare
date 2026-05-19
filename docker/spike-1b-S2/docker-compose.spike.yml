@@ -1,0 +1,114 @@
+name: togare-spike-1bs2
+
+# Spike 1b.S2 — NFR3 / pools segregados do espocrm-daemon por queue_name.
+# THROWAWAY — NÃO combinar com docker/docker-compose.yml principal.
+#
+# Uso:
+#   cd docker/spike-1b-S2
+#   # 1) Subir só o DB:
+#   docker compose -f docker-compose.spike.yml up -d mariadb-spike
+#   # 2) Criar schema togare_queue_items (idempotente):
+#   docker compose -f docker-compose.spike.yml run --rm spike-cli /opt/togare-spike/init-schema.php
+#   # 3) Subir workers (1 por fila):
+#   docker compose -f docker-compose.spike.yml up -d worker-djen worker-internal
+#   # 4) Enfileirar jobs sintéticos:
+#   docker compose -f docker-compose.spike.yml run --rm spike-cli /opt/togare-spike/seed-jobs.php --djen=5 --internal=5
+#   # 5) Observar logs (Ctrl+C para sair):
+#   docker compose -f docker-compose.spike.yml logs -f worker-djen worker-internal
+#   # 6) Inspecionar finish times via SQL:
+#   docker compose -f docker-compose.spike.yml exec mariadb-spike mariadb -uspike -pspike spike_db \
+#     -e "SELECT queue_name, status, processing_started_at, completed_at, \
+#           TIMESTAMPDIFF(SECOND, processing_started_at, completed_at) AS duration_s \
+#         FROM togare_queue_items ORDER BY id"
+#   # 7) Desmontar tudo (preserva a pasta do spike no repo):
+#   docker compose -f docker-compose.spike.yml down -v
+
+networks:
+  spike_net:
+    driver: bridge
+
+services:
+  # ──────────────────────────────────────────────────────────────────────────
+  # MariaDB — efêmero (tmpfs). Reinicia limpo cada `down`.
+  # ──────────────────────────────────────────────────────────────────────────
+  mariadb-spike:
+    image: mariadb:11.4
+    networks: [spike_net]
+    environment:
+      MARIADB_ROOT_PASSWORD: spike_root
+      MARIADB_DATABASE: spike_db
+      MARIADB_USER: spike
+      MARIADB_PASSWORD: spike
+    tmpfs:
+      - /var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Worker DJEN — consome APENAS queue_name='djen'. Pool dedicado (1 container).
+  # Reutiliza 100% o QueueService da Story 1a.4c via autoloader do bootstrap.php.
+  # ──────────────────────────────────────────────────────────────────────────
+  worker-djen:
+    image: espocrm/espocrm:9.3
+    networks: [spike_net]
+    depends_on:
+      mariadb-spike:
+        condition: service_healthy
+    entrypoint: ["php"]
+    command: ["/opt/togare-spike/queue-worker.php"]
+    environment:
+      TOGARE_QUEUE_NAME: djen
+      TOGARE_DB_HOST: mariadb-spike
+      TOGARE_DB_NAME: spike_db
+      TOGARE_DB_USER: spike
+      TOGARE_DB_PASSWORD: spike
+    volumes:
+      - ../../espocrm/togare-core/src/files/custom/Espo/Modules/TogareCore:/usr/src/espocrm/custom/Espo/Modules/TogareCore:ro
+      - ./scripts:/opt/togare-spike:ro
+    restart: "no"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Worker INTERNAL — consome APENAS queue_name='internal'. Pool dedicado.
+  # ──────────────────────────────────────────────────────────────────────────
+  worker-internal:
+    image: espocrm/espocrm:9.3
+    networks: [spike_net]
+    depends_on:
+      mariadb-spike:
+        condition: service_healthy
+    entrypoint: ["php"]
+    command: ["/opt/togare-spike/queue-worker.php"]
+    environment:
+      TOGARE_QUEUE_NAME: internal
+      TOGARE_DB_HOST: mariadb-spike
+      TOGARE_DB_NAME: spike_db
+      TOGARE_DB_USER: spike
+      TOGARE_DB_PASSWORD: spike
+    volumes:
+      - ../../espocrm/togare-core/src/files/custom/Espo/Modules/TogareCore:/usr/src/espocrm/custom/Espo/Modules/TogareCore:ro
+      - ./scripts:/opt/togare-spike:ro
+    restart: "no"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # CLI one-shot — roda init-schema / seed-jobs / reset. Não sobe por default.
+  # Invocar via `docker compose run --rm spike-cli <script> [args]`.
+  # ──────────────────────────────────────────────────────────────────────────
+  spike-cli:
+    image: espocrm/espocrm:9.3
+    networks: [spike_net]
+    depends_on:
+      mariadb-spike:
+        condition: service_healthy
+    entrypoint: ["php"]
+    profiles: ["cli"]
+    environment:
+      TOGARE_DB_HOST: mariadb-spike
+      TOGARE_DB_NAME: spike_db
+      TOGARE_DB_USER: spike
+      TOGARE_DB_PASSWORD: spike
+    volumes:
+      - ../../espocrm/togare-core/src/files/custom/Espo/Modules/TogareCore:/usr/src/espocrm/custom/Espo/Modules/TogareCore:ro
+      - ./scripts:/opt/togare-spike:ro

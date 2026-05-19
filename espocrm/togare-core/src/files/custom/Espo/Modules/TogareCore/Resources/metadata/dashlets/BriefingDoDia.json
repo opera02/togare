@@ -1,0 +1,29 @@
+{
+    "view": "togare-core:views/dashlets/briefing-do-dia",
+    "options": {
+        "fields": {
+            "title": {
+                "type": "varchar",
+                "required": true
+            }
+        },
+        "defaults": {
+            "title": "Briefing do Dia"
+        },
+        "layout": [
+            {
+                "rows": [
+                    [
+                        {"name": "title"},
+                        false
+                    ]
+                ]
+            }
+        ]
+    },
+    "accessDataList": [
+        {
+            "inPortalDisabled": true
+        }
+    ]
+}

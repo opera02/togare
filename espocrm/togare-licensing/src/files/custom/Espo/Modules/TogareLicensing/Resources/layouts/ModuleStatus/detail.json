@@ -1,0 +1,44 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [
+                {
+                    "name": "moduleName"
+                },
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                {
+                    "name": "installationId"
+                },
+                {
+                    "name": "keyJti"
+                }
+            ]
+        ]
+    },
+    {
+        "label": "Validade",
+        "rows": [
+            [
+                {
+                    "name": "expiresAt"
+                },
+                {
+                    "name": "activatedAt"
+                }
+            ],
+            [
+                {
+                    "name": "lastValidatedAt"
+                },
+                {
+                    "name": "lastValidationOutcome"
+                }
+            ]
+        ]
+    }
+]

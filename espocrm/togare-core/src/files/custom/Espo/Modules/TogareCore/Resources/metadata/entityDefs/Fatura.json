@@ -1,0 +1,221 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "numero"},
+            "order": {"order": [["createdAt", "{direction}"]]}
+        },
+        "numero": {
+            "type": "varchar",
+            "maxLength": 30,
+            "trim": true,
+            "readOnly": true,
+            "audited": true
+        },
+        "descricao": {
+            "type": "varchar",
+            "maxLength": 200,
+            "trim": true,
+            "required": true,
+            "audited": true
+        },
+        "status": {
+            "type": "enum",
+            "options": [
+                "emitida",
+                "parcialmente_paga",
+                "paga",
+                "vencida",
+                "cancelada"
+            ],
+            "default": "emitida",
+            "style": {
+                "emitida": "primary",
+                "parcialmente_paga": "warning",
+                "paga": "success",
+                "vencida": "danger",
+                "cancelada": "default"
+            },
+            "readOnly": true,
+            "audited": true
+        },
+        "dataEmissao": {
+            "type": "date",
+            "required": true,
+            "audited": true
+        },
+        "dataVencimento": {
+            "type": "date",
+            "required": true,
+            "audited": true
+        },
+        "valorBruto": {
+            "type": "currency",
+            "min": 0.01,
+            "required": true,
+            "defaultCurrency": "BRL",
+            "audited": true
+        },
+        "valorPago": {
+            "type": "currency",
+            "min": 0,
+            "default": 0,
+            "readOnly": true,
+            "defaultCurrency": "BRL"
+        },
+        "saldo": {
+            "type": "currency",
+            "min": 0,
+            "default": 0,
+            "readOnly": true,
+            "defaultCurrency": "BRL"
+        },
+        "observacoes": {
+            "type": "text",
+            "trim": true,
+            "default": null
+        },
+        "motivoCancelamento": {
+            "type": "text",
+            "trim": true,
+            "default": null,
+            "readOnly": true
+        },
+        "cliente": {
+            "type": "link",
+            "required": true,
+            "view": "togare-core:views/fields/link-autocomplete"
+        },
+        "clienteName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "cliente.name"},
+            "order": {"order": [["cliente.name", "{direction}"]]}
+        },
+        "processo": {
+            "type": "link",
+            "required": false,
+            "view": "togare-core:views/common/fields/processo-by-cliente"
+        },
+        "processoName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "processo.numeroCnj"},
+            "order": {"order": [["processo.numeroCnj", "{direction}"]]}
+        },
+        "contratoHonorarios": {
+            "type": "link",
+            "required": false,
+            "view": "togare-core:views/common/fields/contrato-honorarios-by-cliente"
+        },
+        "contratoHonorariosName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "contratoHonorarios.modalidade"},
+            "order": {"order": [["contratoHonorarios.modalidade", "{direction}"]]}
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false
+        },
+        "lancamentosFinanceiros": {
+            "type": "linkMultiple",
+            "required": false,
+            "readOnly": true,
+            "audited": false
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "cliente": {
+            "type": "belongsTo",
+            "entity": "Cliente",
+            "foreign": "faturas"
+        },
+        "processo": {
+            "type": "belongsTo",
+            "entity": "Processo",
+            "foreign": "faturas"
+        },
+        "contratoHonorarios": {
+            "type": "belongsTo",
+            "entity": "ContratoHonorarios",
+            "foreign": "faturas"
+        },
+        "lancamentosFinanceiros": {
+            "type": "hasMany",
+            "entity": "LancamentoFinanceiro",
+            "foreign": "fatura"
+        }
+    },
+    "indexes": {
+        "numeroUnique": {
+            "columns": ["numero"],
+            "unique": true
+        },
+        "clienteId": {
+            "columns": ["clienteId"]
+        },
+        "processoId": {
+            "columns": ["processoId"]
+        },
+        "contratoHonorariosId": {
+            "columns": ["contratoHonorariosId"]
+        },
+        "statusDataVencimento": {
+            "columns": ["status", "dataVencimento"]
+        },
+        "dataEmissao": {
+            "columns": ["dataEmissao"]
+        },
+        "tenantId": {
+            "columns": ["tenantId"]
+        },
+        "createdAt": {
+            "columns": ["createdAt"]
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc",
+        "textFilterFields": ["numero", "descricao", "cliente.name"]
+    }
+}

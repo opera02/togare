@@ -1,0 +1,24 @@
+{
+  "detailView": {
+    "panels": [
+      {
+        "label": "Identificação Profissional",
+        "name": "identificacaoProfissional",
+        "rows": [
+          [{"name": "oabNumber"}, {"name": "oabUf"}]
+        ]
+      }
+    ]
+  },
+  "editView": {
+    "panels": [
+      {
+        "label": "Identificação Profissional",
+        "name": "identificacaoProfissional",
+        "rows": [
+          [{"name": "oabNumber"}, {"name": "oabUf"}]
+        ]
+      }
+    ]
+  }
+}

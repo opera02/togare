@@ -1,0 +1,96 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "nome"},
+            "order": {"order": [["nome", "{direction}"]]}
+        },
+        "nome": {
+            "type": "varchar",
+            "required": true,
+            "trim": true,
+            "maxLength": 150
+        },
+        "cpf": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cpf-br",
+            "maxLength": 14,
+            "trim": true
+        },
+        "cargo": {
+            "type": "varchar",
+            "required": true,
+            "trim": true,
+            "maxLength": 100
+        },
+        "salario": {
+            "type": "currency",
+            "min": 0,
+            "defaultCurrency": "BRL",
+            "default": null
+        },
+        "dataAdmissao": {
+            "type": "date",
+            "required": true,
+            "audited": true
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        }
+    },
+    "indexes": {
+        "cpf": {
+            "columns": ["cpf"]
+        },
+        "tenantId": {
+            "columns": ["tenantId"]
+        },
+        "createdAt": {
+            "columns": ["createdAt"]
+        }
+    },
+    "collection": {
+        "orderBy": "nome",
+        "order": "asc",
+        "textFilterFields": ["nome", "cpf", "cargo"]
+    }
+}

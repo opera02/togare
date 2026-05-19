@@ -1,0 +1,24 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [{"name": "processo"}, {"name": "tipo"}],
+            [{"name": "dataHora"}, {"name": "duracaoMinutos"}],
+            [{"name": "modalidade"}, {"name": "status"}]
+        ]
+    },
+    {
+        "label": "Localização",
+        "rows": [
+            [{"name": "tribunal"}, {"name": "vara"}],
+            [{"name": "enderecoLink", "fullWidth": true}]
+        ]
+    },
+    {
+        "label": "Atribuição e anotações",
+        "rows": [
+            [{"name": "assignedUser"}, {"name": "participantes", "fullWidth": true}],
+            [{"name": "observacoes", "fullWidth": true}]
+        ]
+    }
+]

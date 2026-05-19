@@ -1,0 +1,8 @@
+[
+    {"name": "processos"},
+    {"name": "prazos"},
+    {"name": "documentos"},
+    {"name": "contratosHonorarios"},
+    {"name": "faturas"},
+    {"name": "lancamentosFinanceiros"}
+]

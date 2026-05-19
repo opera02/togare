@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "financeiro-sem-contrato": {
+      "text": "Nenhum contrato de honorários ativo foi encontrado para este cliente. A fatura pode ser emitida normalmente — este aviso é apenas informativo.",
+      "ctaLabel": "Cadastrar contrato agora",
+      "ctaTarget": "cadastrar-contrato"
+    },
+    "licenca-expirada": {
+      "text": "A licença do Togare expirou. Renove para continuar usando funcionalidades avançadas.",
+      "ctaLabel": "Renovar licença",
+      "ctaTarget": "renovar-licenca"
+    },
+    "pre-requisito-entidade": {
+      "text": "Um pré-requisito obrigatório não foi preenchido para esta operação.",
+      "ctaLabel": null,
+      "ctaTarget": null
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "fields": {
+        "togarePrimaryColor": {
+            "type": "varchar",
+            "maxLength": 7,
+            "default": "#0a4d8c",
+            "tooltip": false
+        }
+    }
+}

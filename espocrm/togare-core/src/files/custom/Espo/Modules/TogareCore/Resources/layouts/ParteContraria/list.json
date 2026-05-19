@@ -1,0 +1,23 @@
+[
+    {
+        "name": "name",
+        "link": true,
+        "width": 30
+    },
+    {
+        "name": "tipoPessoa",
+        "width": 15
+    },
+    {
+        "name": "cpf",
+        "width": 15
+    },
+    {
+        "name": "cnpj",
+        "width": 17
+    },
+    {
+        "name": "telefone",
+        "width": 15
+    }
+]

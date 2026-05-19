@@ -1,0 +1,11 @@
+{
+  "scriptList": [
+    "__APPEND__",
+    "client/custom/modules/togare-rbac/lib/init.js",
+    "client/custom/modules/togare-rbac/src/extensions.js"
+  ],
+  "cssList": [
+    "__APPEND__",
+    "client/custom/modules/togare-rbac/css/wizard.css"
+  ]
+}

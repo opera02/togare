@@ -1,0 +1,10 @@
+{
+  "module": "TogareTpu",
+  "name": "TogareTpu",
+  "description": "Módulo TPU do Togare: sync mensal das Tabelas Processuais Unificadas (Classes/Assuntos/Movimentos) do CNJ via PDPJ REST + cache Redis (p95 ≤100ms) + fallback DB (Story 3.3). Expõe ClasseResolver/AssuntoResolver/MovimentoResolver. Adiciona hook Hooks/Processo/ResolveTpuFieldsHook que valida lookup TPU obrigatório no save de Processo (cross-module via hook scanner) + Controller TogareTpuCatalog com 3 endpoints search para autocomplete (Story 3.4, FR8, v0.2.0). FR8/FR9/NFR4/NFR17/NFR25.",
+  "author": "Togare",
+  "bundled": true,
+  "acceptableVersions": [">=9.3.0"],
+  "php": [">=8.3"],
+  "scripts": []
+}

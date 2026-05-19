@@ -1,0 +1,64 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [
+                {"name": "tipo"},
+                {"name": "dataMovimento"}
+            ],
+            [
+                {"name": "descricao", "fullWidth": true},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Valor",
+        "rows": [
+            [
+                {"name": "valor"},
+                {"name": "formaPagamento"}
+            ],
+            [
+                {"name": "categoria"},
+                {"name": "assignedUser"}
+            ]
+        ]
+    },
+    {
+        "label": "Vínculos",
+        "rows": [
+            [
+                {"name": "fatura"},
+                {"name": "cliente"}
+            ],
+            [
+                {"name": "processo"},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Observações",
+        "rows": [
+            [
+                {"name": "observacoes", "fullWidth": true},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Auditoria",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "createdAt"},
+                {"name": "createdBy"}
+            ],
+            [
+                {"name": "modifiedAt"},
+                {"name": "modifiedBy"}
+            ]
+        ]
+    }
+]

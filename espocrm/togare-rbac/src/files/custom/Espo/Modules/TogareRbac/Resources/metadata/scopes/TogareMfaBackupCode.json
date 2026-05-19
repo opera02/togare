@@ -1,0 +1,8 @@
+{
+  "entity": true,
+  "object": false,
+  "module": "TogareRbac",
+  "tab": false,
+  "acl": false,
+  "aclPortal": false
+}

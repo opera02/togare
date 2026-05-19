@@ -1,0 +1,15 @@
+{
+  "module": "TogareRbac",
+  "name": "TogareRbac",
+  "version": "0.14.1",
+  "releaseNotes": "Story 6.5 fix-pass (togare-rbac 0.14.1 PATCH): fecha findings do bmad-code-review. V010 tolera role.data malformado em scopeList/scopeLevel sem deixar Funcionario parcial; seeds dos 8 roles agora explicitam Fatura com politica canonica da Story 6.3, incluindo RH-lite=no em instalacao nova. Dependencia togare-core cravada >=0.37.1.",
+  "description": "Togare RBAC — 8 roles + convite + MFA TOTP + audit dual-write + auth lockout + wizard + alinhamentos por entity. + Story 5.2 v0.11.0: scope-level Documento via V007. + Story 6.1 v0.12.0: scope-level ContratoHonorarios via V008. + Story 6.3 v0.13.0: scope-level Fatura + LancamentoFinanceiro (Sócio/Admin+Financeiro full em ambas; Advogado+Assistente read own; Secretária+Marketing+RH-lite+Cliente-portal no) via V009 idempotente com LEGACY_POLICY preventivo. + Story 6.5 v0.14.1: Funcionario via V010 + seeds Fatura canonicos. dependencyVersion togare-core bumpada para >=0.37.1.",
+  "author": "Togare",
+  "bundled": true,
+  "acceptableVersions": [">=9.3.0"],
+  "php": [">=8.3"],
+  "scripts": [],
+  "dependencies": {
+    "togare-core": ">=0.37.1"
+  }
+}

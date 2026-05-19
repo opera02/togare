@@ -1,0 +1,7 @@
+[
+    {"name": "mimeType", "width": 5, "notSortable": true, "customLabel": "Tipo"},
+    {"name": "filename", "link": true, "customLabel": "Arquivo"},
+    {"name": "sizeBytes", "width": 12, "customLabel": "Tamanho"},
+    {"name": "createdAt", "width": 18, "customLabel": "Enviado em"},
+    {"name": "uploadedBy", "width": 18, "customLabel": "Enviado por"}
+]

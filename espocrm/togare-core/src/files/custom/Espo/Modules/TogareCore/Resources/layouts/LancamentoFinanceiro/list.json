@@ -1,0 +1,9 @@
+[
+    {"name": "tipo", "width": 12, "customLabel": "Tipo"},
+    {"name": "descricao", "width": 25, "customLabel": "Descrição"},
+    {"name": "cliente", "link": true, "customLabel": "Cliente"},
+    {"name": "fatura", "link": true, "customLabel": "Fatura"},
+    {"name": "valor", "width": 10, "customLabel": "Valor"},
+    {"name": "formaPagamento", "width": 10, "customLabel": "Forma"},
+    {"name": "dataMovimento", "width": 10, "customLabel": "Data"}
+]

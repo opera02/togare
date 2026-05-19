@@ -1,0 +1,175 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "filename"},
+            "order": {"order": [["filename", "{direction}"]]},
+            "where": {
+                "LIKE": {"whereClause": {"filename*": "{value}"}}
+            }
+        },
+        "filename": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true,
+            "readOnly": true
+        },
+        "mimeType": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true,
+            "readOnly": true,
+            "view": "togare-core:views/document/fields/mime-icon"
+        },
+        "sizeBytes": {
+            "type": "int",
+            "min": 0,
+            "readOnly": true
+        },
+        "nextcloudUri": {
+            "type": "varchar",
+            "maxLength": 500,
+            "trim": true,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "uploadedAttachment": {
+            "type": "file",
+            "notStorable": true
+        },
+        "processo": {
+            "type": "link",
+            "required": false
+        },
+        "processoName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "processo.numeroCnj"},
+            "order": {"order": [["processo.numeroCnj", "{direction}"]]}
+        },
+        "cliente": {
+            "type": "link",
+            "required": false
+        },
+        "clienteName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "cliente.name"},
+            "order": {"order": [["cliente.name", "{direction}"]]}
+        },
+        "prazo": {
+            "type": "link",
+            "required": false
+        },
+        "prazoName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "prazo.atoCodigo"},
+            "order": {"order": [["prazo.atoCodigo", "{direction}"]]}
+        },
+        "uploadedBy": {
+            "type": "link",
+            "required": false,
+            "readOnly": true
+        },
+        "uploadedByName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "uploadedBy.name"},
+            "order": {"order": [["uploadedBy.name", "{direction}"]]}
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "processo": {
+            "type": "belongsTo",
+            "entity": "Processo",
+            "foreign": "documentos"
+        },
+        "cliente": {
+            "type": "belongsTo",
+            "entity": "Cliente",
+            "foreign": "documentos"
+        },
+        "prazo": {
+            "type": "belongsTo",
+            "entity": "Prazo",
+            "foreign": "documentos"
+        },
+        "uploadedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        }
+    },
+    "indexes": {
+        "processoId": {
+            "columns": ["processoId"]
+        },
+        "clienteId": {
+            "columns": ["clienteId"]
+        },
+        "prazoId": {
+            "columns": ["prazoId"]
+        },
+        "uploadedById": {
+            "columns": ["uploadedById"]
+        },
+        "createdAt": {
+            "columns": ["createdAt"]
+        },
+        "mimeType": {
+            "columns": ["mimeType"]
+        },
+        "tenantId": {
+            "columns": ["tenantId"]
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc",
+        "textFilterFields": ["filename"]
+    }
+}

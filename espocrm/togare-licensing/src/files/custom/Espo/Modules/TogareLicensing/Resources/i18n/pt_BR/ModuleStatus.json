@@ -1,0 +1,36 @@
+{
+    "labels": {
+        "Create ModuleStatus": "Criar Status de Módulo",
+        "Edit ModuleStatus": "Editar Status de Módulo"
+    },
+    "scopeNames": {
+        "ModuleStatus": "Status de Módulo"
+    },
+    "scopeNamesPlural": {
+        "ModuleStatus": "Status de Módulos"
+    },
+    "fields": {
+        "moduleName": "Módulo",
+        "status": "Status",
+        "installationId": "ID da Instalação",
+        "keyJti": "JTI da chave",
+        "expiresAt": "Expira em",
+        "lastValidatedAt": "Última revalidação",
+        "lastValidationOutcome": "Resultado da última revalidação",
+        "activatedAt": "Ativado em"
+    },
+    "options": {
+        "status": {
+            "never_activated": "Nunca ativado",
+            "active": "Ativo",
+            "read_only": "Somente leitura (expirado)"
+        },
+        "lastValidationOutcome": {
+            "success": "Sucesso",
+            "expired": "Expirado",
+            "invalid_signature": "Assinatura inválida",
+            "malformed": "Mal-formado",
+            "wrong_issuer": "Emissor incorreto"
+        }
+    }
+}

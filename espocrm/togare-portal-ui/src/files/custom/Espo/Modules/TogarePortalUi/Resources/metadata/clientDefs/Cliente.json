@@ -1,0 +1,16 @@
+{
+  "menu": {
+    "detail": {
+      "dropdown": [
+        {
+          "name": "liberarAcessoPortal",
+          "labelTranslation": "PortalAccess.labels.liberarAcessoPortal",
+          "handler": "togare-portal-ui:handlers/cliente/portal-access-handler",
+          "actionFunction": "provision",
+          "acl": "edit",
+          "aclScope": "Cliente"
+        }
+      ]
+    }
+  }
+}

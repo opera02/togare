@@ -1,0 +1,58 @@
+{
+    "fields": {
+        "moduleName": {
+            "type": "varchar",
+            "maxLength": 100,
+            "required": true,
+            "trim": true
+        },
+        "status": {
+            "type": "enum",
+            "options": ["never_activated", "active", "read_only"],
+            "default": "never_activated",
+            "required": true
+        },
+        "installationId": {
+            "type": "varchar",
+            "maxLength": 100
+        },
+        "keyJti": {
+            "type": "varchar",
+            "maxLength": 100
+        },
+        "expiresAt": {
+            "type": "datetime"
+        },
+        "lastValidatedAt": {
+            "type": "datetime"
+        },
+        "lastValidationOutcome": {
+            "type": "varchar",
+            "maxLength": 50
+        },
+        "activatedAt": {
+            "type": "datetime"
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        }
+    },
+    "indexes": {
+        "moduleName": {
+            "columns": ["moduleName"],
+            "unique": true
+        },
+        "revalidate": {
+            "columns": ["status", "expiresAt"]
+        }
+    },
+    "collection": {
+        "orderBy": "moduleName",
+        "order": "asc"
+    }
+}

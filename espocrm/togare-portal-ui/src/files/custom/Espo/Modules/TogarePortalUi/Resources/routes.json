@@ -1,0 +1,7 @@
+[
+  {
+    "route": "/TogarePortalUi/PortalAccess/provision",
+    "method": "post",
+    "actionClassName": "Espo\\Modules\\TogarePortalUi\\Tools\\PortalAccess\\Api\\PostProvision"
+  }
+]

@@ -1,0 +1,34 @@
+{
+    "labels": {
+        "subjectPrefix": "[Togare]"
+    },
+    "subjectByMarco": {
+        "D-7": "Prazo vence em 7 dias úteis",
+        "D-3": "Prazo vence em 3 dias úteis",
+        "D-1": "Prazo vence amanhã (D-1)",
+        "D-0": "VENCE HOJE",
+        "status_atrasado_reagendado": "Prazo marcado como atrasado/reagendado — sua atenção",
+        "status_aguardando_cliente": "Prazo aguarda resposta do cliente",
+        "status_aguardando_correcao": "Prazo aguarda correção"
+    },
+    "bodyTitleByMarco": {
+        "D-7": "Prazo vence em 7 dias úteis",
+        "D-3": "Prazo vence em 3 dias úteis",
+        "D-1": "Prazo vence amanhã (D-1)",
+        "D-0": "VENCE HOJE",
+        "status_atrasado_reagendado": "Prazo marcado como atrasado/reagendado — sua atenção",
+        "status_aguardando_cliente": "Prazo aguarda resposta do cliente",
+        "status_aguardando_correcao": "Prazo aguarda correção"
+    },
+    "fields": {
+        "cnj": "Processo (CNJ)",
+        "descricao": "Descrição",
+        "dataFatal": "Data fatal (legal)",
+        "dataCumprimento": "Data planejada (interno)",
+        "linkLabel": "Abrir prazo no Togare"
+    },
+    "messages": {
+        "hedgeJuridico": "A responsabilidade final pelo cumprimento do prazo é do(a) advogado(a). O Togare é uma ferramenta auxiliar e pode falhar; sempre confirme prazos críticos no DJEN/diário oficial.",
+        "footerNotice": "Você está recebendo esta notificação porque é responsável pelo prazo ou tem perfil Sócio/Admin no escritório."
+    }
+}

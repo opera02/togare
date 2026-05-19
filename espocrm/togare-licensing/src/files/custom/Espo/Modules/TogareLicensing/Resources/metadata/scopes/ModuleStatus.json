@@ -1,0 +1,10 @@
+{
+    "entity": true,
+    "object": true,
+    "module": "TogareLicensing",
+    "tab": false,
+    "acl": true,
+    "aclPortal": false,
+    "stream": false,
+    "customizable": false
+}

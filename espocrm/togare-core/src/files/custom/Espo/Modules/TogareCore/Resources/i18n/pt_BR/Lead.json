@@ -1,0 +1,13 @@
+{
+    "fields": {
+        "status": "Status"
+    },
+    "options": {
+        "status": {
+            "Novo Lead": "Novo Lead",
+            "Qualificado": "Qualificado",
+            "Descartado": "Descartado",
+            "Converted": "Convertido"
+        }
+    }
+}

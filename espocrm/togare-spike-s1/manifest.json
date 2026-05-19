@@ -1,0 +1,9 @@
+{
+  "name": "TogareSpikeS1",
+  "version": "0.0.0-spike",
+  "description": "THROWAWAY — módulo usado APENAS pela Spike 1b.S1 (sanity + Fase 2 bench em VPS). NÃO empacotar. NÃO subir no compose principal. Será deletado após Fase 2 fechar.",
+  "author": "Togare",
+  "acceptableVersions": [
+    ">=9.3.0"
+  ]
+}

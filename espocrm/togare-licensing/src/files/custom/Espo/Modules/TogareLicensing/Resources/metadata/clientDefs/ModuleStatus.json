@@ -1,0 +1,10 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "list": "views/list"
+    },
+    "recordViews": {
+        "list": "views/record/list",
+        "detail": "views/record/detail"
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "fields": {
+    "togareCliente": {
+      "type": "link"
+    }
+  },
+  "links": {
+    "togareCliente": {
+      "type": "belongsTo",
+      "entity": "Cliente",
+      "foreign": "portalUsers"
+    }
+  }
+}

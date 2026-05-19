@@ -1,0 +1,149 @@
+name: togare-spike-1b-s1
+
+# ==============================================================================
+# Docker Compose ISOLADO da Spike 1b.S1 — sanity local do X-Accel-Redirect
+# equivalente no Caddy v2 (ADR 0004, receita a validar).
+#
+# ATENÇÃO — THROWAWAY:
+#   - Este compose NÃO sobe junto com `docker-compose.yml` principal.
+#   - Sobe tudo em portas alternativas (8443/tcp, 8443/udp) para coexistir com a
+#     stack principal em dev.
+#   - Volumes são locais a este compose e descartados com `down -v`.
+#   - Não usar em produção. Será deletado após Fase 2 (Epic 10) fechar.
+#
+# SOBE:
+#   - caddy-spike    : Caddy 2.8 com Caddyfile.spike (receita X-Accel equivalente).
+#   - espocrm-spike  : EspoCRM 9.3 com módulo throwaway togare-spike-s1 montado.
+#   - mariadb-spike  : MariaDB 11.4 EFÊMERO (sem volume persistente) — só pro
+#                      EspoCRM bootar.
+#   - nextcloud-spike: Nextcloud 31 EFÊMERO — usado para criar o volume
+#                      nextcloud_data_spike com o PDF de teste dentro.
+#
+# NÃO USA: redis, postgres principal, backup, etc. Todo o resto é irrelevante
+# para validação funcional de download via X-Accel.
+#
+# COMO SUBIR (do repo root):
+#   docker compose -f docker/spike-1b-S1/docker-compose.spike.yml up -d
+#
+# COMO GERAR PDF 200MB (ver README.md passo a passo):
+#   docker compose -f docker/spike-1b-S1/docker-compose.spike.yml exec \
+#     nextcloud-spike sh -c \
+#     'dd if=/dev/urandom of=/var/www/html/data/test-200mb.pdf bs=1M count=200'
+#
+# COMO RODAR SANITY:
+#   Ver docker/spike-1b-S1/README.md.
+#
+# COMO DERRUBAR COM LIMPEZA COMPLETA:
+#   docker compose -f docker/spike-1b-S1/docker-compose.spike.yml down -v
+# ==============================================================================
+
+networks:
+  spike_net:
+    driver: bridge
+
+services:
+  mariadb-spike:
+    # EFÊMERO: sem volume persistente. Só precisa existir pro EspoCRM subir.
+    image: mariadb:11.4
+    networks: [spike_net]
+    environment:
+      MARIADB_ROOT_PASSWORD: spikerootpw1234
+      MARIADB_DATABASE: espocrm_spike
+      MARIADB_USER: espocrm_spike
+      MARIADB_PASSWORD: spikepw1234
+    # tmpfs para dados: some quando container morre. Sem lixo no host.
+    tmpfs:
+      - /var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Nextcloud existe APENAS para criar o volume nextcloud_data_spike e colocar
+  # o PDF de teste nele. Não precisa estar healthy para o spike funcionar
+  # depois do PDF gerado — basta o volume existir.
+  nextcloud-spike:
+    image: nextcloud:31-apache
+    networks: [spike_net]
+    environment:
+      # Nextcloud rodando com SQLite (zero dependência externa pro volume subir).
+      SQLITE_DATABASE: nextcloud_spike
+      NEXTCLOUD_ADMIN_USER: admin
+      NEXTCLOUD_ADMIN_PASSWORD: spikeadminpw1234
+      NEXTCLOUD_TRUSTED_DOMAINS: localhost
+    volumes:
+      - nextcloud_data_spike:/var/www/html
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/status.php >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
+
+  espocrm-spike:
+    image: espocrm/espocrm:9.3
+    networks: [spike_net]
+    depends_on:
+      mariadb-spike:
+        condition: service_healthy
+    environment:
+      ESPOCRM_DATABASE_HOST: mariadb-spike
+      ESPOCRM_DATABASE_NAME: espocrm_spike
+      ESPOCRM_DATABASE_USER: espocrm_spike
+      ESPOCRM_DATABASE_PASSWORD: spikepw1234
+      ESPOCRM_ADMIN_USERNAME: admin
+      ESPOCRM_ADMIN_PASSWORD: spikeadminpw1234
+      ESPOCRM_SITE_URL: https://localhost:8443
+    volumes:
+      # Módulo throwaway montado DIRETO (não empacotado como .zip).
+      # EspoCRM resolve módulos custom em /var/www/html/custom/Espo/Modules/<Nome>/.
+      # O nome TogareSpikeS1 mantém prefixo "Togare" para passar o validator R1
+      # (validate-togare-naming.php, Story 1a.2). A URL pública continua
+      # `/Spike/action/download` via routes.json — ver AC2.
+      - ../../espocrm/togare-spike-s1/src/files/custom/Espo/Modules/TogareSpikeS1:/var/www/html/custom/Espo/Modules/TogareSpikeS1
+      # Volume nextcloud_data_spike montado READ-ONLY em /internal-files.
+      # Usado EXCLUSIVAMENTE pelo branch use_proxy=php do controller (AC3):
+      # PHP lê bytes do filesystem aqui quando a rota X-Accel-Redirect não é
+      # disparada. Para o caminho primário (X-Accel via Caddy), o EspoCRM NÃO
+      # precisa ler o arquivo — só devolve o header e o Caddy serve.
+      - nextcloud_data_spike:/internal-files:ro
+    healthcheck:
+      # HTTP probe real (não só TCP): verifica que o EspoCRM responde à API,
+      # não apenas que algo está escutando na porta 80. Evita que o caddy-spike
+      # comece a fazer proxy antes do EspoCRM estar pronto para servir requests.
+      test: ["CMD-SHELL", "curl -fsS http://localhost/api/v1/ -o /dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 90s
+
+  caddy-spike:
+    image: caddy:2.8-alpine
+    networks: [spike_net]
+    depends_on:
+      espocrm-spike:
+        # service_healthy garante que o EspoCRM passou no healthcheck HTTP antes
+        # do Caddy começar a fazer proxy — evita 502s nos primeiros requests do sanity.
+        condition: service_healthy
+    ports:
+      # 9080:80 — HTTP plain. 9080 escolhido para evitar conflito com IIS/outros
+      # dev servers que ocupam 8080 no Windows (problema real encontrado no
+      # laptop do Felipe).
+      - "9080:80"
+      # 8443:443 — HTTPS com tls internal (alternativa).
+      - "8443:443"
+      - "8443:443/udp"
+    volumes:
+      - ./Caddyfile.spike:/etc/caddy/Caddyfile:ro
+      # Mesmo volume do Nextcloud, montado READ-ONLY em /internal-files.
+      # Caddy serve daqui quando handle_response intercepta o header
+      # X-Accel-Redirect do EspoCRM.
+      - nextcloud_data_spike:/internal-files:ro
+      - caddy_data_spike:/data
+      - caddy_config_spike:/config
+
+volumes:
+  nextcloud_data_spike:
+  caddy_data_spike:
+  caddy_config_spike:

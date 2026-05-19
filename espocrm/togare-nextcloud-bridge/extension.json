@@ -1,0 +1,15 @@
+{
+  "module": "TogareNextcloudBridge",
+  "name": "TogareNextcloudBridge",
+  "version": "0.4.0",
+  "releaseNotes": "Story 6.0 (MINOR — alinhamento cross-module com togare-core 0.32.0): NextcloudFileStorage ganha buildUri(logicalPath):string novo retornando 'nextcloud://<logicalPath>' (método novo no FileStorageContract da togare-core; LocalDiskStorage parceira retorna 'local://<path>'). Sem mudança em put/get/exists/delete/softPurge/restore/streamWebDav. Dep togare-core bumpada para >=0.32.0. +1 PHPUnit novo. +PREVIOUS 0.3.0 Story 5.5: TogareBridgeHardDeleteJob cron 0 3 * * * promove tombstones soft-purged em hard-delete após retention 30d via togare_documento_log sem schema novo.",
+  "description": "Módulo Nextcloud Bridge do Togare — camada de integração unificada Togare↔Nextcloud (Stories 5.1 + 5.3 + 5.5, FR19/FR20/FR21 + NFR1 + NFR26). NextcloudClientContract com **7 métodos** WebDAV/OCS (putWebDav, getWebDav, existsWebDav, deleteWebDav, moveWebDav, propfindList, resolveWebDavUrl + **streamWebDav** novo na 5.3 para PHP-proxy fallback de download — cURL CURLOPT_FILE=php://output 1MB buffer; sem retry/CB porque é single-shot — falha pré-byte conta no CB via dispatchUnavailableEvent). Default OcsApiClient via cURL + Basic auth + retry 3x backoff [1s,4s,16s] + circuit breaker file-based 5/300s/300s + httpExecutor injetável + suporte file:// pra fixtures. 3 impls cross-module dos contratos togare-core: NextcloudFileStorage (put/get/exists/delete) + NextcloudPurgeableStorage (softPurge MOVE → .purged/<tombstone-32-hex>; restoreFromTombstone MOVE inverso). EventDispatcher dispara IntegrationFailedEvent(integration=nextcloud, reason=cb_opened|retries_exhausted|stream_failed). Configuração via env vars TOGARE_NEXTCLOUD_BASE_URL/USER/PASSWORD. Sem container Docker novo — reusa nextcloud:31-apache. **Story 5.5:** TogareBridgeHardDeleteJob scheduled (cron 0 3 * * *) promove tombstones soft-purged em hard-delete definitivo após retention 30d; consome togare_documento_log da togare-core sem schema novo.",
+  "author": "Togare",
+  "bundled": true,
+  "acceptableVersions": [">=9.3.0"],
+  "php": [">=8.3"],
+  "scripts": [],
+  "dependencies": {
+    "togare-core": ">=0.32.0"
+  }
+}

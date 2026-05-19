@@ -1,0 +1,227 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "CONCAT:(IFNULL:(atoCodigo, ''), ' — ', IFNULL:(numeroProcessoOriginal, '(sem CNJ)'))"},
+            "order": {"order": [["dataFatal", "{direction}"]]},
+            "where": {
+                "LIKE": {"whereClause": {"OR": [{"atoCodigo*": "{value}"}, {"numeroProcessoOriginal*": "{value}"}, {"fonteExcerpt*": "{value}"}]}}
+            }
+        },
+        "sourcePubId": {
+            "type": "int",
+            "tooltip": false
+        },
+        "numeroProcessoOriginal": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cnj",
+            "maxLength": 25,
+            "trim": true
+        },
+        "payload": {
+            "type": "text",
+            "view": "togare-core:views/fields/payload-json",
+            "tooltip": true
+        },
+        "texto": {
+            "type": "text"
+        },
+        "dataDisponibilizacao": {
+            "type": "date"
+        },
+        "dataInicioPrazo": {
+            "type": "date"
+        },
+        "dataFatal": {
+            "type": "date"
+        },
+        "prazoDias": {
+            "type": "int",
+            "min": 1,
+            "max": 365
+        },
+        "contagem": {
+            "type": "enum",
+            "options": ["uteis", "corridos"]
+        },
+        "atoCodigo": {
+            "type": "varchar",
+            "view": "togare-core:views/prazo/fields/ato-codigo",
+            "maxLength": 64,
+            "trim": true
+        },
+        "referenciaLegal": {
+            "type": "varchar",
+            "maxLength": 64,
+            "trim": true
+        },
+        "confidence": {
+            "type": "enum",
+            "options": ["high", "medium", "low"],
+            "style": {
+                "high": "success",
+                "medium": "warning",
+                "low": "danger"
+            }
+        },
+        "parserRegraVersao": {
+            "type": "varchar",
+            "maxLength": 16,
+            "trim": true
+        },
+        "fonteExcerpt": {
+            "type": "text"
+        },
+        "candidatos": {
+            "type": "text",
+            "tooltip": true
+        },
+        "ambiguityReason": {
+            "type": "enum",
+            "options": ["cnj_multiplos_processos", "name_match_multiplos_candidatos"],
+            "tooltip": true
+        },
+        "status": {
+            "type": "enum",
+            "options": [
+                "pendente_revisao",
+                "resolvido",
+                "ignorado",
+                "bulk_ignorado"
+            ],
+            "default": "pendente_revisao",
+            "required": true,
+            "style": {
+                "pendente_revisao": "warning",
+                "resolvido": "success",
+                "ignorado": "default",
+                "bulk_ignorado": "default"
+            }
+        },
+        "decisionType": {
+            "type": "enum",
+            "options": [
+                "",
+                "confirmar_candidato",
+                "ignorar",
+                "bulk_ignorar_processo"
+            ],
+            "default": "",
+            "readOnly": true
+        },
+        "decidedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false
+        },
+        "decidedBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "decisionProcesso": {
+            "type": "link",
+            "readOnly": true
+        },
+        "decisionProcessoName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "decisionProcesso.numeroCnj"},
+            "order": {"order": [["decisionProcesso.numeroCnj", "{direction}"]]}
+        },
+        "prazoCriado": {
+            "type": "link",
+            "readOnly": true
+        },
+        "prazoCriadoName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "prazoCriado.atoCodigo"}
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "decidedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "decisionProcesso": {
+            "type": "belongsTo",
+            "entity": "Processo"
+        },
+        "prazoCriado": {
+            "type": "belongsTo",
+            "entity": "Prazo"
+        }
+    },
+    "indexes": {
+        "sourcePubId": {
+            "type": "unique",
+            "columns": ["sourcePubId"]
+        },
+        "statusAssignedUser": {
+            "columns": ["status", "assignedUserId"]
+        },
+        "dataFatal": {
+            "columns": ["dataFatal"]
+        },
+        "decisionProcessoId": {
+            "columns": ["decisionProcessoId"]
+        },
+        "ambiguityReason": {
+            "columns": ["ambiguityReason"]
+        },
+        "tenantId": {
+            "columns": ["tenantId"]
+        }
+    },
+    "collection": {
+        "orderBy": "dataFatal",
+        "order": "asc",
+        "textFilterFields": [
+            "atoCodigo",
+            "numeroProcessoOriginal",
+            "referenciaLegal",
+            "fonteExcerpt"
+        ]
+    }
+}

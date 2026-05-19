@@ -1,0 +1,12 @@
+{
+  "fields": {
+    "userId": { "label": "ID do usuário" },
+    "codeHash": { "label": "Hash do código" },
+    "used": { "label": "Usado" },
+    "usedAt": { "label": "Usado em" },
+    "createdAt": { "label": "Criado em" }
+  },
+  "labels": {
+    "TogareMfaBackupCode": "Código backup MFA"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "togareCoreEventDispatcher": {
+    "className": "Espo\\Modules\\TogareCore\\Events\\EventDispatcher"
+  },
+  "togareCoreLogger": {
+    "className": "Espo\\Modules\\TogareCore\\Services\\TogareLogger"
+  },
+  "togareCoreQueueService": {
+    "className": "Espo\\Modules\\TogareCore\\Services\\QueueService"
+  },
+  "togareCoreRateLimiter": {
+    "className": "Espo\\Modules\\TogareCore\\Services\\RateLimiter"
+  },
+  "togareCoreBrCalendar": {
+    "className": "Espo\\Modules\\TogareCore\\Services\\Calendar\\BrazilianBusinessCalendar"
+  },
+  "Espo\\Modules\\TogareCore\\Contracts\\AuditLogContract": {
+    "className": "Espo\\Modules\\TogareCore\\Services\\AuditLogService"
+  }
+}

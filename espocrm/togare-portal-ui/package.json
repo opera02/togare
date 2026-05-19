@@ -1,0 +1,36 @@
+{
+  "name": "espocrm-ext-togare-portal-ui",
+  "version": "0.2.0",
+  "releaseNotes": "Story 7a.2 (MINOR — autenticação Portal + isolamento A4; link único nativo). Provisionamento por row-action admin-only fail-closed, PasswordChangeRequest nativo (sem senha em claro), e-mail best-effort não-bloqueante, ACL Portal de Processo (PortalOnlyCliente + OwnershipChecker + audit portal.acesso_cruzado_tentado ⇒ 403), estados erro/lockout acolhedores (rate limit 100% nativo). vitest 35/35 + PHPUnit 25/25 + validate-bundle-imports OK. // ANTERIOR — Story 7a.1 (MINOR — primeiro release do módulo). PortalSplash branded configurável: módulo novo togare-portal-ui, Portal nativo EspoCRM + camada UX. loginView custom (afterRender DOM-patch só no Portal), config Settings togarePortalSplash* (pré-auth via getAllNonInternalData), painel admin Portal->Aparência, CSS AAA, i18n pt-BR, AfterInstall seeder idempotente. Dep togare-core >=0.37.2.",
+  "description": "Módulo Portal UI do Togare — camada UX do Portal do Cliente sobre o Portal nativo do EspoCRM. Story 7a.1: PortalSplash branded configurável (logo/cor/frase/telefone) com defaults curados. FR26-FR28 suporte UX + UX-DR11/9/8 + NFR28 (rota AAA #1).",
+  "scripts": {
+    "sa": "vendor/bin/phpstan",
+    "unit-tests": "vendor/bin/phpunit",
+    "copy": "node build --copy",
+    "composer-install": "node build --composer-install",
+    "sync": "node build --copy && node build --composer-install",
+    "extension": "node build --extension",
+    "build": "node build --extension",
+    "clear-cache": "php site/clear_cache.php",
+    "rebuild": "node build --rebuild",
+    "all": "node build --all",
+    "prepare-test": "node build --prepare-test",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "type": "module",
+  "author": "Togare",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "espo-extension-tools": "github:espocrm/extension-tools#0.4.3",
+    "fs-extra": "^9.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "npm": ">=8",
+    "node": ">=18"
+  }
+}

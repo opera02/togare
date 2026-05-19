@@ -1,0 +1,314 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "CONCAT:(IFNULL:(numeroProcessoOriginal, ''), ' — ', IFNULL:(referenciaLegal, ''))"},
+            "order": {"order": [["dataFatal", "{direction}"]]},
+            "where": {
+                "LIKE": {"whereClause": {"OR": [{"numeroProcessoOriginal*": "{value}"}, {"referenciaLegal*": "{value}"}, {"atoCodigo*": "{value}"}]}}
+            }
+        },
+        "dataDisponibilizacao": {
+            "type": "date",
+            "required": true
+        },
+        "dataInicioPrazo": {
+            "type": "date",
+            "required": true
+        },
+        "dataFatal": {
+            "type": "date",
+            "required": true
+        },
+        "prazoDias": {
+            "type": "int",
+            "required": true,
+            "min": 1,
+            "max": 365
+        },
+        "contagem": {
+            "type": "enum",
+            "options": ["uteis", "corridos"],
+            "default": "uteis",
+            "required": true
+        },
+        "atoCodigo": {
+            "type": "varchar",
+            "view": "togare-core:views/prazo/fields/ato-codigo",
+            "maxLength": 64,
+            "required": true,
+            "trim": true
+        },
+        "referenciaLegal": {
+            "type": "varchar",
+            "maxLength": 64,
+            "required": true,
+            "trim": true
+        },
+        "confidence": {
+            "type": "enum",
+            "options": ["high", "medium", "low"],
+            "default": "high",
+            "required": true,
+            "style": {
+                "high": "success",
+                "medium": "warning",
+                "low": "danger"
+            }
+        },
+        "parserRegraVersao": {
+            "type": "varchar",
+            "maxLength": 16,
+            "required": true,
+            "trim": true,
+            "default": "1.0.0"
+        },
+        "fonteExcerpt": {
+            "type": "text"
+        },
+        "source": {
+            "type": "enum",
+            "options": ["djen", "manual", "manual_ambiguo"],
+            "default": "djen",
+            "required": true
+        },
+        "sourcePubId": {
+            "type": "int",
+            "tooltip": false
+        },
+        "numeroProcessoOriginal": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cnj",
+            "maxLength": 25,
+            "trim": true
+        },
+        "publicacaoOrigemRaw": {
+            "type": "text",
+            "view": "togare-core:views/fields/payload-json",
+            "tooltip": false
+        },
+        "status": {
+            "type": "enum",
+            "view": "togare-core:views/prazo/fields/status-selector",
+            "options": [
+                "rascunho",
+                "pendente",
+                "atrasado_reagendado",
+                "aguardando_cliente",
+                "aguardando_correcao",
+                "protocolado",
+                "ciencia_renuncia",
+                "acompanhamento",
+                "descartado"
+            ],
+            "default": "rascunho",
+            "required": true,
+            "style": {
+                "rascunho": "info",
+                "pendente": "warning",
+                "atrasado_reagendado": "danger",
+                "aguardando_cliente": "default",
+                "aguardando_correcao": "default",
+                "protocolado": "success",
+                "ciencia_renuncia": "success",
+                "acompanhamento": "info",
+                "descartado": "default"
+            }
+        },
+        "descricao": {
+            "type": "text"
+        },
+        "prioridade": {
+            "type": "enum",
+            "options": ["baixa", "normal", "alta", "urgente"],
+            "default": "normal",
+            "required": true,
+            "style": {
+                "baixa": "default",
+                "normal": "info",
+                "alta": "warning",
+                "urgente": "danger"
+            }
+        },
+        "prioridadeWeight": {
+            "type": "int",
+            "default": 2,
+            "readOnly": true,
+            "layoutListDisabled": true,
+            "layoutDetailDisabled": true,
+            "layoutMassUpdateDisabled": true,
+            "layoutFiltersDisabled": true,
+            "tooltip": false
+        },
+        "tipoPrazo": {
+            "type": "enum",
+            "options": [
+                "",
+                "peticao_inicial",
+                "contestacao",
+                "replica",
+                "apelacao",
+                "agravo_instrumento",
+                "agravo_interno",
+                "embargos_declaracao",
+                "resp_re",
+                "aresp_are",
+                "manifestacao_diversa",
+                "impugnacao_laudo_cumprimento",
+                "contrarrazoes",
+                "idpj",
+                "mandado_seguranca",
+                "audiencia",
+                "ciencia_renuncia",
+                "diligencia_administrativa"
+            ],
+            "default": "",
+            "required": false
+        },
+        "motivoReagendamento": {
+            "type": "varchar",
+            "maxLength": 500,
+            "trim": true
+        },
+        "dataCumprimento": {
+            "type": "date",
+            "tooltip": true
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false
+        },
+        "processo": {
+            "type": "link",
+            "required": false
+        },
+        "processoName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "processo.numeroCnj"},
+            "order": {"order": [["processo.numeroCnj", "{direction}"]]}
+        },
+        "cliente": {
+            "type": "link",
+            "required": false
+        },
+        "parteContraria": {
+            "type": "link",
+            "required": false
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "processo": {
+            "type": "belongsTo",
+            "entity": "Processo",
+            "foreign": "prazos"
+        },
+        "cliente": {
+            "type": "belongsTo",
+            "entity": "Cliente",
+            "foreign": "prazos"
+        },
+        "parteContraria": {
+            "type": "belongsTo",
+            "entity": "ParteContraria",
+            "foreign": "prazos"
+        },
+        "documentos": {
+            "type": "hasMany",
+            "entity": "Documento",
+            "foreign": "prazo"
+        }
+    },
+    "indexes": {
+        "dataFatal": {
+            "columns": ["dataFatal"]
+        },
+        "statusDataFatal": {
+            "columns": ["status", "dataFatal"]
+        },
+        "processoId": {
+            "columns": ["processoId"]
+        },
+        "assignedUserId": {
+            "columns": ["assignedUserId"]
+        },
+        "numeroProcessoOriginal": {
+            "columns": ["numeroProcessoOriginal"]
+        },
+        "sourcePubId": {
+            "columns": ["sourcePubId"]
+        },
+        "prioridade": {
+            "columns": ["prioridade"]
+        },
+        "prioridadeWeight": {
+            "columns": ["prioridadeWeight"]
+        },
+        "dataFatalPrioridadeWeight": {
+            "columns": ["dataFatal", "prioridadeWeight"]
+        },
+        "tipoPrazo": {
+            "columns": ["tipoPrazo"]
+        },
+        "clienteId": {
+            "columns": ["clienteId"]
+        },
+        "parteContrariaId": {
+            "columns": ["parteContrariaId"]
+        },
+        "dataCumprimento": {
+            "columns": ["dataCumprimento"]
+        },
+        "statusDataCumprimento": {
+            "columns": ["status", "dataCumprimento"]
+        }
+    },
+    "collection": {
+        "orderBy": "dataFatal",
+        "order": "asc",
+        "textFilterFields": [
+            "numeroProcessoOriginal",
+            "atoCodigo",
+            "referenciaLegal",
+            "fonteExcerpt",
+            "descricao"
+        ]
+    }
+}

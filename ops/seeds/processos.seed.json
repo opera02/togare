@@ -1,0 +1,20 @@
+{
+  "_implemented": false,
+  "_pendingStory": "3.4",
+  "_pendingEntity": "Processo",
+  "_idempotencyKey": "numeroCnj",
+  "_description": "PLACEHOLDER. Story 3.4 vai criar a entidade Processo (com lookup TPU da Story 3.3); quando ela existir, esta story DEPRECATED e a 3.4 substitui este arquivo por 10 processos determinísticos com numeração CNJ válida (módulo 97). Schema esperado abaixo.",
+  "_schemaExpected": {
+    "processos": [
+      {
+        "numeroCnj": "string (20 dígitos, validado conforme Resolução CNJ 65/2008 — módulo 97)",
+        "clienteCpfCnpj": "string (FK cpfCnpj em clientes.seed.json)",
+        "advogadoResponsavelUserName": "string (FK userName em users.seed.json)",
+        "tpuClasseCodigo": "string (FK código TPU em tpu-sample.seed.json)",
+        "tpuAssuntoCodigo": "string (FK código TPU em tpu-sample.seed.json)",
+        "...": "demais campos conforme entityDef de Processo"
+      }
+    ]
+  },
+  "processos": []
+}

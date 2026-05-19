@@ -1,0 +1,12 @@
+{
+    "messages": {
+        "togareAuthLockout": "Conta temporariamente bloqueada. Tente novamente em 15 minutos.",
+        "togareWizardOrgConfirmed": "Identidade do escritório salva.",
+        "togareWizardColorConfirmed": "Cor primária aplicada.",
+        "togareWizardRolesConfirmed": "Roles confirmadas.",
+        "togareWizardInvitesSent": "Convites enviados: {sent}. Falhas: {failed}.",
+        "togareWizardCompleted": "Wizard concluído. Bem-vindo ao Togare.",
+        "togareWizardSkipped": "Wizard pulado. Você pode revisitar via Admin → Wizard de instalação.",
+        "togareWizardSkipConfirmExpected": "pular"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": ["onlyMy"],
+    "calendar": {
+        "dateField": "dataHora",
+        "nameField": "tipo"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "view": "togare-core:views/dashlets/togare-health-panel",
+    "options": {
+        "fields": {
+            "title": {
+                "type": "varchar",
+                "required": true
+            }
+        },
+        "defaults": {
+            "title": "Saúde do Togare"
+        },
+        "layout": [
+            {
+                "rows": [
+                    [
+                        {"name": "title"},
+                        false
+                    ]
+                ]
+            }
+        ]
+    },
+    "accessDataList": [
+        {
+            "inPortalDisabled": true
+        }
+    ]
+}

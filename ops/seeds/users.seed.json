@@ -1,0 +1,54 @@
+{
+  "_implemented": true,
+  "_pendingStory": null,
+  "_idempotencyKey": "userName",
+  "_description": "Usuários de jornada do PRD para dev local. Senha única para todos: DevSeed2026!. `roles` referencia nome EXATO da coluna `role.name` (regular roles, populados pelo togare-rbac). `portalRoles` referencia `portal_role.name` (portal roles — ainda NÃO seedados pelo togare-rbac até 2026-04-25; Alberto fica sem role atribuído até a infra de portal_role chegar — ver Pendência F2 nas Completion Notes da Story 1a.10).",
+  "users": [
+    {
+      "userName": "ricardo.ferraz",
+      "firstName": "Ricardo",
+      "lastName": "Ferraz",
+      "emailAddress": "ricardo@dev.togare.local",
+      "type": "regular",
+      "isActive": true,
+      "passwordRaw": "DevSeed2026!",
+      "roles": ["Sócio/Admin"],
+      "personaContext": "Jornada 1 (PRD §Jornadas) — sócio fundador Ferraz & Associados"
+    },
+    {
+      "userName": "beatriz.souza",
+      "firstName": "Beatriz",
+      "lastName": "Souza",
+      "emailAddress": "beatriz@dev.togare.local",
+      "type": "regular",
+      "isActive": true,
+      "passwordRaw": "DevSeed2026!",
+      "roles": ["Advogado"],
+      "personaContext": "Jornada 2 (PRD §Jornadas) — advogada associada, edge case publicação ambígua"
+    },
+    {
+      "userName": "marli.nascimento",
+      "firstName": "Marli",
+      "lastName": "Nascimento",
+      "emailAddress": "marli@dev.togare.local",
+      "type": "regular",
+      "isActive": true,
+      "passwordRaw": "DevSeed2026!",
+      "roles": ["Secretária"],
+      "personaContext": "Jornada 5 (PRD §Jornadas) — secretária 14 anos, agenda + cadastro de clientes"
+    },
+    {
+      "userName": "alberto.ferreira",
+      "firstName": "Alberto",
+      "lastName": "Ferreira",
+      "emailAddress": "alberto@dev.togare.local",
+      "type": "portal",
+      "isActive": true,
+      "passwordRaw": "DevSeed2026!",
+      "roles": [],
+      "portalRoles": [],
+      "_pendingPortalRole": "Cliente-portal — pendente seed em `portal_role` (atualmente o role 'Cliente-portal' do togare-rbac está em `role` regular, errado para portal users). Quando a story de portal_role chegar, mover para `portalRoles: [\"Cliente-portal\"]`.",
+      "personaContext": "Jornada 8 (PRD §Jornadas) — cliente idoso (71), processo usucapião, primeira visita ao Portal"
+    }
+  ]
+}

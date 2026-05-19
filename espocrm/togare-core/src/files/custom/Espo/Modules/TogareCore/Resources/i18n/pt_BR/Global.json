@@ -1,0 +1,45 @@
+{
+    "scopeNames": {
+        "Cliente": "Cliente",
+        "ParteContraria": "Parte Contrária",
+        "Processo": "Processo",
+        "Audiencia": "Audiência",
+        "Prazo": "Prazo",
+        "PublicacaoAmbigua": "Precisa sua leitura",
+        "Lead": "Lead",
+        "Opportunity": "Oportunidade",
+        "Documento": "Documento",
+        "ContratoHonorarios": "Contrato de honorários"
+    },
+    "scopeNamesPlural": {
+        "Cliente": "Clientes",
+        "ParteContraria": "Partes Contrárias",
+        "Processo": "Processos",
+        "Audiencia": "Audiências",
+        "Prazo": "Prazos",
+        "PublicacaoAmbigua": "Publicações em revisão",
+        "Lead": "Leads",
+        "Opportunity": "Oportunidades",
+        "Documento": "Documentos",
+        "ContratoHonorarios": "Contratos de honorários"
+    },
+    "labels": {
+        "Global": {
+            "tabs": {
+                "Cliente": "Clientes",
+                "ParteContraria": "Partes Contrárias",
+                "Processo": "Processos",
+                "Audiencia": "Audiências",
+                "Prazo": "Prazos",
+                "PublicacaoAmbigua": "Precisa sua leitura",
+                "Lead": "Leads",
+                "Opportunity": "Oportunidades"
+            }
+        }
+    },
+    "dashlets": {
+        "Prazos": "Meus prazos do dia",
+        "TogareHealth": "Saúde do Togare",
+        "BriefingDoDia": "Briefing do Dia"
+    }
+}

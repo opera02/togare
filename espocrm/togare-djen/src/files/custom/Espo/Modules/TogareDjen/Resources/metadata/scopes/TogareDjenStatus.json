@@ -1,0 +1,12 @@
+{
+    "module": "TogareDjen",
+    "object": false,
+    "entity": false,
+    "tab": false,
+    "layouts": false,
+    "acl": "boolean",
+    "aclPortal": false,
+    "stream": false,
+    "importable": false,
+    "customizable": false
+}

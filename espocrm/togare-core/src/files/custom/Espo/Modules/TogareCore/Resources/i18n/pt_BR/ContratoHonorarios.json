@@ -1,0 +1,84 @@
+{
+    "labels": {
+        "ContratoHonorarios": "Contrato de honorários",
+        "Contratos de honorários": "Contratos de honorários",
+        "Anexar contrato": "Anexar contrato",
+        "Baixar": "Baixar",
+        "Remover": "Remover",
+        "Create ContratoHonorarios": "Cadastrar contrato",
+        "Edit ContratoHonorarios": "Editar contrato",
+        "contextLabel": "Cliente",
+        "chooseFile": "Escolha o PDF do contrato"
+    },
+    "fields": {
+        "modalidade": "Modalidade",
+        "valor": "Valor (R$)",
+        "percentual": "Percentual (%)",
+        "parcelamentoJson": "Parcelamento",
+        "dataAssinatura": "Data de assinatura",
+        "vigenciaInicio": "Vigência (início)",
+        "vigenciaFim": "Vigência (fim)",
+        "filename": "Arquivo",
+        "mimeType": "Tipo",
+        "sizeBytes": "Tamanho",
+        "fileStorageUri": "URI do arquivo (interno)",
+        "uploadedAttachment": "Anexo PDF",
+        "cliente": "Cliente",
+        "processos": "Processos",
+        "uploadedBy": "Enviado por",
+        "createdAt": "Cadastrado em",
+        "createdBy": "Criado por",
+        "modifiedAt": "Modificado em",
+        "modifiedBy": "Modificado por",
+        "assignedUser": "Responsável"
+    },
+    "links": {
+        "cliente": "Cliente",
+        "processos": "Processos vinculados",
+        "uploadedBy": "Enviado por",
+        "contratosHonorarios": "Contratos de honorários",
+        "faturas": "Faturas"
+    },
+    "options": {
+        "modalidade": {
+            "": "(selecione)",
+            "fixo": "Fixo",
+            "exito": "Êxito",
+            "sucumbencia": "Sucumbência",
+            "mensal": "Mensal",
+            "hora_trabalhada": "Hora trabalhada",
+            "misto": "Misto"
+        }
+    },
+    "tooltips": {
+        "vigenciaFim": "Deixe em branco para contratos abertos sem prazo definido (comum em modalidade Êxito ou Mensal sem prazo).",
+        "parcelamentoJson": "Texto livre descrevendo o parcelamento — ex.: '12x de R$ 500 vencendo todo dia 10 a partir de jun/2026'. Opcional."
+    },
+    "messages": {
+        "modalidadeObrigatoria": "Selecione a modalidade do contrato.",
+        "clienteObrigatorio": "O contrato precisa estar vinculado a um Cliente.",
+        "valorObrigatorioFixo": "Modalidade Fixo exige o campo Valor preenchido.",
+        "valorObrigatorioMensal": "Modalidade Mensal exige o campo Valor preenchido.",
+        "valorObrigatorioHora": "Modalidade Hora trabalhada exige o campo Valor preenchido.",
+        "valorObrigatorioMisto": "Modalidade Misto exige AMBOS os campos Valor e Percentual preenchidos.",
+        "percentualObrigatorioExito": "Modalidade Êxito exige o campo Percentual preenchido (0 a 100).",
+        "percentualObrigatorioSucumbencia": "Modalidade Sucumbência exige o campo Percentual preenchido (0 a 100).",
+        "percentualObrigatorioMisto": "Modalidade Misto exige AMBOS os campos Valor e Percentual preenchidos.",
+        "percentualForaDoIntervalo": "O Percentual deve estar entre 0 e 100.",
+        "vigenciaFimAntesInicio": "A Vigência (fim) deve ser igual ou posterior à Vigência (início). Para contratos sem prazo, deixe Vigência (fim) em branco.",
+        "vigenciaInicioObrigatoria": "A Vigência (início) é obrigatória.",
+        "dataAssinaturaObrigatoria": "A Data de assinatura é obrigatória.",
+        "processosCrossCliente": "Os processos vinculados devem pertencer ao mesmo Cliente do contrato.",
+        "pdfObrigatorio": "Anexe o PDF do contrato assinado.",
+        "mimeRejected": "O contrato precisa ser um arquivo PDF.",
+        "attachmentNotFound": "Anexo temporário não encontrado. Faça o upload novamente.",
+        "uploadFailed": "Não foi possível enviar o arquivo do contrato agora. Tente novamente em alguns minutos.",
+        "uploadSuccess": "Contrato cadastrado.",
+        "linkImmutable": "Não é possível trocar o Cliente ou substituir o PDF de um contrato já salvo. Cadastre um contrato novo e marque o antigo como expirado em Vigência (fim).",
+        "purgeFailed": "Não foi possível remover o arquivo do contrato agora. Tente novamente em alguns minutos.",
+        "removeConfirm": "Remover este contrato? O PDF irá para a lixeira por 30 dias.",
+        "removeSuccess": "Contrato removido.",
+        "downloadPending": "Download do contrato disponível em breve.",
+        "uploadHint": "Formato aceito: PDF. Tamanho máximo: 200 MB."
+    }
+}

@@ -1,0 +1,7 @@
+[
+    {"name": "mimeType"},
+    {"name": "createdAt"},
+    {"name": "uploadedBy"},
+    {"name": "processo"},
+    {"name": "cliente"}
+]

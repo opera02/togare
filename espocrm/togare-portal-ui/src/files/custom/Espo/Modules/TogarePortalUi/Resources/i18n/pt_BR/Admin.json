@@ -1,0 +1,11 @@
+{
+  "labels": {
+    "Portal Appearance": "Aparência"
+  },
+  "descriptions": {
+    "portalAppearance": "Configure o logo, a cor primária e a frase de boas-vindas da tela de login do Portal do Cliente."
+  },
+  "keywords": {
+    "portalAppearance": "portal,aparência,splash,logo,cor,boas-vindas,branding,login"
+  }
+}

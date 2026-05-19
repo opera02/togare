@@ -1,0 +1,13 @@
+/build/
+/site/
+/tests/integration/config.php
+/node_modules
+/config.json
+/config.php
+/extensions/
+# /src/files/custom/Espo/Modules/*/vendor/ — INTENCIONALMENTE commitado:
+#   o inner vendor (lcobucci/jwt + psr/clock --no-dev) é necessário pro
+#   build da extension funcionar sem composer no host (Story 1b.1).
+/vendor
+/.phpunit.result.cache
+/composer.phar

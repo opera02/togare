@@ -1,0 +1,19 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "detail": "togare-core:views/publicacao-ambigua/record/detail"
+    },
+    "boolFilterList": [
+        "onlyMy",
+        "precisaSuaLeitura"
+    ],
+    "defaultFilterData": {
+        "boolFilterList": ["precisaSuaLeitura"]
+    },
+    "kanbanViewMode": false,
+    "accessDataList": [
+        {
+            "inPortalDisabled": true
+        }
+    ]
+}

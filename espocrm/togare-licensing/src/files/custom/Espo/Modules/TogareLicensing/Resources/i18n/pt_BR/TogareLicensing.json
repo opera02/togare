@@ -1,0 +1,20 @@
+{
+    "labels": {
+        "activateLicenseTitle": "Ativar Licença Togare",
+        "activateLicenseDescription": "Cole abaixo a chave JWT recebida do Togare empresa para ativar os módulos premium contratados (DJEN, Portal do Cliente, etc.). A validação é feita offline contra a chave pública embutida — não há chamada à internet.",
+        "activateLicensePlaceholder": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0b2dhcmUtZW1wcmVzYSIsImV4cCI6...",
+        "activateLicenseButton": "Ativar módulos",
+        "activateLicenseSubmitting": "Validando…",
+        "activateLicenseWarningTitle": "Antes de colar a chave",
+        "activateLicenseWarningText": "Confira que copiou a chave inteira, sem espaços ou quebras de linha extras. Use apenas chaves emitidas pelo Togare empresa — chaves de origem desconhecida serão rejeitadas pela validação de assinatura."
+    },
+    "messages": {
+        "activateLicenseEmpty": "Cole uma chave JWT no campo acima antes de ativar.",
+        "activateLicenseSuccess": "Licença ativada. Módulos: {modules}. Expira em {expiresAt}.",
+        "activateLicenseError_invalid_signature": "Assinatura da chave JWT inválida — chave pode ter sido adulterada ou foi emitida com chave privada diferente.",
+        "activateLicenseError_expired": "A chave JWT já expirou. Solicite renovação ao Togare empresa.",
+        "activateLicenseError_malformed": "Chave JWT mal-formada — verifique se copiou a chave inteira sem quebras de linha extras.",
+        "activateLicenseError_wrong_issuer": "A chave JWT foi emitida por um issuer desconhecido (não é do Togare empresa).",
+        "activateLicenseErrorGeneric": "Não foi possível ativar a chave. Tente novamente ou entre em contato com o suporte."
+    }
+}

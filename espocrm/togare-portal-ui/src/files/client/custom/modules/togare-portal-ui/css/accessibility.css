@@ -1,0 +1,165 @@
+/*
+ * togare-portal-ui — acessibilidade AAA do PortalSplash (Story 7a.1).
+ *
+ * Rota crítica AAA #1 (UX-DR9/8, NFR28, ux-spec L1547-1575): contraste
+ * alvo 7:1, fonte do corpo >=18px, alvos de toque >=48px, foco 2px,
+ * prefers-reduced-motion, zoom 200% sem scroll horizontal, reforços para
+ * cliente idoso (perfil Alberto).
+ *
+ * TUDO escopado em body.togare-portal-splash — aplicado SÓ no contexto
+ * Portal (a view só adiciona essa classe quando _isPortalContext()).
+ * O login operacional do CRM permanece o tema padrão EspoCRM (AC3).
+ *
+ * Cor primária do escritório injetada pela view como --togare-portal-primary
+ * (fallback = #0d47a1, contraste 8.63:1 com texto branco — AAA folgado).
+ */
+
+body.togare-portal-splash {
+    --togare-portal-primary: #0d47a1;
+    background-color: var(--togare-portal-primary) !important;
+    min-height: 100vh;
+    margin: 0;
+    /* fonte do corpo >=18px no Portal (reforço idoso) */
+    font-size: 18px;
+    line-height: 1.5;
+    overflow-x: hidden; /* zoom 200% sem scroll horizontal */
+}
+
+body.togare-portal-splash #login,
+body.togare-portal-splash .panel-body {
+    background-color: transparent;
+}
+
+/* Splash full-screen centralizado */
+body.togare-portal-splash #login {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+/* Logo grande centralizado */
+body.togare-portal-splash .logo,
+body.togare-portal-splash img.logo {
+    max-width: 280px;
+    height: auto;
+    margin: 0 auto 24px;
+    display: block;
+}
+
+/* Frase de boas-vindas — texto branco sobre a cor do escritório */
+body.togare-portal-splash .togare-portal-splash__welcome {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 500;
+    text-align: center;
+    max-width: 30ch;
+    margin: 0 auto 28px;
+}
+
+/* Fallback telefônico sempre visível */
+body.togare-portal-splash .togare-portal-splash__phone {
+    color: #ffffff;
+    font-size: 18px;
+    text-align: center;
+    margin: 24px auto 0;
+}
+
+/* Form em cartão claro para legibilidade do input */
+body.togare-portal-splash .togare-portal-splash__form,
+body.togare-portal-splash #login-form {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 24px;
+    width: 100%;
+    max-width: 480px;          /* variante desktop centralizado 480px */
+    box-sizing: border-box;
+}
+
+/* Alvos de toque >=48px (reforço idoso; não 44) + labels explícitos */
+body.togare-portal-splash input.form-control,
+body.togare-portal-splash .form-control {
+    min-height: 48px;
+    font-size: 18px;
+}
+
+body.togare-portal-splash .btn,
+body.togare-portal-splash #btn-login,
+body.togare-portal-splash button[type="submit"] {
+    min-height: 48px;
+    min-width: 48px;
+    font-size: 18px;
+    padding: 12px 24px;
+}
+
+body.togare-portal-splash label,
+body.togare-portal-splash .control-label {
+    font-size: 18px;
+    display: block;       /* label explícito, nunca placeholder-only */
+    margin-bottom: 6px;
+}
+
+/* Foco visível 2px contraste AAA (AR-10 — nunca outline:none sem substituto) */
+body.togare-portal-splash a:focus-visible,
+body.togare-portal-splash input:focus-visible,
+body.togare-portal-splash button:focus-visible,
+body.togare-portal-splash .btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+/* Dentro do card branco, foco branco some. Use azul escuro visivel. */
+body.togare-portal-splash .togare-portal-splash__form input:focus-visible,
+body.togare-portal-splash .togare-portal-splash__form button:focus-visible,
+body.togare-portal-splash .togare-portal-splash__form .btn:focus-visible,
+body.togare-portal-splash #login-form input:focus-visible,
+body.togare-portal-splash #login-form button:focus-visible,
+body.togare-portal-splash #login-form .btn:focus-visible {
+    outline-color: #001b3a;
+}
+
+/* Splash sem animação agressiva + respeita prefers-reduced-motion */
+body.togare-portal-splash * {
+    animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.togare-portal-splash *,
+    body.togare-portal-splash *::before,
+    body.togare-portal-splash *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* Variante tablet (fluid, max 640px) */
+@media (max-width: 1024px) and (min-width: 641px) {
+    body.togare-portal-splash .togare-portal-splash__form,
+    body.togare-portal-splash #login-form {
+        max-width: 640px;
+    }
+}
+
+/* Variante mobile (fluid, padding 24px) */
+@media (max-width: 640px) {
+    body.togare-portal-splash #login {
+        padding: 24px;
+    }
+
+    body.togare-portal-splash .togare-portal-splash__form,
+    body.togare-portal-splash #login-form {
+        max-width: 100%;
+    }
+
+    body.togare-portal-splash .togare-portal-splash__welcome {
+        font-size: 20px;
+    }
+}
+
+/* Aviso de contraste do painel admin (AC5) — herdado do tema; reforço a11y */
+.togare-portal-appearance__contrast-notice {
+    font-size: 15px;
+}

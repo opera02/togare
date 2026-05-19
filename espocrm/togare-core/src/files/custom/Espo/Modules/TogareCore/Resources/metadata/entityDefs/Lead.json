@@ -1,0 +1,16 @@
+{
+    "fields": {
+        "status": {
+            "options": ["Novo Lead", "Qualificado", "Descartado", "Converted"],
+            "default": "Novo Lead",
+            "style": {
+                "Novo Lead": "primary",
+                "Qualificado": "success",
+                "Descartado": "danger",
+                "Converted": "success"
+            },
+            "notActualOptions": ["Descartado", "Converted"]
+        }
+    },
+    "convertEntityList": ["Opportunity"]
+}

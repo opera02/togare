@@ -1,0 +1,12 @@
+{
+    "entity": true,
+    "object": true,
+    "module": "TogareCore",
+    "tab": false,
+    "layouts": true,
+    "acl": true,
+    "aclPortal": false,
+    "stream": false,
+    "importable": false,
+    "customizable": true
+}

@@ -1,0 +1,182 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "CONCAT:(tipo, ' — ', dataHora)"},
+            "order": {"order": [["dataHora", "{direction}"]]}
+        },
+        "dataHora": {
+            "type": "datetime",
+            "required": true
+        },
+        "dateStart": {
+            "type": "datetime",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "dataHora"},
+            "order": {"order": [["dataHora", "{direction}"]]},
+            "where": {
+                "=": {"whereClause": {"dataHora=": "{value}"}},
+                "<>": {"whereClause": {"dataHora!=": "{value}"}},
+                ">": {"whereClause": {"dataHora>": "{value}"}},
+                "<": {"whereClause": {"dataHora<": "{value}"}},
+                ">=": {"whereClause": {"dataHora>=": "{value}"}},
+                "<=": {"whereClause": {"dataHora<=": "{value}"}},
+                "IS NULL": {"whereClause": {"dataHora=": null}},
+                "IS NOT NULL": {"whereClause": {"dataHora!=": null}},
+                "BETWEEN": {"whereClause": {"AND": [{"dataHora>=": "{value}.0"}, {"dataHora<=": "{value}.1"}]}},
+                "NOT BETWEEN": {"whereClause": {"OR": [{"dataHora<": "{value}.0"}, {"dataHora>": "{value}.1"}]}}
+            }
+        },
+        "dateEnd": {
+            "type": "datetime",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "dataHora"},
+            "where": {
+                "=": {"whereClause": {"dataHora=": "{value}"}},
+                "<>": {"whereClause": {"dataHora!=": "{value}"}},
+                ">": {"whereClause": {"dataHora>": "{value}"}},
+                "<": {"whereClause": {"dataHora<": "{value}"}},
+                ">=": {"whereClause": {"dataHora>=": "{value}"}},
+                "<=": {"whereClause": {"dataHora<=": "{value}"}},
+                "IS NULL": {"whereClause": {"dataHora=": null}},
+                "IS NOT NULL": {"whereClause": {"dataHora!=": null}},
+                "BETWEEN": {"whereClause": {"AND": [{"dataHora>=": "{value}.0"}, {"dataHora<=": "{value}.1"}]}},
+                "NOT BETWEEN": {"whereClause": {"OR": [{"dataHora<": "{value}.0"}, {"dataHora>": "{value}.1"}]}}
+            }
+        },
+        "duracaoMinutos": {
+            "type": "int",
+            "default": 60,
+            "min": 15,
+            "max": 480
+        },
+        "tribunal": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true
+        },
+        "vara": {
+            "type": "varchar",
+            "maxLength": 100,
+            "trim": true
+        },
+        "enderecoLink": {
+            "type": "text"
+        },
+        "tipo": {
+            "type": "enum",
+            "options": [
+                "conciliacao",
+                "instrucao_julgamento",
+                "julgamento",
+                "una",
+                "conciliacao_mediacao",
+                "outras"
+            ],
+            "default": "conciliacao",
+            "required": true
+        },
+        "modalidade": {
+            "type": "enum",
+            "options": ["presencial", "virtual", "hibrida"],
+            "default": "presencial",
+            "required": true
+        },
+        "status": {
+            "type": "enum",
+            "options": ["agendada", "realizada", "cancelada", "adiada"],
+            "default": "agendada",
+            "required": true
+        },
+        "participantes": {
+            "type": "text"
+        },
+        "observacoes": {
+            "type": "text"
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false
+        },
+        "processo": {
+            "type": "link",
+            "required": true
+        },
+        "processoName": {
+            "type": "varchar",
+            "notStorable": true,
+            "readOnly": true,
+            "select": {"select": "processo.numeroCnj"},
+            "order": {"order": [["processo.numeroCnj", "{direction}"]]}
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "processo": {
+            "type": "belongsTo",
+            "entity": "Processo",
+            "foreign": "audiencias"
+        }
+    },
+    "indexes": {
+        "dataHora": {
+            "columns": ["dataHora"]
+        },
+        "statusDataHora": {
+            "columns": ["status", "dataHora"]
+        },
+        "processoId": {
+            "columns": ["processoId"]
+        },
+        "assignedUserId": {
+            "columns": ["assignedUserId"]
+        }
+    },
+    "collection": {
+        "orderBy": "dataHora",
+        "order": "asc",
+        "textFilterFields": [
+            "participantes",
+            "tribunal",
+            "vara",
+            "observacoes"
+        ]
+    }
+}

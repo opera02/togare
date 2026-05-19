@@ -1,0 +1,10 @@
+[
+    {
+        "label": "Portal Appearance",
+        "rows": [
+            [{"name": "togarePortalSplashLogo"}, false],
+            [{"name": "togarePortalSplashPrimaryColor"}, {"name": "togarePortalSplashPhone"}],
+            [{"name": "togarePortalSplashWelcome"}, false]
+        ]
+    }
+]

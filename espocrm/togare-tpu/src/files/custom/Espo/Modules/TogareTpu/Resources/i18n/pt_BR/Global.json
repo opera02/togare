@@ -1,0 +1,14 @@
+{
+  "scopeNames": {
+    "TogareTpu": "Togare — TPU (Tabelas Processuais Unificadas)"
+  },
+  "labels": {
+    "TogareTpu": {
+      "syncCompleted": "Sync TPU concluído",
+      "syncFailed": "Sync TPU falhou",
+      "syncInProgress": "Sync TPU em andamento",
+      "redisUnavailable": "Cache Redis indisponível — operando em fallback DB",
+      "adapterUnavailable": "Fonte PDPJ indisponível — última sync mantida"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+[
+    {
+        "name": "name",
+        "link": true,
+        "width": 25
+    },
+    {
+        "name": "tipoPessoa",
+        "width": 10
+    },
+    {
+        "name": "cpf",
+        "width": 15
+    },
+    {
+        "name": "cnpj",
+        "width": 15
+    },
+    {
+        "name": "telefone",
+        "width": 15
+    },
+    {
+        "name": "cidade",
+        "width": 12
+    },
+    {
+        "name": "uf",
+        "width": 8
+    }
+]

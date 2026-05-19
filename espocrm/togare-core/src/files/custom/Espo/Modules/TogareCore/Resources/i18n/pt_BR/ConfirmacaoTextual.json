@@ -1,0 +1,10 @@
+{
+  "labels": {
+    "instrucao": "Digite o nome exato para confirmar:",
+    "placeholderPrefix": "Digite: ",
+    "ctaDefault": "Confirmar",
+    "cancelLabel": "Cancelar",
+    "ariaDestructiveWarning": "Ação irreversível.",
+    "ariaDescription": "Campo de confirmação textual. Digite o nome exato da entidade ou política para habilitar o botão de confirmação."
+  }
+}

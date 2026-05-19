@@ -1,0 +1,75 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [
+                {"name": "numero"},
+                {"name": "status"}
+            ],
+            [
+                {"name": "descricao"},
+                {"name": "contratoHonorarios"}
+            ],
+            [
+                {"name": "cliente"},
+                {"name": "processo"}
+            ]
+        ]
+    },
+    {
+        "label": "Valores",
+        "rows": [
+            [
+                {"name": "valorBruto"},
+                {"name": "valorPago"}
+            ],
+            [
+                {"name": "saldo"},
+                {"name": "assignedUser"}
+            ]
+        ]
+    },
+    {
+        "label": "Datas",
+        "rows": [
+            [
+                {"name": "dataEmissao"},
+                {"name": "dataVencimento"}
+            ]
+        ]
+    },
+    {
+        "label": "Observações",
+        "rows": [
+            [
+                {"name": "observacoes", "fullWidth": true},
+                false
+            ]
+        ]
+    },
+    {
+        "name": "cancelamento",
+        "label": "Cancelamento",
+        "style": "danger",
+        "rows": [
+            [
+                {"name": "motivoCancelamento", "fullWidth": true},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Auditoria",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "createdAt"},
+                {"name": "createdBy"}
+            ],
+            [
+                {"name": "modifiedAt"},
+                {"name": "modifiedBy"}
+            ]
+        ]
+    }
+]

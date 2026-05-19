@@ -1,0 +1,24 @@
+{
+  "fields": {
+    "togarePortalSplashLogo": {
+      "type": "image"
+    },
+    "togarePortalSplashPrimaryColor": {
+      "type": "varchar",
+      "maxLength": 7,
+      "default": "#0d47a1",
+      "tooltip": true
+    },
+    "togarePortalSplashWelcome": {
+      "type": "text",
+      "maxLength": 280,
+      "default": "Olá. Aqui você acompanha o andamento do seu processo.",
+      "tooltip": true
+    },
+    "togarePortalSplashPhone": {
+      "type": "varchar",
+      "maxLength": 40,
+      "tooltip": true
+    }
+  }
+}

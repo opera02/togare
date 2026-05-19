@@ -1,0 +1,17 @@
+# Normalização de line endings.
+# Windows↔Linux: sem isso, Git converte LF→CRLF no checkout Windows, scripts
+# bash dentro de containers quebram e diffs vêm cheios de ^M.
+* text=auto eol=lf
+
+# Scripts shell e Caddyfile sempre LF.
+*.sh         text eol=lf
+Caddyfile    text eol=lf
+
+# Binários — desligar transformação.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary

@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "undo": {
+      "icon": "✓",
+      "role": "status",
+      "defaultActionLabel": "Desfazer"
+    },
+    "warning": {
+      "icon": "⚠",
+      "role": "alert",
+      "defaultActionLabel": "Continuar"
+    },
+    "success": {
+      "icon": "✓",
+      "role": "status",
+      "defaultActionLabel": null
+    },
+    "error": {
+      "icon": "✗",
+      "role": "status",
+      "defaultActionLabel": "Tentar de novo"
+    },
+    "auto-link": {
+      "icon": "🔗",
+      "role": "status",
+      "defaultActionLabel": "Editar"
+    }
+  },
+  "messages": {
+    "sessionExpiring": "Sua sessão expira em {minutes} minutos. Clique para continuar.",
+    "saved": "Salvo",
+    "sent": "Enviado",
+    "deleted": "Removido",
+    "deadlineConfirmed": "Prazo confirmado",
+    "genericError": "Algo deu errado. Tente de novo."
+  }
+}

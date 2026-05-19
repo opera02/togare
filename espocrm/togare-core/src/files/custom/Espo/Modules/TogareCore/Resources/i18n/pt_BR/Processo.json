@@ -1,0 +1,94 @@
+{
+    "labels": {
+        "Processo": "Processo",
+        "create": "Novo Processo",
+        "Create Processo": "Novo Processo",
+        "Add Collaborator": "Adicionar colaborador",
+        "Remove Collaborator": "Remover colaborador",
+        "assignmentNotAllowed": "Apenas o titular ou Sócio/Admin pode alterar a atribuição deste processo."
+    },
+    "fields": {
+        "numeroCnj": "Número CNJ",
+        "segredoJustica": "Segredo de Justiça",
+        "classeCodigo": "Classe (código)",
+        "classeNome": "Classe (nome)",
+        "assuntoCodigo": "Assunto (código)",
+        "assuntoNome": "Assunto (nome)",
+        "movimentoCodigo": "Movimento atual (código)",
+        "movimentoNome": "Movimento atual (nome)",
+        "area": "Área",
+        "instancia": "Instância",
+        "fase": "Fase",
+        "status": "Status",
+        "polo": "Polo do cliente",
+        "valorCausa": "Valor da causa",
+        "dataDistribuicao": "Data de distribuição",
+        "dataAutuacao": "Data de autuação",
+        "tribunal": "Tribunal",
+        "vara": "Vara",
+        "observacoes": "Observações",
+        "clientes": "Clientes",
+        "partesContrarias": "Partes Contrárias",
+        "audiencias": "Audiências",
+        "prazos": "Prazos",
+        "assignedUser": "Advogado responsável",
+        "collaborators": "Colaboradores",
+        "tenantId": "Tenant",
+        "createdAt": "Criado em",
+        "modifiedAt": "Modificado em",
+        "createdBy": "Criado por",
+        "modifiedBy": "Modificado por"
+    },
+    "links": {
+        "clientes": "Clientes",
+        "partesContrarias": "Partes Contrárias",
+        "audiencias": "Audiências",
+        "prazos": "Prazos",
+        "collaborators": "Colaboradores",
+        "documentos": "Documentos",
+        "contratosHonorarios": "Contratos de honorários",
+        "faturas": "Faturas",
+        "lancamentosFinanceiros": "Lançamentos financeiros"
+    },
+    "options": {
+        "area": {
+            "civel": "Cível",
+            "criminal": "Criminal",
+            "trabalhista": "Trabalhista",
+            "tributario": "Tributário",
+            "administrativo": "Administrativo",
+            "previdenciario": "Previdenciário",
+            "consumidor": "Consumidor",
+            "familia": "Família",
+            "empresarial": "Empresarial",
+            "ambiental": "Ambiental",
+            "outras": "Outras"
+        },
+        "instancia": {
+            "primeira": "1ª instância",
+            "segunda": "2ª instância",
+            "superior": "Superior (STJ/STF/TST)"
+        },
+        "fase": {
+            "conhecimento": "Conhecimento",
+            "cumprimento_sentenca": "Cumprimento de sentença",
+            "execucao": "Execução",
+            "recursal": "Recursal",
+            "arquivado": "Arquivado"
+        },
+        "status": {
+            "ativo": "Ativo",
+            "suspenso": "Suspenso",
+            "arquivado": "Arquivado",
+            "baixado": "Baixado"
+        },
+        "polo": {
+            "ativo": "Ativo (autor/exequente)",
+            "passivo": "Passivo (réu/executado)",
+            "terceiro": "Terceiro (interessado/assistente)"
+        }
+    },
+    "presetFilters": {
+        "onlyMy": "Apenas meus"
+    }
+}

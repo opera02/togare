@@ -1,0 +1,22 @@
+{
+    "fields": {
+        "togareLembreteConfig": "Meus lembretes (Togare)"
+    },
+    "labels": {
+        "lembreteConfig.tabLabel": "Meus lembretes (Togare)"
+    },
+    "lembreteConfig": {
+        "title": "Meus lembretes (Togare)",
+        "channelsTitle": "Canais ativos",
+        "popupLabel": "Notificação no Togare (pop-up)",
+        "emailLabel": "E-mail",
+        "marcosTitle": "Marcos ativos",
+        "D7Label": "7 dias úteis antes do vencimento",
+        "D3Label": "3 dias úteis antes do vencimento",
+        "D1Label": "1 dia útil antes do vencimento",
+        "D0Label": "Vence hoje (D-0) — alerta crítico",
+        "statusDirigidoLabel": "Quando o status muda para Atrasado/Reagendado, Aguardando cliente ou Aguardando correção",
+        "hint": "Se você desativar todos os canais, não receberá nenhum lembrete. Mudanças também afetam lembretes pendentes que ainda não foram enviados.",
+        "ariaHintId": "togare-lembrete-hint"
+    }
+}

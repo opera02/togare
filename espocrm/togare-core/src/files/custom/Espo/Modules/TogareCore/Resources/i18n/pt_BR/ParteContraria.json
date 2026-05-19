@@ -1,0 +1,42 @@
+{
+    "labels": {
+        "ParteContraria": "Parte Contrária",
+        "create": "Nova Parte Contrária",
+        "Create ParteContraria": "Nova Parte Contrária",
+        "Edit ParteContraria": "Editar Parte Contrária"
+    },
+    "fields": {
+        "name": "Nome",
+        "tipoPessoa": "Tipo",
+        "cpf": "CPF",
+        "cnpj": "CNPJ",
+        "email": "E-mail",
+        "telefone": "Telefone",
+        "observacoes": "Observações",
+        "tenantId": "Tenant",
+        "processos": "Processos",
+        "assignedUser": "Responsável",
+        "createdAt": "Criado em",
+        "modifiedAt": "Modificado em",
+        "createdBy": "Criado por",
+        "modifiedBy": "Modificado por"
+    },
+    "options": {
+        "tipoPessoa": {
+            "pf": "Pessoa Física",
+            "pj": "Pessoa Jurídica",
+            "desconhecida": "Desconhecida"
+        }
+    },
+    "tooltips": {
+        "tipoPessoa": "Define se a parte contrária é Pessoa Física, Jurídica ou Desconhecida (sem CPF/CNPJ).",
+        "telefone": "Apenas dígitos. Aceita máscara — o sistema remove automaticamente.",
+        "cpf": "Opcional. 11 dígitos com dígito verificador. Aceita máscara — o sistema remove automaticamente.",
+        "cnpj": "Opcional. 14 dígitos com dígito verificador. Aceita máscara — o sistema remove automaticamente."
+    },
+    "presetFilters": {
+        "pf": "Pessoa Física",
+        "pj": "Pessoa Jurídica",
+        "desconhecida": "Desconhecida"
+    }
+}

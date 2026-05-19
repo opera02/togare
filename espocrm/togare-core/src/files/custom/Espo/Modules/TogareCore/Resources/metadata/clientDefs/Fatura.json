@@ -1,0 +1,49 @@
+{
+    "controller": "controllers/record",
+    "iconClass": "fas fa-file-invoice-dollar",
+    "color": "#1c5fbf",
+    "recordViews": {
+        "list": "togare-core:views/fatura/record/list",
+        "detail": "togare-core:views/fatura/record/detail"
+    },
+    "modalViews": {
+        "edit": "togare-core:views/fatura/create-modal"
+    },
+    "boolFilterList": ["emAberto", "vencidas"],
+    "defaultFilterData": {
+        "boolFilterList": ["emAberto"]
+    },
+    "menu": {
+        "list": {
+            "buttons": []
+        }
+    },
+    "dynamicLogic": {
+        "fields": {
+            "motivoCancelamento": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "status",
+                            "value": "cancelada"
+                        }
+                    ]
+                }
+            }
+        },
+        "panels": {
+            "cancelamento": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "status",
+                            "value": "cancelada"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

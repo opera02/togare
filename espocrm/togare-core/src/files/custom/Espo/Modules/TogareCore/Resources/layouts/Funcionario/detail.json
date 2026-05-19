@@ -1,0 +1,33 @@
+[
+    {
+        "label": "Dados do funcionário",
+        "rows": [
+            [
+                {"name": "nome"},
+                {"name": "cpf"}
+            ],
+            [
+                {"name": "cargo"},
+                {"name": "salario"}
+            ],
+            [
+                {"name": "dataAdmissao"},
+                false
+            ]
+        ]
+    },
+    {
+        "label": "Auditoria",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "createdAt"},
+                {"name": "createdBy"}
+            ],
+            [
+                {"name": "modifiedAt"},
+                {"name": "modifiedBy"}
+            ]
+        ]
+    }
+]

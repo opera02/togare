@@ -1,0 +1,23 @@
+[
+    {
+        "name": "moduleName",
+        "link": true,
+        "width": 25
+    },
+    {
+        "name": "status",
+        "width": 15
+    },
+    {
+        "name": "expiresAt",
+        "width": 20
+    },
+    {
+        "name": "lastValidatedAt",
+        "width": 20
+    },
+    {
+        "name": "lastValidationOutcome",
+        "width": 15
+    }
+]

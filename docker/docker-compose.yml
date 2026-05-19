@@ -1,0 +1,358 @@
+name: nextcloud-crm
+
+# Stack Togare MVP — brownfield, ver Story 1a.1.
+# - Todas as versões de imagem são pinadas via .env (ADR 0003 — TOGARE_*).
+# - MariaDB ≥10.6 é obrigatório pelo ADR 0005 (SELECT ... FOR UPDATE SKIP LOCKED).
+# - EspoCRM e Nextcloud NÃO expõem portas ao host: tráfego externo passa pelo Caddy
+#   (ADR 0004) com TLS 1.3 exclusivo (NFR7).
+
+networks:
+  togare_net:
+    driver: bridge
+
+services:
+  mariadb:
+    image: mariadb:${MARIADB_VERSION}
+    restart: unless-stopped
+    networks: [togare_net]
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${ESPOCRM_DB_NAME}
+      MARIADB_USER: ${ESPOCRM_DB_USER}
+      MARIADB_PASSWORD: ${ESPOCRM_DB_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  espocrm:
+    image: espocrm/espocrm:${ESPOCRM_VERSION}
+    restart: unless-stopped
+    networks: [togare_net]
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      ESPOCRM_DATABASE_HOST: mariadb
+      ESPOCRM_DATABASE_NAME: ${ESPOCRM_DB_NAME}
+      ESPOCRM_DATABASE_USER: ${ESPOCRM_DB_USER}
+      ESPOCRM_DATABASE_PASSWORD: ${ESPOCRM_DB_PASSWORD}
+      ESPOCRM_ADMIN_USERNAME: ${ESPOCRM_ADMIN_USERNAME}
+      ESPOCRM_ADMIN_PASSWORD: ${ESPOCRM_ADMIN_PASSWORD}
+      ESPOCRM_SITE_URL: https://${TOGARE_DOMAIN}
+      # togare-tpu (Story 3.3) — DB 1 isolado do Nextcloud (DB 0).
+      TOGARE_REDIS_HOST: redis
+      TOGARE_REDIS_PORT: 6379
+      TOGARE_REDIS_PASSWORD: ${REDIS_PASSWORD}
+      TOGARE_REDIS_DB: 1
+      # Story 4b.4 / ADR 0009 — state-file do circuit breaker do DjenAdapter
+      # vive em volume Docker compartilhado entre espocrm e togare-djen-worker
+      # (snapshot endpoint precisa ler o mesmo file que o worker escreve;
+      # /tmp NÃO é compartilhado entre containers). Ver docker/README.md.
+      TOGARE_DJEN_CB_STATE_PATH: /var/togare-djen/circuit-breaker.json
+      # Story 5.1 — togare-nextcloud-bridge (FR19/FR20/FR21 fundação + NFR26).
+      # Bridge consome Nextcloud via DNS interno (sem Caddy). User/senha caem
+      # em NEXTCLOUD_ADMIN_USER/PASSWORD se TOGARE_NEXTCLOUD_USER vazio
+      # (Decisão #6 — service user dedicado é Growth).
+      TOGARE_NEXTCLOUD_BASE_URL: ${TOGARE_NEXTCLOUD_BASE_URL:-http://nextcloud:80}
+      TOGARE_NEXTCLOUD_USER: ${TOGARE_NEXTCLOUD_USER:-${NEXTCLOUD_ADMIN_USER}}
+      TOGARE_NEXTCLOUD_PASSWORD: ${TOGARE_NEXTCLOUD_PASSWORD:-${NEXTCLOUD_ADMIN_PASSWORD}}
+      # Story 5.2 — entity Documento (FR19/FR20). Limite servidor para upload
+      # de Documento; Validate hook bloqueia maiores. Ajuste PHP overrides
+      # (espocrm-php-overrides.ini) proporcionalmente.
+      TOGARE_MAX_DOCUMENT_SIZE_MB: ${TOGARE_MAX_DOCUMENT_SIZE_MB:-200}
+      # Story 5.3 — download proxy branch flag. Default `false` = X-Accel-Redirect
+      # (Caddy serve direto do volume nextcloud_data via /internal-nextcloud).
+      # `true` = PHP-proxy chunked via cURL CURLOPT_FILE=php://output (1MB buffer,
+      # não carrega body em memória). Promover apenas se bench VPS Fase 2 da
+      # Spike 1b.S1 (Epic 10) revelar p95 TTFB > 2.5s sustentado no X-Accel.
+      TOGARE_DOWNLOAD_USE_PHP_PROXY: ${TOGARE_DOWNLOAD_USE_PHP_PROXY:-false}
+      # Story 6.0 — root do LocalDiskStorage fallback (FileStorageContract sem
+      # togare-nextcloud-bridge instalado). Bridge sobrescreve quando presente.
+      TOGARE_LOCAL_STORAGE_ROOT: ${TOGARE_LOCAL_STORAGE_ROOT:-/var/togare/local-storage}
+    volumes:
+      - espocrm_data:/var/www/html
+      # Montagem vinculante para módulos custom Togare (Stories 1a.3+).
+      - ../espocrm/custom:/var/www/html/custom/Espo/Modules/Custom
+      # Seeds determinísticos para dev local (Story 1a.10). Read-only — o
+      # script load-seeds.php nunca grava em ops/. NÃO replicado em produção.
+      - ../ops:/var/www/html/ops:ro
+      # Story 4b.4 / ADR 0009 — volume compartilhado para CB state.
+      - togare_djen_cb_state:/var/togare-djen
+      # Story 5.2 — overrides PHP para upload >2MB default (peças processuais).
+      - ./espocrm-php-overrides.ini:/usr/local/etc/php/conf.d/zzz-togare-overrides.ini:ro
+      # Story 6.0 — volume LocalDiskStorage fallback. O target acompanha
+      # TOGARE_LOCAL_STORAGE_ROOT para evitar escrita fora do volume quando há
+      # override operacional. Bridge ativo → volume fica vazio em produção
+      # (Nextcloud é fonte única binários NFR26; LocalDisk é só plano B).
+      - togare_local_storage:${TOGARE_LOCAL_STORAGE_ROOT:-/var/togare/local-storage}
+      # Story 10.2 / FR41 (AC2) — sentinela de backup montada READ-ONLY para o
+      # tile "Backup" do TogareHealth ler last-success.json. Decisão A2.1: o
+      # app NUNCA escreve/apaga backup; só lê. Mesmo volume que togare-backup
+      # monta r/w em /var/backups/togare. Sem este bind, BackupHealthProvider
+      # não enxerga a sentinela (containers isolados).
+      - ${TOGARE_BACKUP_LOCAL_PATH}:/var/backups/togare:ro
+    healthcheck:
+      # PHP é garantido na imagem oficial (php:apache). fsockopen verifica Apache up.
+      test: ["CMD", "php", "-r", "exit((bool)@fsockopen('localhost', 80) ? 0 : 1);"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
+
+  espocrm-daemon:
+    image: espocrm/espocrm:${ESPOCRM_VERSION}
+    restart: unless-stopped
+    networks: [togare_net]
+    depends_on:
+      espocrm:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    entrypoint: docker-daemon.sh
+    environment:
+      # TZ alinhado ao togare-backup — sem isso o cron 0 3 1 * * do togare-tpu
+      # roda em UTC (= 00:00 BRT no inverno / 21:00 do dia anterior no verão).
+      # Ver Dev Notes §11 da Story 3.3.
+      TZ: America/Sao_Paulo
+      # togare-tpu (Story 3.3) — DB 1 isolado do Nextcloud (DB 0).
+      TOGARE_REDIS_HOST: redis
+      TOGARE_REDIS_PORT: 6379
+      TOGARE_REDIS_PASSWORD: ${REDIS_PASSWORD}
+      TOGARE_REDIS_DB: 1
+      # Story 6.0 — daemon precisa enxergar o mesmo root que o web container
+      # para jobs futuros de retenção/restore sobre LocalDisk.
+      TOGARE_LOCAL_STORAGE_ROOT: ${TOGARE_LOCAL_STORAGE_ROOT:-/var/togare/local-storage}
+    volumes:
+      - espocrm_data:/var/www/html
+      - ../espocrm/custom:/var/www/html/custom/Espo/Modules/Custom
+      # Mesmo bind do serviço espocrm — consistência operacional (debug `exec`
+      # no daemon vê os mesmos arquivos). Não há job de seed em prod. Story 1a.10.
+      - ../ops:/var/www/html/ops:ro
+      # Story 6.0 — LocalDiskStorage volume também montado no daemon no mesmo
+      # target do web container.
+      - togare_local_storage:${TOGARE_LOCAL_STORAGE_ROOT:-/var/togare/local-storage}
+      # Story 10.2 / FR41 (AC2) — mesma sentinela read-only do serviço espocrm
+      # (consistência: jobs/CLI no daemon enxergam o mesmo last-success.json).
+      - ${TOGARE_BACKUP_LOCAL_PATH}:/var/backups/togare:ro
+
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    restart: unless-stopped
+    networks: [togare_net]
+    environment:
+      POSTGRES_DB: ${NEXTCLOUD_DB_NAME}
+      POSTGRES_USER: ${NEXTCLOUD_DB_USER}
+      POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${NEXTCLOUD_DB_USER} -d ${NEXTCLOUD_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    restart: unless-stopped
+    networks: [togare_net]
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", 'redis-cli -a "$$REDIS_PASSWORD" ping | grep -q PONG']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  nextcloud:
+    image: nextcloud:${NEXTCLOUD_VERSION}
+    restart: unless-stopped
+    networks: [togare_net]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: ${NEXTCLOUD_DB_NAME}
+      POSTGRES_USER: ${NEXTCLOUD_DB_USER}
+      POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD}
+      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER}
+      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
+      NEXTCLOUD_TRUSTED_DOMAINS: ${TOGARE_DOMAIN} files.${TOGARE_DOMAIN} nextcloud
+      REDIS_HOST: redis
+      REDIS_HOST_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - nextcloud_data:/var/www/html
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/status.php >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
+
+  caddy:
+    image: caddy:${CADDY_VERSION}-alpine
+    restart: unless-stopped
+    networks: [togare_net]
+    depends_on:
+      espocrm:
+        condition: service_started
+      nextcloud:
+        condition: service_started
+    environment:
+      TOGARE_DOMAIN: ${TOGARE_DOMAIN}
+      CADDY_TLS_EMAIL: ${CADDY_TLS_EMAIL}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      # Story 5.3: volume Nextcloud read-only para Caddy servir binário via
+      # X-Accel-Redirect (matcher /internal-nextcloud/* no Caddyfile). RO
+      # garante que Caddy nunca corrompe a estrutura interna do Nextcloud
+      # (.ocdata, mtime, etc.). Caminho final servido:
+      # /internal-nextcloud/data/<user>/files/togare/<bucket>/<id>/<file>.
+      - nextcloud_data:/internal-nextcloud:ro
+
+  # togare-djen-worker (Story 4a.1): consumer dedicado da fila `djen` no
+  # outbox togare_queue_items (Variante B canônica da Spike 1b.S2 — 1 container
+  # por queue_name). Reusa imagem espocrm/espocrm:9.3 (mesma base do espocrm e
+  # espocrm-daemon) com volume compartilhado — extensão togare-djen é instalada
+  # via Admin → Extensions e fica visível ao worker pelo bind do volume.
+  # Loop em queue-worker.php trapeia SIGTERM para shutdown limpo.
+  # NÃO expõe portas (interno-only).
+  togare-djen-worker:
+    image: espocrm/espocrm:${ESPOCRM_VERSION}
+    restart: unless-stopped
+    networks: [togare_net]
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      espocrm:
+        condition: service_healthy
+    init: true
+    environment:
+      TZ: America/Sao_Paulo
+      TOGARE_QUEUE_NAME: djen
+      TOGARE_DJEN_BASE_URL: ${TOGARE_DJEN_BASE_URL}
+      # Story 4b.4 / ADR 0009 — state-file do CB compartilhado com espocrm
+      # (snapshot endpoint lê o mesmo file). Ver docker/README.md.
+      TOGARE_DJEN_CB_STATE_PATH: /var/togare-djen/circuit-breaker.json
+    volumes:
+      - espocrm_data:/var/www/html
+      - ../espocrm/custom:/var/www/html/custom/Espo/Modules/Custom
+      # Story 4b.4 / ADR 0009 — volume compartilhado para CB state.
+      - togare_djen_cb_state:/var/togare-djen
+    command:
+      - php
+      - /var/www/html/custom/Espo/Modules/TogareDjen/scripts/queue-worker.php
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(0);"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # togare-backup (Story 1a.7): restic + supercronic. Dump SQL diário de
+  # MariaDB e Postgres + snapshot dos volumes Nextcloud e EspoCRM. Healthcheck
+  # marca o container unhealthy se o último backup tem mais de 26h.
+  # NÃO expõe portas (interno-only).
+  togare-backup:
+    build:
+      context: ./backup
+      args:
+        RESTIC_VERSION: ${RESTIC_VERSION}
+        SUPERCRONIC_VERSION: 0.2.33
+    # init: true injeta tini como PID 1. Sem isso, supercronic morre com
+    # "Failed to fork exec" no boot ao tentar reapear processos órfãos como PID 1
+    # (não tem implementação correta de PID 1 em PID-1-context).
+    init: true
+    restart: unless-stopped
+    networks: [togare_net]
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      # TZ é CRÍTICA — sem isso cron roda em UTC e o backup das 02:00 vira 23:00
+      # (verão BRT) ou 00:00 (inverno). Ver docker/README.md seção Backup.
+      TZ: America/Sao_Paulo
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      ESPOCRM_DB_NAME: ${ESPOCRM_DB_NAME}
+      NEXTCLOUD_DB_NAME: ${NEXTCLOUD_DB_NAME}
+      NEXTCLOUD_DB_USER: ${NEXTCLOUD_DB_USER}
+      NEXTCLOUD_DB_PASSWORD: ${NEXTCLOUD_DB_PASSWORD}
+      RESTIC_PASSWORD: ${RESTIC_PASSWORD}
+      RESTIC_REPOSITORY: /var/backups/togare
+      BACKUP_CRON_EXPRESSION: ${BACKUP_CRON_EXPRESSION}
+      PRUNE_CRON_EXPRESSION: ${PRUNE_CRON_EXPRESSION}
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS}
+    volumes:
+      - ${TOGARE_BACKUP_LOCAL_PATH}:/var/backups/togare
+      - espocrm_data:/espocrm-data:ro
+      - nextcloud_data:/nextcloud-data:ro
+      # Story 6.0 — backup do LocalDiskStorage fallback (read-only).
+      # Quando bridge está instalado, este volume fica vazio (nextcloud_data
+      # cobre os binários). Sem bridge, restic snapshota daqui também.
+      - togare_local_storage:/togare-local-storage:ro
+    healthcheck:
+      test: ["CMD", "/app/healthcheck.sh"]
+      interval: 5m
+      timeout: 10s
+      retries: 3
+      # 25h dá uma janela completa para o primeiro cron diário rodar antes
+      # de o Docker marcar o container como unhealthy.
+      start_period: 25h
+
+  # Mailpit — SMTP de captura para smoke do convite de usuário (Story 2.2).
+  # Profile `dev` = só sobe com `docker compose --profile dev up -d`. Em
+  # produção usar SMTP real (Gmail App Password ou provedor do escritório).
+  mailpit:
+    image: axllent/mailpit:v1.21
+    restart: unless-stopped
+    networks: [togare_net]
+    profiles: [dev]
+    init: true
+    ports:
+      - "8025:8025" # UI web — http://localhost:8025
+      - "1025:1025" # SMTP de captura
+    environment:
+      MP_MAX_MESSAGES: 200
+      MP_DATABASE: /data/mailpit.db
+    volumes:
+      - mailpit_data:/data
+
+volumes:
+  mariadb_data:
+  espocrm_data:
+  postgres_data:
+  redis_data:
+  nextcloud_data:
+  caddy_data:
+  caddy_config:
+  mailpit_data:
+  # Story 4b.4 / ADR 0009 — circuit breaker state-file do DjenAdapter,
+  # compartilhado entre `espocrm` (snapshot endpoint lê) e
+  # `togare-djen-worker` (escreve). Volume Docker `local` driver garante
+  # `flock()` semântica consistente entre containers no mesmo host.
+  togare_djen_cb_state:
+  # Story 6.0 — LocalDiskStorage fallback do FileStorageContract.
+  # Compartilhado entre `espocrm` (escrita), `espocrm-daemon` (jobs futuros)
+  # e `togare-backup` (snapshot read-only via restic). Quando
+  # togare-nextcloud-bridge está instalado, volume fica vazio em produção
+  # (NFR26 — Nextcloud é fonte única binários).
+  togare_local_storage:

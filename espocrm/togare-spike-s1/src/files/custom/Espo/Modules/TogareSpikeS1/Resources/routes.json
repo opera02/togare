@@ -1,0 +1,11 @@
+[
+  {
+    "route": "/Spike/action/download",
+    "method": "get",
+    "params": {
+      "controller": "TogareSpike",
+      "action": "download"
+    },
+    "noAuth": true
+  }
+]

@@ -1,0 +1,35 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [{"name": "atoCodigo"}, {"name": "referenciaLegal"}],
+            [{"name": "numeroProcessoOriginal"}, {"name": "ambiguityReason"}],
+            [{"name": "status"}, false]
+        ]
+    },
+    {
+        "label": "Datas e prazo",
+        "rows": [
+            [{"name": "dataDisponibilizacao"}, {"name": "dataInicioPrazo"}],
+            [{"name": "dataFatal"}, {"name": "prazoDias"}],
+            [{"name": "contagem"}, {"name": "confidence"}]
+        ]
+    },
+    {
+        "label": "Conteúdo",
+        "rows": [
+            [{"name": "fonteExcerpt", "fullWidth": true}],
+            [{"name": "texto", "fullWidth": true}],
+            [{"name": "candidatos", "fullWidth": true}],
+            [{"name": "payload", "fullWidth": true}]
+        ]
+    },
+    {
+        "label": "Decisão",
+        "rows": [
+            [{"name": "decisionType"}, {"name": "decisionProcesso"}],
+            [{"name": "prazoCriado"}, {"name": "decidedBy"}],
+            [{"name": "decidedAt"}, {"name": "parserRegraVersao"}]
+        ]
+    }
+]

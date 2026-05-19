@@ -1,0 +1,11 @@
+{
+  "scriptList": [
+    "__APPEND__",
+    "client/custom/modules/togare-core/lib/init.js",
+    "client/custom/modules/togare-core/js/bootstrap-formatters.js"
+  ],
+  "cssList": [
+    "__APPEND__",
+    "client/custom/modules/togare-core/css/components.css"
+  ]
+}

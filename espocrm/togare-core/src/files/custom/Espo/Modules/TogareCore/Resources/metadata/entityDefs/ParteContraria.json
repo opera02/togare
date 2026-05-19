@@ -1,0 +1,112 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "maxLength": 255,
+            "trim": true,
+            "required": true
+        },
+        "tipoPessoa": {
+            "type": "enum",
+            "options": ["pf", "pj", "desconhecida"],
+            "default": "pf",
+            "required": true
+        },
+        "cpf": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cpf-br",
+            "maxLength": 14,
+            "trim": true
+        },
+        "cnpj": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/cnpj-br",
+            "maxLength": 18,
+            "trim": true
+        },
+        "email": {
+            "type": "email"
+        },
+        "telefone": {
+            "type": "varchar",
+            "view": "togare-core:views/fields/telefone-br",
+            "maxLength": 16,
+            "trim": true
+        },
+        "observacoes": {
+            "type": "text"
+        },
+        "tenantId": {
+            "type": "varchar",
+            "maxLength": 40,
+            "readOnly": true,
+            "tooltip": false
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true
+        },
+        "assignedUser": {
+            "type": "link"
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "processos": {
+            "type": "hasMany",
+            "entity": "Processo",
+            "foreign": "partesContrarias",
+            "relationshipName": "ParteContrariaProcesso"
+        },
+        "prazos": {
+            "type": "hasMany",
+            "entity": "Prazo",
+            "foreign": "parteContraria"
+        }
+    },
+    "indexes": {
+        "nomeIdx": {
+            "columns": ["name"]
+        },
+        "tipoPessoaName": {
+            "columns": ["tipoPessoa", "name"]
+        },
+        "createdAt": {
+            "columns": ["createdAt"]
+        }
+    },
+    "collection": {
+        "orderBy": "name",
+        "order": "asc",
+        "textFilterFields": [
+            "name",
+            "cpf",
+            "cnpj",
+            "email",
+            "telefone"
+        ]
+    }
+}

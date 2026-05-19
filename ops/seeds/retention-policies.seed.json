@@ -1,0 +1,19 @@
+{
+  "_implemented": false,
+  "_pendingStory": "Epic 8",
+  "_pendingEntity": "RetentionPolicy",
+  "_idempotencyKey": "policyKey",
+  "_description": "PLACEHOLDER. Epic 8 (LGPD purga manual com prova de descarte ed25519) vai criar a entidade RetentionPolicy + RetentionRegistry; quando elas existirem, esta story DEPRECATED e a 8.1 substitui este arquivo por políticas de retenção default (ex.: 10 anos para contratos honorários, 24 meses para audit log, 5 anos para processos arquivados). Schema esperado abaixo.",
+  "_schemaExpected": {
+    "policies": [
+      {
+        "policyKey": "string (slug único, ex.: 'audit-log-24m')",
+        "entityType": "string (entidade EspoCRM alvo)",
+        "retentionMonths": "integer",
+        "legalBasis": "string (LGPD art. 7º ou 11º)",
+        "...": "demais campos conforme entityDef de RetentionPolicy"
+      }
+    ]
+  },
+  "policies": []
+}

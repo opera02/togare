@@ -1,0 +1,184 @@
+/* Togare Wizard pós-primeiro-login (Story 2.6).
+ * Modal full-screen de 4 passos. Usa CSS variable --togare-primary
+ * gravada pelo Passo 2; default #0a4d8c.
+ */
+
+:root {
+    --togare-primary: #0a4d8c;
+}
+
+#togare-rbac-wizard-mount {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+}
+
+.togare-wizard {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.togare-wizard__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.togare-wizard__shell {
+    position: relative;
+    width: min(960px, 95vw);
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+    padding: 24px 28px;
+    color: #222;
+}
+
+.togare-wizard__header {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.togare-wizard__title {
+    margin: 0 0 4px;
+    font-size: 22px;
+    color: var(--togare-primary);
+}
+
+.togare-wizard__progress {
+    margin: 0;
+    font-size: 13px;
+    color: #777;
+}
+
+.togare-wizard__body {
+    min-height: 300px;
+}
+
+.togare-wizard__step {
+    padding: 8px 0;
+}
+
+.togare-wizard__label {
+    display: block;
+    font-weight: 600;
+    margin: 12px 0 6px;
+}
+
+.togare-wizard__input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.togare-wizard__input--inline {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.togare-wizard__hint {
+    font-size: 13px;
+    color: #666;
+    margin: 4px 0 12px;
+}
+
+.togare-wizard__swatches {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+}
+
+.togare-wizard__swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #ccc;
+    cursor: pointer;
+    padding: 0;
+}
+
+.togare-wizard__swatch:focus-visible {
+    outline: 3px solid var(--togare-primary);
+    outline-offset: 2px;
+}
+
+.togare-wizard__color-preview {
+    margin-top: 12px;
+    height: 60px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.togare-wizard__roles-table,
+.togare-wizard__invite-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+.togare-wizard__roles-table th,
+.togare-wizard__roles-table td,
+.togare-wizard__invite-table th,
+.togare-wizard__invite-table td {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 8px 6px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.togare-wizard__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.togare-wizard__nav {
+    display: flex;
+    gap: 10px;
+}
+
+.togare-wizard__skip {
+    color: #999;
+    text-decoration: underline;
+    background: transparent;
+    border: 0;
+}
+
+.togare-wizard__hedge {
+    margin-top: 14px;
+    padding: 8px 12px;
+    background: #fff8e1;
+    border-left: 3px solid #f0ad4e;
+    border-radius: 2px;
+    font-size: 12px;
+    color: #6a4f10;
+}
+
+@media (max-width: 600px) {
+    .togare-wizard__shell {
+        width: 100vw;
+        max-height: 100vh;
+        border-radius: 0;
+        padding: 16px;
+    }
+    .togare-wizard__footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+}

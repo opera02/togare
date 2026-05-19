@@ -1,0 +1,33 @@
+[
+    {
+        "label": "Identificação",
+        "rows": [
+            [
+                {"name": "filename"},
+                {"name": "mimeType"}
+            ],
+            [
+                {"name": "sizeBytes"},
+                {"name": "processo"}
+            ],
+            [
+                {"name": "cliente"},
+                {"name": "prazo"}
+            ]
+        ]
+    },
+    {
+        "label": "Auditoria",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "createdAt"},
+                {"name": "createdBy"}
+            ],
+            [
+                {"name": "uploadedBy"},
+                {"name": "modifiedAt"}
+            ]
+        ]
+    }
+]

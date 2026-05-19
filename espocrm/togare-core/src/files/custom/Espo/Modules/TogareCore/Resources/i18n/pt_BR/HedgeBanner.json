@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "footer-global": {
+      "text": "Ferramentas podem falhar. A responsabilidade final do cumprimento do prazo é do advogado.",
+      "learnMoreLabel": "Saiba mais"
+    },
+    "module-deadline": {
+      "text": "Ferramentas podem falhar. Confira sempre a publicação original no DJEN. Responsabilidade final é do advogado.",
+      "learnMoreLabel": "Saiba mais"
+    },
+    "action-destructive": {
+      "text": "Ação irreversível após confirmação. Revise cuidadosamente."
+    },
+    "portal-friendly": {
+      "text": "Este portal é um canal de consulta. Para questões urgentes, ligue para o escritório."
+    }
+  }
+}
