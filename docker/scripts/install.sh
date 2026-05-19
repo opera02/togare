@@ -105,6 +105,27 @@ ts() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 step() { CURRENT_STEP="$1"; echo ""; echo "→ [$(ts)] $1"; }
 run() { if [ "$DRY_RUN" -eq 1 ]; then echo "[DRY-RUN] $*"; else "$@"; fi; }
 
+# retry <max> <base_seg> <cmd...> — repete o comando até <max> vezes, com
+# espera crescente (base, 2*base, 3*base...). Existe porque o `docker compose
+# pull` de um escritório pode levar um "connection reset" transitório no meio
+# do download e NÃO pode derrubar a instalação inteira por isso. Não burla
+# falha real: após <max> tentativas, falha com mensagem clara.
+retry() {
+  local max="$1" base="$2"; shift 2
+  local n=1 wait
+  while true; do
+    if "$@"; then return 0; fi
+    if [ "$n" -ge "$max" ]; then
+      echo "  ✗ '$*' falhou após ${max} tentativas." >&2
+      return 1
+    fi
+    wait=$(( base * n ))
+    echo "  ⚠ tentativa ${n}/${max} falhou (rede instável?). Nova tentativa em ${wait}s..." >&2
+    sleep "$wait"
+    n=$(( n + 1 ))
+  done
+}
+
 on_error() {
   local code=$?
   echo ""
@@ -149,7 +170,21 @@ confirmar() {
 
 # Gera senha forte: 24 caracteres, SÓ letras e números (regra do .env.example
 # — $ " ' \ ` { } quebram o parsing do Compose e o restic).
-gen_pwd() { LC_ALL=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 24; }
+#
+# IMPORTANTE: nada de `tr ... | head -c 24`. Sob `set -o pipefail`, o `head`
+# fecha o pipe ao atingir 24 bytes, o `tr` (lendo /dev/urandom infinito) leva
+# SIGPIPE e a pipeline retorna 141 → `set -e` aborta o instalador. Em vez
+# disso, lê-se um bloco FINITO de /dev/urandom (head é o leitor, sai limpo),
+# filtra-se, e fatia-se 24 chars com slice nativo do bash (sem 2º pipe).
+gen_pwd() {
+  local raw
+  raw="$(LC_ALL=C tr -dc 'A-Za-z0-9' < <(head -c 8192 /dev/urandom) || true)"
+  if [ "${#raw}" -lt 24 ]; then
+    echo "FATAL: geração de senha produziu < 24 chars (entropia insuficiente?)." >&2
+    return 1
+  fi
+  printf '%s' "${raw:0:24}"
+}
 
 # Escreve KEY=VALUE no docker/.env (substitui a linha existente). VALUE aqui é
 # sempre alfanumérico (senha), domínio [A-Za-z0-9.-] ou e-mail — seguro p/ sed.
@@ -304,7 +339,9 @@ else
     fi
     [ -z "$DOMINIO" ] && DOMINIO="localhost"
   fi
-  if ! printf '%s' "$DOMINIO" | grep -qE '^[A-Za-z0-9.-]+$'; then
+  # Validação com regex nativo do bash ([[ =~ ]]) — sem pipe, evita o mesmo
+  # foot-gun de SIGPIPE+pipefail de `printf | grep -q`.
+  if ! [[ "$DOMINIO" =~ ^[A-Za-z0-9.-]+$ ]]; then
     echo "FATAL: domínio inválido: '${DOMINIO}' (use só letras, números, . e -)." >&2
     exit 1
   fi
@@ -318,7 +355,7 @@ else
         read -r EMAIL || true
       fi
     fi
-    if ! printf '%s' "$EMAIL" | grep -qE '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'; then
+    if ! [[ "$EMAIL" =~ ^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$ ]]; then
       echo "FATAL: com domínio real é obrigatório um e-mail válido para o" >&2
       echo "       certificado HTTPS. Use: --email voce@seudominio.adv.br" >&2
       exit 1
@@ -385,9 +422,21 @@ step "4/7 Baixando imagens e subindo a stack"
 echo "  Versões pinadas: MariaDB=${MARIADB_VERSION:-?} EspoCRM=${ESPOCRM_VERSION:-?} \
 Nextcloud=${NEXTCLOUD_VERSION:-?} Postgres=${POSTGRES_VERSION:-?} \
 Redis=${REDIS_VERSION:-?} Caddy=${CADDY_VERSION:-?}"
-dc pull
-# --build: togare-backup é imagem `build:` (pull a ignora).
-dc up -d --build
+echo "  Baixando imagens (pode levar alguns minutos na primeira vez)..."
+if ! retry 4 10 dc pull; then
+  echo "FATAL: não consegui baixar as imagens após várias tentativas." >&2
+  echo "       Quase sempre é a conexão de internet do servidor. Verifique" >&2
+  echo "       a rede e rode ./instalar.sh de novo — ele continua de onde" >&2
+  echo "       parou (não regera senhas; reaproveita o que já baixou)." >&2
+  exit 1
+fi
+# --build: togare-backup é imagem `build:` (pull a ignora). Também sob retry —
+# o build/criação puxa camadas e pode tropeçar na mesma instabilidade de rede.
+if ! retry 3 10 dc up -d --build; then
+  echo "FATAL: não consegui subir a stack após várias tentativas." >&2
+  echo "       Verifique a rede/disco e rode ./instalar.sh de novo." >&2
+  exit 1
+fi
 
 wait_healthy() {
   local svc="$1" i status
@@ -461,20 +510,73 @@ echo "  (togare-portal-ui NÃO instalado — Portal é Growth, congelado.)"
 step "6/7 Validando a instalação"
 
 if [ "$DRY_RUN" -eq 0 ]; then
-  # 6a. Nenhum serviço não-saudável.
-  bad="$(dc_q ps --format json 2>/dev/null | json_compose_unhealthy || true)"
-  if [ -n "${bad// /}" ]; then
-    echo "FATAL: serviços não-saudáveis: ${bad}" >&2
+  # 6a. Saúde dos serviços — regra correta para o PÓS-INSTALAÇÃO.
+  #
+  # NÃO usar json_compose_unhealthy (lib-json, compartilhado com update.sh/
+  # restore.sh): ele reprova qualquer Health != "healthy", incluindo
+  # "starting". Mas "starting" = container RODANDO dentro do start_period do
+  # healthcheck, não é falha. Em especial `togare-backup` tem
+  # `start_period: 25h` no compose — ele fica "starting" por design até o
+  # 1º backup rodar; ele JAMAIS está "healthy" logo após instalar. Reprovar
+  # a instalação por isso era um bug (achado rodando de verdade).
+  #
+  # Regra: FALHA só se algum serviço está com State != running OU
+  # Health == unhealthy. "starting" ganha carência (re-checagem); o
+  # togare-backup é OK enquanto estiver "running" (starting esperado).
+  health_scan() {  # ecoa: "FAILED:<svc...>|PENDING:<svc...>"
+    local failed="" pending="" line svc state health
+    while IFS='|' read -r svc state health; do
+      [ -z "$svc" ] && continue
+      if [ "$state" != "running" ] || [ "$health" = "unhealthy" ]; then
+        failed="${failed} ${svc}"
+      elif [ "$health" = "starting" ] && [ "$svc" != "togare-backup" ]; then
+        pending="${pending} ${svc}"
+      fi
+    done < <(dc_q ps --format '{{.Service}}|{{.State}}|{{.Health}}' 2>/dev/null)
+    echo "FAILED:${failed# }|PENDING:${pending# }"
+  }
+  hs=""
+  for _try in $(seq 1 18); do          # até ~3 min de carência p/ "starting"
+    hs="$(health_scan)"
+    hs_failed="${hs#FAILED:}"; hs_failed="${hs_failed%%|PENDING:*}"
+    hs_pending="${hs##*|PENDING:}"
+    if [ -n "${hs_failed// /}" ]; then
+      echo "FATAL: serviço(s) em estado ruim (parado/unhealthy): ${hs_failed}" >&2
+      echo "       Diagnóstico: docker compose logs ${hs_failed}" >&2
+      exit 1
+    fi
+    [ -z "${hs_pending// /}" ] && break
+    echo "  aguardando serviço(s) ainda iniciando: ${hs_pending} ..."
+    sleep 10
+  done
+  if [ -n "${hs_pending// /}" ]; then
+    echo "FATAL: serviço(s) não saíram de 'iniciando' a tempo: ${hs_pending}" >&2
+    echo "       Diagnóstico: docker compose logs ${hs_pending}" >&2
     exit 1
   fi
-  echo "  ✓ Todos os serviços estão saudáveis."
+  echo "  ✓ Serviços essenciais saudáveis (togare-backup fica 'iniciando'"
+  echo "    até o 1º backup rodar — isso é normal e esperado)."
 
   # 6b. EspoCRM responde via Caddy (HTTPS). -k aceita o cert interno do
   #     localhost; em domínio real o Let's Encrypt já é válido.
-  code="$(curl -k -s -o /dev/null -w '%{http_code}' "https://${TOGARE_DOMAIN:-localhost}/" 2>/dev/null || true)"
+  #
+  # RETRY obrigatório: logo após o `clear-cache` do passo 5, a 1ª requisição
+  # web do EspoCRM reconstrói `data/cache/application` e pode devolver 500
+  # transitório por alguns segundos (cache frio) antes de estabilizar em 200.
+  # Um curl único pega justamente essa janela e reprova a instalação por
+  # engano (achado rodando de verdade). Tenta por até ~3 min.
+  code="000"
+  for _try in $(seq 1 18); do
+    code="$(curl -k -s -o /dev/null -w '%{http_code}' "https://${TOGARE_DOMAIN:-localhost}/" 2>/dev/null || true)"
+    case "${code:-000}" in
+      200|302) break ;;
+    esac
+    echo "  CRM ainda aquecendo (HTTP ${code:-000}); nova checagem em 10s..."
+    sleep 10
+  done
   case "${code:-000}" in
     200|302) echo "  ✓ CRM responde em https://${TOGARE_DOMAIN:-localhost}/ (HTTP ${code})." ;;
-    *) echo "FATAL: CRM não respondeu como esperado (HTTP ${code:-000}; esperado 200/302)." >&2
+    *) echo "FATAL: CRM não respondeu como esperado após ~3 min (HTTP ${code:-000}; esperado 200/302)." >&2
        echo "       Veja: docker compose logs caddy espocrm" >&2
        exit 1 ;;
   esac
