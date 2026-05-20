@@ -54,11 +54,48 @@ class AfterInstall
         }
 
         $this->ensureTabsInNavbar($container);
+        $this->ensureDefaultLanguagePtBr($container);
         $this->ensureBrlCurrencyConfig($container);
         $this->ensureBriefingDoDiaInDashboardLayout($container);
         $this->ensureHealthPanelInDashboardLayout($container);
         $this->ensureLembreteTabInPreferencesLayout();
         $this->backfillD0Lembretes($pdo);
+    }
+
+    /**
+     * Sobrescreve o idioma default da aplicação para pt_BR APENAS se ainda
+     * estiver no default de fábrica do EspoCRM (`en_US`). Se o admin já
+     * mudou para outro idioma (`pt_BR`, `pt_PT`, `es_ES` etc.), NÃO toca.
+     *
+     * Bug corrigido em 0.39.2 (smoke browser do Felipe 2026-05-20):
+     * instalação fresh ficava em inglês — sidebar mostrava "Accounts/
+     * Contacts/Leads" stock e a experiência era confusa para o ICP do
+     * Togare (escritórios de advocacia brasileiros).
+     *
+     * Idempotente: subsequentes execuções não tocam (config já é `pt_BR`,
+     * ou foi explicitamente mudada — não há como distinguir "admin
+     * configurou pt_BR" de "AfterInstall configurou", e ambos são OK).
+     */
+    private function ensureDefaultLanguagePtBr(Container $container): void
+    {
+        try {
+            $config = $container->getByClass(Config::class);
+            $injectableFactory = $container->getByClass(InjectableFactory::class);
+            $configWriter = $injectableFactory->create(ConfigWriter::class);
+        } catch (\Throwable $e) {
+            echo "[togare-core] AVISO: ConfigWriter indisponível — defina language=pt_BR manualmente em Admin → Settings.\n";
+            return;
+        }
+
+        $current = $config->get('language');
+        if ($current !== 'en_US') {
+            // já configurado pelo admin (pt_BR, outro idioma, ou null custom).
+            return;
+        }
+
+        $configWriter->set('language', 'pt_BR');
+        $configWriter->save();
+        echo "[togare-core] Idioma default da aplicação: en_US → pt_BR.\n";
     }
 
     /**
@@ -102,28 +139,15 @@ class AfterInstall
             return;
         }
 
-        // Insere as tabs ausentes JUNTO das outras tabs Togare existentes (Story 4b.1a).
-        // Estratégia: encontrar a posição da última tab Togare existente e inserir
-        // logo após ela. Isso evita que tabs novas caiam no dropdown "More" depois
-        // do `_delimiter_`. Se nenhuma tab Togare existir ainda, fallback para append
-        // ao final (cenário improvável — Cliente já é Story 3.1 e estará lá).
-        $togareKnown = ['Cliente', 'ParteContraria', 'Processo', 'Audiencia', 'Prazo', 'PublicacaoAmbigua', 'Fatura', 'LancamentoFinanceiro', 'Funcionario'];
-        $lastTogareIndex = -1;
-        foreach ($tabList as $i => $entry) {
-            if (is_string($entry) && in_array($entry, $togareKnown, true)) {
-                $lastTogareIndex = $i;
-            }
-        }
-
-        if ($lastTogareIndex >= 0) {
-            // Insere após a última tab Togare existente, preservando ordem das missing.
-            \array_splice($tabList, $lastTogareIndex + 1, 0, $missing);
-        } else {
-            // Fallback: append (admin reordena via Admin → User Interface → Tab List).
-            foreach ($missing as $tab) {
-                $tabList[] = $tab;
-            }
-        }
+        // Inserção em 3 níveis de fallback — lógica pura em TabListPlacer
+        // (extraída em 0.39.2 para teste isolado; ver TabListPlacerTest).
+        // Universo conhecido das tabs Togare é o mesmo array $togareTabs
+        // do início do método.
+        $tabList = \Espo\Modules\TogareCore\Services\TabListPlacer::place(
+            $tabList,
+            $missing,
+            $togareTabs,
+        );
 
         $configWriter->set('tabList', $tabList);
         $configWriter->save();
