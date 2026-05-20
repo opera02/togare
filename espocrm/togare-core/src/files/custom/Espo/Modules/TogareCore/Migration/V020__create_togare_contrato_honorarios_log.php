@@ -37,7 +37,7 @@ final class V020__create_togare_contrato_honorarios_log implements MigrationInte
     public function up(PDO $pdo): void
     {
         $isMysql = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql';
-        $engine = $isMysql ? 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4' : '';
+        $engine = $isMysql ? 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci' : '';
 
         $statements = [
             "CREATE TABLE IF NOT EXISTS togare_contrato_honorarios_log (

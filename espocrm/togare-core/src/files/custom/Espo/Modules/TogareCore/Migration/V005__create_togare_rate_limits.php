@@ -25,7 +25,7 @@ final class V005__create_togare_rate_limits implements MigrationInterface
     public function up(PDO $pdo): void
     {
         $isMysql = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql';
-        $engine = $isMysql ? 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4' : '';
+        $engine = $isMysql ? 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci' : '';
 
         $pdo->exec("
             CREATE TABLE IF NOT EXISTS togare_rate_limits (

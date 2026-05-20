@@ -38,7 +38,7 @@ final class V018__create_togare_documento_log implements MigrationInterface
     public function up(PDO $pdo): void
     {
         $isMysql = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql';
-        $engine = $isMysql ? 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4' : '';
+        $engine = $isMysql ? 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci' : '';
 
         $statements = [
             "CREATE TABLE IF NOT EXISTS togare_documento_log (

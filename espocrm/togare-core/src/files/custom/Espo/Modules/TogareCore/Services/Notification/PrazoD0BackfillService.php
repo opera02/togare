@@ -75,10 +75,20 @@ final class PrazoD0BackfillService
             $params[$key] = $status;
         }
 
+        // Defesa em profundidade contra collation mismatch (erro 1267) entre
+        // togare_prazo_lembrete (criada pela V016) e a tabela `prazo` do
+        // EspoCRM. A V016 v0.39.1+ já pina utf8mb4_unicode_ci no CREATE TABLE,
+        // mas tabelas legadas (instaladas com togare-core ≤ 0.39.0 sobre
+        // MariaDB 11.x, que default a utf8mb4_uca1400_ai_ci) também precisam
+        // funcionar. SQLite ignora COLLATE de mysql — guard por driver.
+        $collate = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql'
+            ? ' COLLATE utf8mb4_unicode_ci'
+            : '';
+
         $sql = '
             SELECT DISTINCT l.prazo_id, l.user_id, p.data_fatal
               FROM togare_prazo_lembrete l
-              INNER JOIN prazo p ON p.id = l.prazo_id
+              INNER JOIN prazo p ON p.id' . $collate . ' = l.prazo_id
              WHERE l.marco IN (:d7, :d3, :d1)
                AND p.status IN (' . implode(', ', $statusPlaceholders) . ')
                AND COALESCE(p.deleted, 0) = 0

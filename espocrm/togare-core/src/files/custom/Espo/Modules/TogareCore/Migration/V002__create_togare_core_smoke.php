@@ -27,7 +27,7 @@ final class V002__create_togare_core_smoke implements MigrationInterface
             CREATE TABLE IF NOT EXISTS togare_core_smoke (
                 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 created_at DATETIME NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
         SQL);
     }
 

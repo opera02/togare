@@ -602,8 +602,18 @@ if [ "$DRY_RUN" -eq 0 ]; then
     exit 1
   fi
   echo "  ✓ Os 6 módulos Togare estão instalados."
+
+  # 6e. Validação de segurança do ambiente (Action Item A2 da retro Épico 10).
+  #     NÃO-BLOQUEANTE por design: o instalador segue mesmo se algum check der
+  #     NOK (HSTS pode estar propagando, backup pode demorar o 1º run etc.).
+  #     O resumo no fim já chama a atenção pros 3 manuais residuais.
+  step "    Validando segurança do ambiente (gate A2 — não-bloqueante)"
+  if ! bash "${SCRIPT_DIR}/validar-seguranca.sh"; then
+    echo "  (validar-seguranca.sh retornou erro; instalação não trava por isso." >&2
+    echo "   Reveja a saída acima — o relatório com ✓/✗ por item é o oficial.)" >&2
+  fi
 else
-  echo "[DRY-RUN] (validaria: serviços healthy + HTTPS 200/302 + Nextcloud + 6 módulos)"
+  echo "[DRY-RUN] (validaria: serviços healthy + HTTPS 200/302 + Nextcloud + 6 módulos + gate A2)"
 fi
 
 # =============================================================================
@@ -640,9 +650,11 @@ else
 fi
 echo ""
 echo "  Próximos passos recomendados (segurança antes de dados reais):"
-echo "    • Rodar o checklist de segurança do ambiente (item A2 da retro"
-echo "      do Épico 10): trava do log de auditoria, HSTS, teste de"
-echo "      bloqueio de login, conferir o backup das 02:00."
+echo "    • Os 5 checks automáticos do A2 já rodaram acima (gate A2)."
+echo "    • Faltam 3 PASSOS MANUAIS impressos pelo gate — releia a seção"
+echo "      \"PASSOS MANUAIS RESIDUAIS\" mais acima: bloqueio de login,"
+echo "      sessão de 31 min e cron do backup das 02:00 (no dia seguinte)."
+echo "    • Re-rodar a qualquer momento: ./scripts/validar-seguranca.sh"
 echo "    • Manter docker/CREDENCIAIS-TOGARE.txt só com o Sócio."
 echo ""
 echo "  Comandos do dia a dia:"

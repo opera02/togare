@@ -43,7 +43,7 @@ final class V016__create_togare_prazo_lembrete implements MigrationInterface
     public function up(PDO $pdo): void
     {
         $isMysql = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME) === 'mysql';
-        $engine = $isMysql ? 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4' : '';
+        $engine = $isMysql ? 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci' : '';
 
         // CREATE TABLE — colunas alinhadas ao AC1 da Story 4b.2.
         // Volume estimado: 50 advs × 5 prazos × 4 marcos = 1000 entries/dia
