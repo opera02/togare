@@ -9,7 +9,10 @@
         "Lead": "Lead",
         "Opportunity": "Oportunidade",
         "Documento": "Documento",
-        "ContratoHonorarios": "Contrato de honorários"
+        "ContratoHonorarios": "Contrato de honorários",
+        "Fatura": "Fatura",
+        "LancamentoFinanceiro": "Lançamento financeiro",
+        "Funcionario": "Funcionário"
     },
     "scopeNamesPlural": {
         "Cliente": "Clientes",
@@ -21,7 +24,10 @@
         "Lead": "Leads",
         "Opportunity": "Oportunidades",
         "Documento": "Documentos",
-        "ContratoHonorarios": "Contratos de honorários"
+        "ContratoHonorarios": "Contratos de honorários",
+        "Fatura": "Faturas",
+        "LancamentoFinanceiro": "Lançamentos financeiros",
+        "Funcionario": "Funcionários"
     },
     "labels": {
         "Global": {
@@ -33,7 +39,10 @@
                 "Prazo": "Prazos",
                 "PublicacaoAmbigua": "Precisa sua leitura",
                 "Lead": "Leads",
-                "Opportunity": "Oportunidades"
+                "Opportunity": "Oportunidades",
+                "Fatura": "Faturas",
+                "LancamentoFinanceiro": "Lançamentos financeiros",
+                "Funcionario": "Funcionários"
             }
         }
     },

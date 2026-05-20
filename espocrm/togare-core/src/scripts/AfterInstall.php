@@ -54,12 +54,75 @@ class AfterInstall
         }
 
         $this->ensureTabsInNavbar($container);
+        $this->ensureStockTabsCleanedOnce($container);
         $this->ensureDefaultLanguagePtBr($container);
         $this->ensureBrlCurrencyConfig($container);
         $this->ensureBriefingDoDiaInDashboardLayout($container);
         $this->ensureHealthPanelInDashboardLayout($container);
         $this->ensureLembreteTabInPreferencesLayout();
         $this->backfillD0Lembretes($pdo);
+    }
+
+    /**
+     * Remove tabs stock do EspoCRM que não fazem sentido para o ICP do Togare
+     * (escritórios de advocacia brasileiros). Executa APENAS UMA VEZ na vida
+     * da instalação — controlada por flag `togareStockTabsCleanedAt` no
+     * config. Se admin reabilitar manualmente alguma stock depois, NÃO toca.
+     *
+     * Bug corrigido em 0.39.3 (smoke browser fresh-install do Felipe
+     * 2026-05-20: ele queria sidebar focada em Togare; Accounts/Contacts/
+     * Cases/KnowledgeBaseArticle stock eram ruído pro fluxo jurídico).
+     *
+     * Tabs removidas:
+     *  - Account, Contact  → "Cliente" Togare substitui (PF/PJ unificado).
+     *  - Email             → não usado no fluxo jurídico básico.
+     *  - Case              → ticket de suporte, não aplica.
+     *  - KnowledgeBaseArticle → documentação interna, não aplica.
+     *
+     * Tabs preservadas: Lead, Opportunity (pipeline Marketing — Story 3.8),
+     * Meeting, Call, Task, Calendar (atividades operacionais do advogado).
+     */
+    private function ensureStockTabsCleanedOnce(Container $container): void
+    {
+        try {
+            $config = $container->getByClass(Config::class);
+            $injectableFactory = $container->getByClass(InjectableFactory::class);
+            $configWriter = $injectableFactory->create(ConfigWriter::class);
+        } catch (\Throwable $e) {
+            return; // best-effort — não tranca instalação
+        }
+
+        if ($config->get('togareStockTabsCleanedAt')) {
+            return; // já rodou uma vez; respeita customização posterior do admin
+        }
+
+        $stockToRemove = ['Account', 'Contact', 'Email', 'Case', 'KnowledgeBaseArticle'];
+        $tabList = $config->get('tabList') ?? [];
+        if (! is_array($tabList)) {
+            return;
+        }
+
+        $filtered = [];
+        $removed = [];
+        foreach ($tabList as $entry) {
+            if (is_string($entry) && in_array($entry, $stockToRemove, true)) {
+                $removed[] = $entry;
+                continue;
+            }
+            $filtered[] = $entry;
+        }
+
+        if ($removed !== []) {
+            $configWriter->set('tabList', $filtered);
+        }
+        // Marca a flag sempre — mesmo sem remoção (alguém já tinha removido):
+        // garante idempotência forte e respeita escolha do admin daqui pra frente.
+        $configWriter->set('togareStockTabsCleanedAt', (new \DateTimeImmutable())->format('c'));
+        $configWriter->save();
+
+        if ($removed !== []) {
+            echo "[togare-core] Tabs stock removidas (1x): " . implode(', ', $removed) . "\n";
+        }
     }
 
     /**
