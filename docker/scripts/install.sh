@@ -29,8 +29,11 @@
 # retomada" — não regera senhas, só garante a stack no ar e os módulos
 # instalados. Para ATUALIZAR uma instalação que já roda, use update.sh.
 #
-# Idioma de toda a saída: português. NÃO requer Node/PHP/Composer no servidor
-# (os módulos já vêm pré-empacotados em espocrm/<módulo>/build/*.zip).
+# Idioma de toda a saída: português. NÃO requer Node/PHP/Composer no servidor:
+# os módulos vêm pré-empacotados em espocrm/<módulo>/build/*.zip, ou — quando
+# faltam (clone novo do repo) — são buildados automaticamente em CONTAINER
+# isolado pelo passo 4.5 via docker/scripts/build-modulos.sh. Único requisito
+# do host é o Docker (já necessário para a stack).
 
 set -euo pipefail
 
@@ -71,6 +74,7 @@ readonly SEGREDOS=(
 DRY_RUN=0
 ASSUME_YES=0
 SKIP_DOCKER=0
+REBUILD_MODULES=0
 DOMINIO=""
 EMAIL=""
 while [ $# -gt 0 ]; do
@@ -81,10 +85,11 @@ while [ $# -gt 0 ]; do
     --dominio) DOMINIO="${2:-}"; shift 2 ;;
     --email)   EMAIL="${2:-}"; shift 2 ;;
     --rebuild-modules)
-      echo "AVISO: --rebuild-modules exige Node+PHP+Composer (toolchain de dev)." >&2
-      echo "       O caminho suportado/validado é o .zip já versionado em" >&2
-      echo "       espocrm/<módulo>/build/. Ignorando flag, usando os zips." >&2
-      shift ;;
+      # Força rebuild via container isolado (docker/scripts/build-modulos.sh)
+      # mesmo que os zips das versões atuais já existam. Útil para limpar
+      # cache de build local. Sem a flag, o passo 4.5 só roda quando algum
+      # zip está FALTANDO (cenário comum em clone fresh).
+      REBUILD_MODULES=1; shift ;;
     -h|--help) sed -n '2,40p' "$0"; exit 0 ;;
     *) echo "Flag desconhecida: $1 (use -h para ajuda)" >&2; exit 1 ;;
   esac
@@ -458,6 +463,53 @@ if [ "$DRY_RUN" -eq 0 ]; then
   wait_healthy nextcloud
 else
   echo "[DRY-RUN] (esperaria mariadb/postgres/redis/espocrm/nextcloud healthy)"
+fi
+
+# =============================================================================
+# 4.5 — Garantir os zips dos módulos (auto-build em container se faltarem)
+# =============================================================================
+# Por que existe: o `.gitignore` de cada espocrm/togare-*/ exclui build/, então
+# clones frescos do repo NÃO têm os zips. Em vez de exigir Node/PHP/Composer
+# no host (contraria o desenho one-shot), buildamos em CONTAINER isolado via
+# docker/scripts/build-modulos.sh (image togare-builder), gerando os zips
+# para `espocrm/togare-*/build/`. Idempotente: pula módulo com zip já
+# presente na versão atual; --rebuild-modules força rebuild.
+step "4.5/7 Verificando os zips dos módulos Togare"
+
+modulos_faltantes=""
+for m in "${MODULOS[@]}"; do
+  pkg="${REPO_DIR}/espocrm/${m}/package.json"
+  if [ ! -f "$pkg" ]; then
+    echo "FATAL: ${pkg} não encontrado (módulo ${m} ausente do repo)." >&2
+    exit 1
+  fi
+  ver="$(json_file_get "$pkg" version)"
+  zip="${REPO_DIR}/espocrm/${m}/build/${m}-${ver}.zip"
+  if [ ! -f "$zip" ]; then
+    modulos_faltantes="${modulos_faltantes} ${m}-${ver}"
+  fi
+done
+
+if [ "$REBUILD_MODULES" -eq 1 ] || [ -n "${modulos_faltantes// /}" ]; then
+  if [ "$DRY_RUN" -eq 1 ]; then
+    echo "[DRY-RUN] rodaria docker/scripts/build-modulos.sh$( [ $REBUILD_MODULES -eq 1 ] && echo ' --force')"
+  else
+    if [ -n "${modulos_faltantes// /}" ]; then
+      echo "  Zips ausentes:${modulos_faltantes}"
+      echo "  Buildando em container isolado (Node+PHP+Composer em togare-builder)..."
+    else
+      echo "  --rebuild-modules ativo. Forçando rebuild dos 6 zips."
+    fi
+    build_args=""
+    [ "$REBUILD_MODULES" -eq 1 ] && build_args="--force"
+    if ! bash "${SCRIPT_DIR}/build-modulos.sh" ${build_args}; then
+      echo "FATAL: build-modulos.sh falhou. Veja a saída acima." >&2
+      echo "       Diagnóstico: bash docker/scripts/build-modulos.sh" >&2
+      exit 1
+    fi
+  fi
+else
+  echo "  ✓ Os 6 zips já existem (espocrm/togare-*/build/*.zip)."
 fi
 
 # =============================================================================
