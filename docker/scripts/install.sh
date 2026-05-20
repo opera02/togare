@@ -556,6 +556,17 @@ dc exec -T espocrm php command.php rebuild
 dc exec -T espocrm php command.php clear-cache
 echo "  (togare-portal-ui NÃO instalado — Portal é Growth, congelado.)"
 
+# Story 4a.1 — togare-djen-worker pode ter ficado em crash-loop até este
+# momento (sobe junto com a stack ANTES do extension install do togare-djen).
+# Restart explícito zera o backoff de restart do Docker e faz o worker subir
+# limpo agora que /var/www/html/custom/Espo/Modules/TogareDjen/scripts/
+# queue-worker.php existe no volume `espocrm_data`. Sem isso, o passo 6a
+# pode pegar o worker ainda em `state=restarting` e levantar falso positivo.
+if [ "$DRY_RUN" -eq 0 ]; then
+  echo "    Reiniciando togare-djen-worker (limpa backoff pós-install)"
+  dc restart togare-djen-worker >/dev/null 2>&1 || true
+fi
+
 # =============================================================================
 # 6/7 — Validações de saúde
 # =============================================================================
@@ -575,11 +586,22 @@ if [ "$DRY_RUN" -eq 0 ]; then
   # Regra: FALHA só se algum serviço está com State != running OU
   # Health == unhealthy. "starting" ganha carência (re-checagem); o
   # togare-backup é OK enquanto estiver "running" (starting esperado).
+  #
+  # togare-djen-worker em `restarting` também é OK durante install fresco:
+  # o container sobe junto com a stack ANTES do extension install do
+  # togare-djen (que só roda no passo 5). Até lá, queue-worker.php ainda
+  # não existe no volume `espocrm_data`, o entrypoint sai com "Could not
+  # open input file" e Docker reagenda restart. No passo 5 nós forçamos
+  # `restart togare-djen-worker` para zerar o backoff e ele sobe limpo.
+  # Damos a mesma carência do "starting" — falha real só se persistir
+  # restarting por mais de ~3min.
   health_scan() {  # ecoa: "FAILED:<svc...>|PENDING:<svc...>"
     local failed="" pending="" line svc state health
     while IFS='|' read -r svc state health; do
       [ -z "$svc" ] && continue
-      if [ "$state" != "running" ] || [ "$health" = "unhealthy" ]; then
+      if [ "$svc" = "togare-djen-worker" ] && [ "$state" = "restarting" ]; then
+        pending="${pending} ${svc}"
+      elif [ "$state" != "running" ] || [ "$health" = "unhealthy" ]; then
         failed="${failed} ${svc}"
       elif [ "$health" = "starting" ] && [ "$svc" != "togare-backup" ]; then
         pending="${pending} ${svc}"

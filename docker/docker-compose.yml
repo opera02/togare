@@ -264,7 +264,13 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 30s
+      # 90s de carência para o primeiro install (era 30s): o worker sobe junto
+      # com a stack mas só consegue rodar de verdade depois do passo 5 do
+      # install.sh ter copiado o togare-djen para o volume espocrm_data. Com
+      # 30s antigos, healthcheck reportava unhealthy antes do worker estabilizar
+      # e o passo 6 do install disparava falso positivo (achado validando
+      # install no servidor do Felipe 2026-05-20).
+      start_period: 90s
 
   # togare-backup (Story 1a.7): restic + supercronic. Dump SQL diário de
   # MariaDB e Postgres + snapshot dos volumes Nextcloud e EspoCRM. Healthcheck
