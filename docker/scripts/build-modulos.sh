@@ -36,6 +36,22 @@ readonly MODULOS=(togare-core togare-licensing togare-rbac togare-tpu togare-nex
 
 readonly BUILDER_IMAGE="togare-builder"
 readonly BUILDER_DOCKERFILE="${SCRIPT_DIR}/build-modulos.Dockerfile"
+# Volume Docker nomeado: cache do ~/.npm entre runs E entre módulos. Primeiro
+# pull popula; runs seguintes reusam tarballs locais. Reduz drasticamente
+# dependência de rede instável (achado validando install no Linux do Felipe
+# 2026-05-20: npm ci ETIMEDOUT no togare-licensing).
+readonly NPM_CACHE_VOLUME="togare_builder_npm_cache"
+
+# Limites para tolerância de rede ruim. npm default é 60s/2 retries; aqui:
+# 5min por fetch, 5 retries com backoff exponencial 20s→120s.
+readonly NPM_FETCH_TIMEOUT_MS="300000"
+readonly NPM_FETCH_RETRIES="5"
+readonly NPM_FETCH_RETRY_MINTIMEOUT_MS="20000"
+readonly NPM_FETCH_RETRY_MAXTIMEOUT_MS="120000"
+
+# Cada módulo pode falhar até MAX_BUILD_RETRIES vezes antes do script abortar.
+# Entre tentativas: backoff de 30s × tentativa.
+readonly MAX_BUILD_RETRIES=3
 
 FORCE=0
 while [ $# -gt 0 ]; do
@@ -91,26 +107,49 @@ for m in "${MODULOS[@]}"; do
 
   step "[${m}] build v${ver}"
   # Volume monta o REPO inteiro como /work; WORKDIR no módulo específico.
-  # npm_config_* desliga audit/fund para acelerar (saída poluída em build).
-  # Composer install NÃO é chamado: o ext-template empacota o vendor/ se
-  # existir; mas o módulo Togare typically não precisa de vendor instalado
-  # em runtime (DI via Espo container). Composer fica disponível no
-  # builder caso algum módulo passe a precisar — sem custo a mais.
-  MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*' docker run --rm \
-      -v "${REPO_DIR}:/work" \
-      -w "/work/espocrm/${m}" \
-      -e npm_config_audit=false \
-      -e npm_config_fund=false \
-      "${BUILDER_IMAGE}" \
-      bash -lc '
-        set -e
-        if [ -f package-lock.json ]; then
-          npm ci --no-audit --no-fund
-        else
-          npm install --no-audit --no-fund
-        fi
-        npm run build
-      '
+  # Volume `togare_builder_npm_cache` em /root/.npm cacheia tarballs do
+  # registry entre runs (mitigação primária pra ETIMEDOUT em rede instável).
+  # npm_config_* desliga audit/fund e estende timeouts/retries (mitigação
+  # secundária — npm default 60s/2 retries é apertado pra link doméstico).
+  # Composer fica disponível no builder caso algum módulo passe a precisar.
+  build_attempt=0
+  while true; do
+    build_attempt=$((build_attempt + 1))
+    if MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*' docker run --rm \
+        -v "${REPO_DIR}:/work" \
+        -v "${NPM_CACHE_VOLUME}:/root/.npm" \
+        -w "/work/espocrm/${m}" \
+        -e npm_config_audit=false \
+        -e npm_config_fund=false \
+        -e npm_config_fetch_timeout="${NPM_FETCH_TIMEOUT_MS}" \
+        -e npm_config_fetch_retries="${NPM_FETCH_RETRIES}" \
+        -e npm_config_fetch_retry_mintimeout="${NPM_FETCH_RETRY_MINTIMEOUT_MS}" \
+        -e npm_config_fetch_retry_maxtimeout="${NPM_FETCH_RETRY_MAXTIMEOUT_MS}" \
+        "${BUILDER_IMAGE}" \
+        bash -lc '
+          set -e
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+          npm run build
+        '; then
+      break
+    fi
+
+    if [ "${build_attempt}" -ge "${MAX_BUILD_RETRIES}" ]; then
+      echo "  ✗ ${m}: build falhou após ${MAX_BUILD_RETRIES} tentativas." >&2
+      echo "       Provável: rede instável (npm registry inalcançável)." >&2
+      echo "       Reproduzir manualmente: bash docker/scripts/build-modulos.sh" >&2
+      echo "       (idempotente — pula módulos com zip já gerado)" >&2
+      exit 1
+    fi
+
+    espera=$(( 30 * build_attempt ))
+    echo "  ⚠ ${m}: tentativa ${build_attempt}/${MAX_BUILD_RETRIES} falhou (rede?). Nova tentativa em ${espera}s..." >&2
+    sleep "${espera}"
+  done
 
   if [ ! -f "${zip}" ]; then
     echo "  ✗ ${m}: zip não foi gerado em ${zip}" >&2
